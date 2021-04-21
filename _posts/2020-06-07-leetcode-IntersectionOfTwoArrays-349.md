@@ -45,7 +45,7 @@ featured: true
 
 ### 代码
 
-```javascrit
+```javascript
 /**
  * @param {number[]} nums1
  * @param {number[]} nums2

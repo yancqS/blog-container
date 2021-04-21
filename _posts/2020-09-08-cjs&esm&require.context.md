@@ -47,12 +47,12 @@ let module = {
 
 验证一下：
 
-```javscript
+```javascript
 //addSum.js
 console.log(module);
 ```
 
-```javscript
+```javascript
 //index.js
 console.log(require('./addSum.js'), 'addSum');
 ```
