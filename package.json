@@ -1,0 +1,19 @@
+{
+  "scripts": {
+    "dev": "vuepress dev ./",
+    "build": "vuepress build ./",
+    "deploy": "GH=1 yarn build && bash ./deploy.sh"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "vuepress": "^1.7.0",
+    "vuepress-plugin-crisp": "^1.0.0",
+    "vuepress-plugin-mathjax": "^1.2.8",
+    "vuepress-plugin-medium-zoom": "^1.1.9",
+    "vuepress-plugin-reading-time": "^0.1.1"
+  },
+  "dependencies": {
+    "vuepress-plugin-reading-progress": "^1.0.10",
+    "vuepress-theme-custom": "^1.0.1"
+  }
+}
