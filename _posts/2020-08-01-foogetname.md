@@ -113,6 +113,3 @@ new new Foo().getName();
   >第一个new 属于 new(无参数列表) 优先级为18；之后的new属于带参数列表的，优先级为19，成员访问优先级也为19.
 
   相当于：new ((new Foo()).getName())，先执行new Foo().getName()，输出3，然后再创建Foo.prototype.getName()这个函数的实例。
-
-
-<comment />

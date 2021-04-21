@@ -74,6 +74,3 @@ class hashSet {
     }
 }
 ```
-
-
-<comment />

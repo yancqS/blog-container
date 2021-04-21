@@ -1661,6 +1661,3 @@ swan.after({
 ## 参考文章
 
 - [百度小程序官网](https://smartprogram.baidu.com/docs/develop/tutorial/intro/)
-
-
-<comment />

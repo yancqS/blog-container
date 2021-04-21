@@ -319,5 +319,3 @@ CPU的地址线条数比较多，寻址范围也比较大。要构成一个主�
 ## 参考文章
 
 - [理解字节序](https://www.ruanyifeng.com/blog/2016/11/byte-order.html)
-
-<comment />

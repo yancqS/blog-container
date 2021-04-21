@@ -138,5 +138,3 @@ TTL是Time to Live的缩写，也就是生存时间值，表示DNS记录在DNS�
 
 - [[前端性能]浅谈域名发散与域名收敛](https://cloud.tencent.com/developer/article/1136774)
 - [3分钟弄明白顶级域名\|二级域名\|子域名\|父域名的区别](https://zhuanlan.zhihu.com/p/27290218)
-
-<comment />

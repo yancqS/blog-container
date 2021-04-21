@@ -82,6 +82,3 @@ let myPow = function(x, n) {
 ```
 
 ![](https://gitee.com/yancqS/blogImage/raw/master/blogImage/20201017190350.jpg)
-
-
-<comment />

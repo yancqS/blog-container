@@ -95,6 +95,3 @@ function sum(a, b, c, d) {
 let currySum = curry(sum);
 currySum(1,2)(3)(4)//应该打印 10
 ```
-
-
-<comment />

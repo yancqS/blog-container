@@ -92,6 +92,3 @@ var sequentialDigits = function(low, high) {
     return res;
 };
 ```
-
-
-<comment />

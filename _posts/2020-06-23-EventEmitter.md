@@ -151,6 +151,3 @@ class Observe {
 
   proxy.a = 100;
 ```
-
-
-<comment />

@@ -84,6 +84,3 @@ var majorityElement = function(nums) {
         return candidate;
 }
 ```
-
-
-<comment />

@@ -344,6 +344,3 @@ over!!!!!
 - [ssh链接git服务器，解决push pull要求输入密码问题](https://my.oschina.net/lieefu/blog/469337)
 - [CentOS 7 安装 Jenkins](https://www.cnblogs.com/fangts/p/11095316.html)
 - [利用gitlab的webhook触发jenkins](https://www.jianshu.com/p/2b2c204dcbe2)
-
-
-<comment />

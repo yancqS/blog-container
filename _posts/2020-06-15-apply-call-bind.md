@@ -100,6 +100,3 @@ featured: true
 ## 参考文章
 
 [JavaScript深入之call和apply的模拟实现](https://juejin.im/post/5907eb99570c3500582ca23c)
-
-
-<comment />

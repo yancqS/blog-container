@@ -48,6 +48,3 @@ Array.prototype.reduce2 = function (callback, initData) {
   return initVal;
 }
 ```
-
-
-<comment />

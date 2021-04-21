@@ -59,6 +59,3 @@ let generate = function(numRows) {
   return res;
 };
 ```
-
-
-<comment />

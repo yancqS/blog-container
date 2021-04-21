@@ -258,6 +258,3 @@ class ClassAssistant {
 ## 参考文章
 
 - [如果你这样回答“什么是线程安全”，面试官都会对你刮目相看](https://www.cnblogs.com/lixinjie/p/a-answer-about-thread-safety-in-a-interview.html)
-
-
-<comment />

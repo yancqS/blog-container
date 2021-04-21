@@ -53,6 +53,3 @@ fi
 ```
 
 >**解决办法:指定其为10进制即可，在结果前加上10#。** 如：declare -i date_birth_md = **10**#`date --date="$date2" +%m%d`
-
-
-<comment />

@@ -80,6 +80,3 @@ featured: true
 - rpm -e **packageName** 卸载rpm包
 - rpm -e --nodeps **packageName**   卸载rpm包，不管是否被依赖
 - rpm -ivh **packageName** 安装rpm包
-
-
-<comment />

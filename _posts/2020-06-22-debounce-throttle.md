@@ -130,6 +130,3 @@ PromiseRace([p1,p2]).then(value => {
   console.log(reason);
 })
 ```
-
-
-<comment />

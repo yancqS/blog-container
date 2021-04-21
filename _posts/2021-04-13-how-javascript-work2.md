@@ -283,6 +283,3 @@ Finally, here are some tips and tricks on how to write well-optimized, better Ja
 
 ## 参考文章
 - [翻译参考文章](https://github.com/Troland/how-javascript-works/blob/master/v8.md)
-
-
-<comment />

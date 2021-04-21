@@ -245,5 +245,3 @@ function cloneDeep(target, map = new Map()) {
 - [JSON.parse(JSON.stringify(obj))实现深拷贝的弊端](https://juejin.im/post/6844904130247573517)
 - [深拷贝系列 ———— 自己通过递归实现一个深拷贝](https://juejin.im/post/6844904004170809351)
 - [JS中如何进行对象的深拷贝](https://zhuanlan.zhihu.com/p/30216256)
-
-<comment />

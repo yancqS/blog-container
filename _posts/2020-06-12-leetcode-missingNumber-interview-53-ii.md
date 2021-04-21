@@ -69,6 +69,3 @@ var missingNumber = function(nums) {
     return nums[index] + 1;
 };
 ```
-
-
-<comment />

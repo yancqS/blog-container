@@ -1,6 +1,6 @@
 # <center>目录</center>
 
-![](https://img.shields.io/badge/Yoha's%20Blog-Count%2063-green)
+![](https://img.shields.io/badge/Yoha's%20Blog-Count%2067-green)
 
 - [How JavaScript works: inside the V8 engine + 5 tips on how to write optimized code](https://yancqs.github.io/blog/2021/04/13/how-javascript-work2/)
 - [AST实现函数自动包裹try/catch](https://yancqs.github.io/blog/2021/04/10/ast/)
@@ -66,4 +66,8 @@
 - [node核心模块——fs](https://yancqs.github.io/blog/2020/05/08/node-fs/)
 - [node核心模块——path](https://yancqs.github.io/blog/2020/04/20/node-path/)
 - [Shell value too great for base](https://yancqs.github.io/blog/2018/12/09/shell-value-too-great-for-base/)
+- [Xshell无法连接到Linux虚拟机](https://yancqs.github.io/blog/2018/10/21/xshell/)
+- [Cookie、Session、WebStorage](https://yancqs.github.io/blog/2018/10/10/cookie/)
 - [apt-get命令、dpkg命令、rpm命令和yum命令](https://yancqs.github.io/blog/2018/04/30/ubuntu-apt-dpkg/)
+- [Ubuntu 18.04LTS系统设置窗口打不开或者消失解决办法](https://yancqs.github.io/blog/2018/04/29/ubuntu-setting/)
+- [关于linux丢失/root文件夹导致的-bash-4.1#(不显示路径)的解决办法](https://yancqs.github.io/blog/2018/04/13/linux-bash/)

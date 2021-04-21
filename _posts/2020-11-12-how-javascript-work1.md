@@ -198,5 +198,3 @@ This will be explained in greater detail in Part 2 of the “How JavaScript actu
 ## 参考文章
 
 - [翻译参考文章](https://github.com/Troland/how-javascript-works/blob/master/overview.md)
-
-<comment />

@@ -27,5 +27,3 @@ featured: true
 ## 系統设置里只有很少的几个图标请重新安装unity-control-center
 
 命令：`sudo apt-get install unity-control-center`
-
-<comment />

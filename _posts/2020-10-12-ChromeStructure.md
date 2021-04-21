@@ -433,6 +433,3 @@ document.body.addEventListener('touchstart', event => {
 ## 最后
 
 转载于[Chrome 浏览器架构](https://xie.infoq.cn/article/5d36d123bfd1c56688e125ad3)
-
-
-<comment />

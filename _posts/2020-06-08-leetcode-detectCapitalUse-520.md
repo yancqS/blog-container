@@ -84,6 +84,3 @@ let detectCapitalUse = function(word) {
   return reg1.test(word) || reg2.test(word) || reg3.test(word);
 };
 ```
-
-
-<comment />

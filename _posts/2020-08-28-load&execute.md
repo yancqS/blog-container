@@ -105,6 +105,3 @@ xhr.send(null);
 ## 参考文章
 
 - [defer和sync的区别](https://segmentfault.com/q/1010000000640869)
-
-
-<comment />

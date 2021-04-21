@@ -536,5 +536,3 @@ Atomics对象提供多种方法如下：
 - 阮一峰老师的ES6标准入门
 - [如果你这样回答“什么是线程安全”，面试官都会对你刮目相看](https://www.cnblogs.com/lixinjie/p/a-answer-about-thread-safety-in-a-interview.html)
 - [并发编程之原子性操作](https://blog.csdn.net/dyhdengyahui/article/details/80014076)
-
-<comment />

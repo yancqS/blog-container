@@ -67,6 +67,3 @@ var numJewelsInStones = function(J, S) {
     return res;
 };
 ```
-
-
-<comment />

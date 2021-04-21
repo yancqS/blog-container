@@ -152,6 +152,3 @@ function zero(matrix,rec){
         zero(matrix,rec)
     };
 ```
-
-
-<comment />

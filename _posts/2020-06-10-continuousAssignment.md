@@ -69,6 +69,3 @@ console.log(a === b.x) //true。不是因为值的相等，而是因为对象引
 
 - [知乎大佬的解释](https://www.zhihu.com/question/41220520)
 - [运算符优先级](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Operator_Precedence)
-
-
-<comment />

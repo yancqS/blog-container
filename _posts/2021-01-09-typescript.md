@@ -457,5 +457,3 @@ enum Days {Sun, Mon, Tue, Wed, Thu, Fri, Sat};
 - [TypeScript 入门教程](https://ts.xcatliu.com/)
 - [tsconfig.json 配置详解](https://blog.csdn.net/wu5229485/article/details/104814671)
 - [tsconfig.json官方文档](https://www.staging-typescript.org/tsconfig)
-
-<comment />

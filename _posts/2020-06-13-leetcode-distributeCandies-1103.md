@@ -131,6 +131,3 @@ let distributeCandies = function(candies, num_people) {
 1%3= 1
 0%3= 0
 ```
-
-
-<comment />

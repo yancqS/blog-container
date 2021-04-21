@@ -61,6 +61,3 @@ let intersection = function(nums1, nums2) {
   return Array.from(res);
 };
 ```
-
-
-<comment />

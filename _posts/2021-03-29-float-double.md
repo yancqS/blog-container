@@ -205,6 +205,3 @@ IEEE 754规定了四种表示浮点数值的方式：单精确度（32位）、�
 - [漫话：如何给女朋友解释为什么计算机中 0.2 + 0.1 不等于 0.3 ？](https://my.oschina.net/u/4081479/blog/4670415)
 - [Is floating point math broken?
 ](https://stackoverflow.com/questions/588004/is-floating-point-math-broken/588014#588014)
-
-
-<comment />

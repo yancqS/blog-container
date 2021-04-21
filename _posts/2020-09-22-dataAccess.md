@@ -291,6 +291,3 @@ function hasEitherClass(element, className1, className2) {
 - 嵌套的对象成员会明显影响性能。
 - 属性或方法在原型链中的位置越深，访问它的速度越慢。
 - 通常来说，可以通过把常用的对象成员、数组元素、跨作用域变量保存在局部变量中来改善JavaScript性能，因为局部变量的访问速度最快。
-
-
-<comment />

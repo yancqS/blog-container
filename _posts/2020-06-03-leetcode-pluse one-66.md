@@ -86,6 +86,3 @@ var plusOne = function(digits) {
         return [1, ...digits];
     };
 ```
-
-
-<comment />
