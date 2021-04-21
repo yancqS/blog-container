@@ -10,7 +10,7 @@ deploy:
   skip_cleanup: true
   local_dir: /.vuepress/dist
   repo: yancqS/blog
-  github_token: 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
+  github_token: $GH_TOKEN
   keep_history: true
   on:
     branch: master
