@@ -4,7 +4,7 @@ node_js:
 install:
   - yarn install
 script:
-  - node append.js && yarn build && node deleteComponent.js
+  - node getReadme.js && node append.js && yarn build && node deleteComponent.js
 deploy:
   provider: pages
   skip_cleanup: true
