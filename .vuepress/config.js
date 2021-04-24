@@ -41,6 +41,11 @@ module.exports = {
         link: '/handbooks/',
         icon: 'el-icon-s-management',
       },
+      {
+        text: 'Emoji',
+        link: '/emoji/',
+        emoji: '💕'
+      },
     ],
     posts: {
       prepend: "Hi, I hope you'll <i>enjoy</i> this post!",
