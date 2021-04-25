@@ -8,141 +8,72 @@ languages:
   - Babel
 ---
 
+# Babel 插件手册
 
-## h2 Headingtttttdtdtt
+这篇文档涵盖了如何创建 [Babel](https://babeljs.io) [插件](https://babeljs.io/docs/advanced/plugins/)等方面的内容。.
 
-### h3 Heading676767
+[![cc-by-4.0](https://licensebuttons.net/l/by/4.0/80x15.png)](http://creativecommons.org/licenses/by/4.0/)
 
-#### h4 Heading
+# 目录
 
-##### h5 Heading
-
-###### h6 Heading
-
-## Horizontal Rules
-
-___
-
----
-
-***
-
-## Typographic replacements
-
-Enable typographer option to see result.
-
-(c) (C) (r) (R) (tm) (TM) (p) (P) +-
-
-test.. test... test..... test?..... test!....
-
-!!!!!! ???? ,,  -- ---
-
-"Smartypants, double quotes" and 'single quotes'
-
-## Emphasis
-
-**This is bold text**
-
-__This is bold text__
-
-*This is italic text*
-
-_This is italic text_
-
-~~Strikethrough~~
-
-## Blockquotes
-
-> Blockquotes can also be nested...
->> ...by using additional greater-than signs right next to each other...
-> > > ...or with spaces between arrows.
-
-## Lists
-
-Unordered
-
-+ Create a list by starting a line with `+`, `-`, or `*`
-+ Sub-lists are made by indenting 2 spaces:
-  - Marker character change forces new list start:
-    * Ac tristique libero volutpat at
-    + Facilisis in pretium nisl aliquet
-    - Nulla volutpat aliquam velit
-+ Very easy!
-
-Ordered
-
-1. Lorem ipsum dolor sit amet
-2. Consectetur adipiscing elit
-3. Integer molestie lorem at massa
-
-1. You can use sequential numbers...
-1. ...or keep all the numbers as `1.`
-
-Start numbering with offset:
-
-57. foo
-1. bar
-
-## Code
-
-Inline `code`
-
-Indented code
-
-    // Some comments
-    line 1 of code
-    line 2 of code
-    line 3 of code
-
-Block code "fences"
-
-```
-Sample text here...
-```
-
-Syntax highlighting
-
-``` js
-var foo = function (bar) {
-  return bar++;
-};
-
-console.log(foo(5));
-```
-
-## Tables
-
-| Option | Description |
-| ------ | ----------- |
-| data   | path to data files to supply the data that will be passed into templates. |
-| engine | engine to be used for processing templates. Handlebars is the default. |
-| ext    | extension to be used for dest files. |
-
-Right aligned columns
-
-| Option | Description |
-| ------:| -----------:|
-| data   | path to data files to supply the data that will be passed into templates. |
-| engine | engine to be used for processing templates. Handlebars is the default. |
-| ext    | extension to be used for dest files. |
-
-## Links
-
-[link text](http://dev.nodeca.com)
-
-[link with title](http://nodeca.github.io/pica/demo/ "title text!")
-
-Autoconverted link <https://github.com/nodeca/pica> (enable linkify to see)
-
-## Images
-
-![Minion](https://octodex.github.com/images/minion.png)
-![Stormtroopocat](https://octodex.github.com/images/stormtroopocat.jpg "The Stormtroopocat")
-
-Like links, Images also have a footnote style syntax
-
-![Alt text][id]
-
-With a reference later in the document defining the URL location:
-
-[id]: https://octodex.github.com/images/dojocat.jpg  "The Dojocat"
+  * [介绍](#toc-introduction)
+  * [基础](#toc-basics) 
+      * [抽象语法树（ASTs）](#toc-asts)
+      * [Babel 的处理步骤](#toc-stages-of-babel)
+      * [解析](#toc-parse) 
+          * [词法分析](#toc-lexical-analysis)
+          * [语法分析](#toc-syntactic-analysis)
+      * [转换](#toc-transform)
+      * [生成](#toc-generate)
+      * [遍历](#toc-traversal)
+      * [Visitors（访问者）](#toc-visitors)
+      * [Paths（路径）](#toc-paths) 
+          * [Paths in Visitors（存在于访问者中的路径）](#toc-paths-in-visitors)
+      * [State（状态）](#toc-state)
+      * [Scopes（作用域）](#toc-scopes) 
+          * [Bindings（绑定）](#toc-bindings)
+  * [API](#toc-api) 
+      * [babylon](#toc-babylon)
+      * [babel-traverse](#toc-babel-traverse)
+      * [babel-types](#toc-babel-types)
+      * [Definitions（定义）](#toc-definitions)
+      * [Builders（构建器）](#toc-builders)
+      * [Validators（验证器）](#toc-validators)
+      * [Converters（变换器）](#toc-converters)
+      * [babel-generator](#toc-babel-generator)
+      * [babel-template](#toc-babel-template)
+  * [编写你的第一个 Babel 插件](#toc-writing-your-first-babel-plugin)
+  * [转换操作](#toc-transformation-operations) 
+      * [访问](#toc-visiting)
+      * [获取子节点的Path](#toc-get-the-path-of-a-sub-node)
+      * [检查节点（Node）类型](#toc-check-if-a-node-is-a-certain-type)
+      * [检查路径（Path）类型](#toc-check-if-a-path-is-a-certain-type)
+      * [检查标识符（Identifier）是否被引用](#toc-check-if-an-identifier-is-referenced)
+      * [找到特定的父路径](#toc-find-a-specific-parent-path)
+      * [获取同级路径](#toc-get-sibling-paths)
+      * [停止遍历](#toc-stopping-traversal)
+      * [处理](#toc-manipulation)
+      * [替换一个节点](#toc-replacing-a-node)
+      * [用多节点替换单节点](#toc-replacing-a-node-with-multiple-nodes)
+      * [用字符串源码替换节点](#toc-replacing-a-node-with-a-source-string)
+      * [插入兄弟节点](#toc-inserting-a-sibling-node)
+      * [插入到容器（container）中](#toc-inserting-into-a-container)
+      * [删除节点](#toc-removing-a-node)
+      * [替换父节点](#toc-replacing-a-parent)
+      * [删除父节点](#toc-removing-a-parent)
+      * [Scope（作用域）](#toc-scope)
+      * [检查本地变量是否被绑定](#toc-checking-if-a-local-variable-is-bound)
+      * [生成UID](#toc-generating-a-uid)
+      * [提升变量声明至父级作用域](#toc-pushing-a-variable-declaration-to-a-parent-scope)
+      * [重命名绑定及其引用](#toc-rename-a-binding-and-its-references)
+  * [插件选项](#toc-plugin-options) 
+      * [插件的准备和收尾工作](#toc-pre-and-post-in-plugins)
+      * [在插件中启用其他语法](#toc-enabling-syntax-in-plugins)
+  * [构建节点](#toc-building-nodes)
+  * [最佳实践](#toc-best-practices) 
+      * [尽量避免遍历抽象语法树（AST）](#toc-avoid-traversing-the-ast-as-much-as-possible)
+      * [及时合并访问者对象](#toc-merge-visitors-whenever-possible)
+      * [可以手动查找就不要遍历](#toc-do-not-traverse-when-manual-lookup-will-do)
+      * [优化嵌套的访问者对象](#toc-optimizing-nested-visitors)
+      * [留意嵌套结构](#toc-being-aware-of-nested-structures)
+      * [单元测试](#toc-unit-testing)
