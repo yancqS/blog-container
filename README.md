@@ -305,3 +305,24 @@ files.forEach((item, index) => {
 
 就先到这吧。
 
+最后，记得更新`travis.yml`:
+
+```yaml
+language: node_js
+node_js:
+  - lts/*
+install:
+  - yarn install
+script:
+  - node getReadme.js && node append.js && yarn build && node deleteComponent.js
+deploy:
+  provider: pages
+  skip_cleanup: true
+  local_dir: .vuepress/dist
+  repo: yancqS/blog
+  github_token: $GH_TOKEN
+  keep_history: true
+  on:
+    branch: master
+```
+
