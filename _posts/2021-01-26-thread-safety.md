@@ -25,7 +25,7 @@ featured: true
 
 前一段时间学习了一下[arrayBuffer](https://yancqs.github.io/blog/2020/12/31/arraybuffer/),里面在谈及共享数组缓冲区(shared array buffers)时，提出了Atomics API，其是为了解决多个线程同时访问内存有风险这一问题。Atomics API 可以保证 SharedArrayBuffer 上的 JavaScript 操作是**线程安全**的。
 
-这里的线程安全引起了我的兴趣，于是在网上查找了资料，发现一片比较不错的文章。于是，转载到自己的博客，方便以后回顾。在此对其作者表示感谢。
+这里的线程安全引起了我的兴趣，于是在网上查找了资料，发现一篇比较不错的文章。于是，转载到自己的博客，方便以后回顾。在此对其作者表示感谢。
 
 下面为文章正文。
 

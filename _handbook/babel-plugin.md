@@ -1058,3 +1058,316 @@ console.log(generate(ast).code);
 ```js
 var myModule = require("my-module");
 ```
+
+# <a id="toc-writing-your-first-babel-plugin"></a>编写你的第一个 Babel 插件
+
+现在你已经熟悉了 Babel 的所有基础知识了，让我们把这些知识和插件的 API融合在一起来编写第一个 Babel 插件吧。
+
+先从一个接收了当前`babel`对象作为参数的 [`function`](https://github.com/babel/babel/tree/master/packages/babel-core) 开始。
+
+```js
+export default function(babel) {
+  // plugin contents
+}
+```
+
+由于你将会经常这样使用，所以直接取出 `babel.types` 会更方便：（译注：这是 ES2015 语法中的对象解构，即 Destructuring）
+
+```js
+export default function({ types: t }) {
+  // plugin contents
+}
+```
+
+接着返回一个对象，其 `visitor` 属性是这个插件的主要访问者。
+
+```js
+export default function({ types: t }) {
+  return {
+    visitor: {
+      // visitor contents
+    }
+  };
+};
+```
+
+Visitor 中的每个函数接收2个参数：`path` 和 `state`
+
+```js
+export default function({ types: t }) {
+  return {
+    visitor: {
+      Identifier(path, state) {},
+      ASTNodeTypeHere(path, state) {}
+    }
+  };
+};
+```
+
+让我们快速编写一个可用的插件来展示一下它是如何工作的。下面是我们的源代码：
+
+```js
+foo === bar;
+```
+
+其 AST 形式如下：
+
+```js
+{
+  type: "BinaryExpression",
+  operator: "===",
+  left: {
+    type: "Identifier",
+    name: "foo"
+  },
+  right: {
+    type: "Identifier",
+    name: "bar"
+  }
+}
+```
+
+我们从添加 `BinaryExpression` 访问者方法开始：
+
+```js
+export default function({ types: t }) {
+  return {
+    visitor: {
+      BinaryExpression(path) {
+        // ...
+      }
+    }
+  };
+}
+```
+
+然后我们更确切一些，只关注哪些使用了 `===` 的 `BinaryExpression`。
+
+```js
+visitor: {
+  BinaryExpression(path) {
+    if (path.node.operator !== "===") {
+      return;
+    }
+
+    // ...
+  }
+}
+```
+
+现在我们用新的标识符来替换 `left` 属性：
+
+```js
+BinaryExpression(path) {
+  if (path.node.operator !== "===") {
+    return;
+  }
+
+  path.node.left = t.identifier("sebmck");
+  // ...
+}
+```
+
+于是如果我们运行这个插件我们会得到：
+
+```js
+sebmck === bar;
+```
+
+现在只需要替换 `right` 属性了。
+
+```js
+BinaryExpression(path) {
+  if (path.node.operator !== "===") {
+    return;
+  }
+
+  path.node.left = t.identifier("sebmck");
+  path.node.right = t.identifier("dork");
+}
+```
+
+这就是我们的最终结果了：
+
+```js
+sebmck === dork;
+```
+
+完美！我们的第一个 Babel 插件。
+
+* * *
+
+# <a id="toc-transformation-operations"></a>转换操作
+
+## <a id="toc-visiting"></a>访问
+
+### <a id="toc-get-the-path-of-a-sub-node"></a>获取子节点的Path
+
+为了得到一个AST节点的属性值，我们一般先访问到该节点，然后利用 `path.node.property` 方法即可。
+
+```js
+// the BinaryExpression AST node has properties: `left`, `right`, `operator`
+BinaryExpression(path) {
+  path.node.left;
+  path.node.right;
+  path.node.operator;
+}
+```
+
+如果你想访问到该属性的`path`，使用path对象的`get`方法，传递该属性的字符串形式作为参数。
+
+```js
+BinaryExpression(path) {
+  path.get('left');
+}
+Program(path) {
+  path.get('body.0');
+}
+```
+
+### <a id="toc-check-if-a-node-is-a-certain-type"></a>检查节点的类型
+
+如果你想检查节点的类型，最好的方式是：
+
+```js
+BinaryExpression(path) {
+  if (t.isIdentifier(path.node.left)) {
+    // ...
+  }
+}
+```
+
+你同样可以对节点的属性们做浅层检查：
+
+```js
+BinaryExpression(path) {
+  if (t.isIdentifier(path.node.left, { name: "n" })) {
+    // ...
+  }
+}
+```
+
+功能上等价于：
+
+```js
+BinaryExpression(path) {
+  if (
+    path.node.left != null &&
+    path.node.left.type === "Identifier" &&
+    path.node.left.name === "n"
+  ) {
+    // ...
+  }
+}
+```
+
+### <a id="toc-check-if-a-path-is-a-certain-type"></a>检查路径（Path）类型
+
+一个路径具有相同的方法检查节点的类型：
+
+```js
+BinaryExpression(path) {
+  if (path.get('left').isIdentifier({ name: "n" })) {
+    // ...
+  }
+}
+```
+
+就相当于：
+
+```js
+BinaryExpression(path) {
+  if (t.isIdentifier(path.node.left, { name: "n" })) {
+    // ...
+  }
+}
+```
+
+### <a id="toc-check-if-an-identifier-is-referenced"></a>检查标识符（Identifier）是否被引用
+
+```js
+Identifier(path) {
+  if (path.isReferencedIdentifier()) {
+    // ...
+  }
+}
+```
+
+或者：
+
+```js
+Identifier(path) {
+  if (t.isReferenced(path.node, path.parent)) {
+    // ...
+  }
+}
+```
+
+### <a id="toc-find-a-specific-parent-path"></a>找到特定的父路径
+
+有时你需要从一个路径向上遍历语法树，直到满足相应的条件。
+
+对于每一个父路径调用`callback`并将其`NodePath`当作参数，当`callback`返回真值时，则将其`NodePath`返回。.
+
+```js
+path.findParent((path) => path.isObjectExpression());
+```
+
+如果也需要遍历当前节点：
+
+```js
+path.find((path) => path.isObjectExpression());
+```
+
+查找最接近的父函数或程序：
+
+```js
+path.getFunctionParent();
+```
+
+向上遍历语法树，直到找到在列表中的父节点路径
+
+```js
+path.getStatementParent();
+```
+
+### <a id="toc-get-sibling-paths"></a>获取同级路径
+
+如果一个路径是在一个 `Function`／`Program`中的列表里面，它就有同级节点。
+
+  * 使用`path.inList`来判断路径是否有同级节点， 
+  * 使用`path.getSibling(index)`来获得同级路径,
+  * 使用 `path.key`获取路径所在容器的索引,
+  * 使用 `path.container`获取路径的容器（包含所有同级节点的数组）
+  * 使用 `path.listKey`获取容器的key
+
+> 这些API用于 [babel-minify](https://github.com/babel/babili) 中使用的 [transform-merge-sibling-variables](https://github.com/babel/babili/blob/master/packages/babel-plugin-transform-merge-sibling-variables/src/index.js) 插件。
+
+
+```js
+var a = 1; // pathA, path.key = 0
+var b = 2; // pathB, path.key = 1
+var c = 3; // pathC, path.key = 2
+```
+
+```js
+export default function({ types: t }) {
+  return {
+    visitor: {
+      VariableDeclaration(path) {
+        // if the current path is pathA
+        path.inList // true
+        path.listKey // "body"
+        path.key // 0
+        path.getSibling(0) // pathA
+        path.getSibling(path.key + 1) // pathB
+        path.container // [pathA, pathB, pathC]
+        path.getPrevSibling() // path(undefined) *
+        path.getNextSibling() // pathB
+        path.getAllPrevSiblings() // []
+        path.getAllNextSiblings() // [pathB, pathC]
+      }
+    }
+  };
+}
+```
