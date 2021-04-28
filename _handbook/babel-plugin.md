@@ -1371,3 +1371,460 @@ export default function({ types: t }) {
   };
 }
 ```
+
+* `path(undefined)`是`path.node === undefined` 的的一个节点路径
+
+### <a id="toc-stopping-traversal"></a>停止遍历
+
+如果你的插件需要在某种情况下不运行，最简单的做法是尽早写回。
+
+```js
+BinaryExpression(path) {
+  if (path.node.operator !== '**') return;
+}
+```
+
+如果您在顶级路径中进行子遍历，则可以使用2个提供的API方法：
+
+- `path.skip()` skips traversing the children of the current path. 
+- `path.stop()` stops traversal entirely.
+
+```js
+outerPath.traverse({
+  Function(innerPath) {
+    innerPath.skip(); // if checking the children is irrelevant
+  },
+  ReferencedIdentifier(innerPath, state) {
+    state.iife = true;
+    innerPath.stop(); // if you want to save some state and then stop traversal, or deopt
+  }
+});
+```
+## <a id="toc-manipulation"></a>处理
+
+### <a id="toc-replacing-a-node"></a>替换一个节点
+
+```js
+BinaryExpression(path) {
+  path.replaceWith(
+    t.binaryExpression("**", path.node.left, t.numberLiteral(2))
+  );
+}
+```
+
+```diff
+  function square(n) {
+-   return n * n;
++   return n ** 2;
+  }
+```
+
+### <a id="toc-replacing-a-node-with-multiple-nodes"></a>用多节点替换单节点
+
+```js
+ReturnStatement(path) {
+  path.replaceWithMultiple([
+    t.expressionStatement(t.stringLiteral("Is this the real life?")),
+    t.expressionStatement(t.stringLiteral("Is this just fantasy?")),
+    t.expressionStatement(t.stringLiteral("(Enjoy singing the rest of the song in your head)")),
+  ]);
+}
+```
+
+```diff
+  function square(n) {
+-   return n * n;
++   "Is this the real life?";
++   "Is this just fantasy?";
++   "(Enjoy singing the rest of the song in your head)";
+  }
+```
+
+> **注意**：当用多个节点替换一个表达式时，它们必须都是声明。这是因为Babel在更换节点时广泛使用启发式算法，这意味着您可以做一些非常疯狂的转换，否则将会非常冗长。
+
+### <a id="toc-replacing-a-node-with-a-source-string"></a>用字符串源码替换节点
+
+```js
+FunctionDeclaration(path) {
+  path.replaceWithSourceString(`function add(a, b) {
+    return a + b;
+  }`);
+}
+```
+
+```diff
+- function square(n) {
+-   return n * n;
++ function add(a, b) {
++   return a + b;
+  }
+```
+
+> **注意**：不建议使用这个API，除非您正在处理动态的源码字符串，否则在访问者外部解析代码更有效率。
+
+### <a id="toc-inserting-a-sibling-node"></a>插入兄弟节点
+
+```js
+FunctionDeclaration(path) {
+  path.insertBefore(t.expressionStatement(t.stringLiteral("Because I'm easy come, easy go.")));
+  path.insertAfter(t.expressionStatement(t.stringLiteral("A little high, little low.")));
+}
+```
+
+```diff
++ "Because I'm easy come, easy go.";
+  function square(n) {
+    return n * n;
+  }
++ "A little high, little low.";
+```
+
+> 注意：这里同样应该使用声明或者一个声明数组。这里使用了在用多个节点替换一个节点中提到的相同的启发式算法。
+
+### <a id="toc-inserting-into-a-container"></a>插入到容器（container）中
+
+如果您想要在AST节点属性中插入一个像 `body` 那样的数组。
+它与 `insertBefore` / `insertAfter` 类似, 但您必须指定 `listKey` (通常是 `body`)。
+
+```js
+ClassMethod(path) {
+  path.get('body').unshiftContainer('body', t.expressionStatement(t.stringLiteral('before')));
+  path.get('body').pushContainer('body', t.expressionStatement(t.stringLiteral('after')));
+}
+```
+
+```diff
+ class A {
+  constructor() {
++   "before"
+    var a = 'middle';
++   "after"
+  }
+ }
+```
+
+### <a id="toc-removing-a-node"></a>删除一个节点
+
+```js
+FunctionDeclaration(path) {
+  path.remove();
+}
+```
+
+```diff
+- function square(n) {
+-   return n * n;
+- }
+```
+
+### <a id="toc-replacing-a-parent"></a>替换父节点
+
+只需使用 parentPath (`path.parentPath`) 调用 replaceWith 即可:
+
+```js
+BinaryExpression(path) {
+  path.parentPath.replaceWith(
+    t.expressionStatement(t.stringLiteral("Anyway the wind blows, doesn't really matter to me, to me."))
+  );
+}
+```
+
+```diff
+  function square(n) {
+-   return n * n;
++   "Anyway the wind blows, doesn't really matter to me, to me.";
+  }
+```
+
+### <a id="toc-removing-a-parent"></a>删除父节点
+
+```js
+BinaryExpression(path) {
+  path.parentPath.remove();
+}
+```
+
+```diff
+  function square(n) {
+-   return n * n;
+  }
+```
+
+## <a id="toc-scope"></a>Scope（作用域）
+
+### <a id="toc-checking-if-a-local-variable-is-bound"></a>检查本地变量是否被绑定
+
+```js
+FunctionDeclaration(path) {
+  if (path.scope.hasBinding("n")) {
+    // ...
+  }
+}
+```
+
+这将遍历作用域树并检查特定的绑定。
+
+您也可以检查一个作用域是否有**自己**的绑定：
+
+```js
+FunctionDeclaration(path) {
+  if (path.scope.hasOwnBinding("n")) {
+    // ...
+  }
+}
+```
+
+### <a id="toc-generating-a-uid"></a>生成一个 UID
+
+这将生成一个标识符，不会与任何本地定义的变量相冲突。
+
+```js
+FunctionDeclaration(path) {
+  path.scope.generateUidIdentifier("uid");
+  // Node { type: "Identifier", name: "_uid" }
+  path.scope.generateUidIdentifier("uid");
+  // Node { type: "Identifier", name: "_uid2" }
+}
+```
+
+### <a id="toc-pushing-a-variable-declaration-to-a-parent-scope"></a>提升变量声明至父级作用域
+
+有时你可能想要提升一个 `VariableDeclaration` ，以便为其赋值。
+
+```js
+FunctionDeclaration(path) {
+  const id = path.scope.generateUidIdentifierBasedOnNode(path.node.id);
+  path.remove();
+  path.scope.parent.push({ id, init: path.node });
+}
+``` 
+
+```diff
+- function square(n) {
++ var _square = function square(n) {
+    return n * n;
+- }
++ };
+```
+
+### <a id="toc-rename-a-binding-and-its-references"></a>重命名绑定及其引用
+
+```js
+FunctionDeclaration(path) {
+  path.scope.rename("n", "x");
+}
+```
+
+```diff
+- function square(n) {
+-   return n * n;
++ function square(x) {
++   return x * x;
+  }
+```
+
+或者，您可以将绑定重命名为生成的唯一标识符：
+
+```js
+FunctionDeclaration(path) {
+  path.scope.rename("n");
+}
+```
+
+```diff
+- function square(n) {
+-   return n * n;
++ function square(_n) {
++   return _n * _n;
+  }
+```
+
+* * *
+
+# <a id="toc-plugin-options"></a>插件选项
+
+如果您想让您的用户自定义您的Babel插件的行为您可以接受用户可以指定的插件特定选项，如下所示：
+
+```js
+{
+  plugins: [
+    ["my-plugin", {
+      "option1": true,
+      "option2": false
+    }]
+  ]
+}
+```
+
+这些选项会通过 `state` 对象传递给插件访问者：
+
+```js
+export default function({ types: t }) {
+  return {
+    visitor: {
+      FunctionDeclaration(path, state) {
+        console.log(state.opts);
+        // { option1: true, option2: false }
+      }
+    }
+  }
+}
+```
+
+这些选项是特定于插件的，您不能访问其他插件中的选项。
+
+## <a id="toc-pre-and-post-in-plugins"></a> 插件的准备和收尾工作
+
+插件具有在插件之前或之后运行的函数。它们可用于设置或清理/分析。
+
+```js
+export default function({ types: t }) {
+  return {
+    pre(state) {
+      this.cache = new Map();
+    },
+    visitor: {
+      StringLiteral(path) {
+        this.cache.set(path.node.value, 1);
+      }
+    },
+    post(state) {
+      console.log(this.cache);
+    }
+  };
+}
+```
+
+## <a id="toc-enabling-syntax-in-plugins"></a> 在插件中启用其他语法
+
+插件可以启用babylon plugins，因此用户不需要安装/启用它们。这可以防止解析错误，而不会继承语法插件。
+
+```js
+export default function({ types: t }) {
+  return {
+    inherits: require("babel-plugin-syntax-jsx")
+  };
+}
+```
+
+## <a id="toc-throwing-a-syntax-error"></a> 抛出一个语法错误
+
+如果您想用babel-code-frame和一个消息抛出一个错误：
+
+```js
+export default function({ types: t }) {
+  return {
+    visitor: {
+      StringLiteral(path) {
+        throw path.buildCodeFrameError("Error message here");
+      }
+    }
+  };
+}
+```
+
+该错误看起来像：
+
+    file.js: Error message here
+       7 |
+       8 | let tips = [
+    >  9 |   "Click on any AST node with a '+' to expand it",
+         |   ^
+      10 |
+      11 |   "Hovering over a node highlights the \
+      12 |    corresponding part in the source code",
+    
+
+* * *
+
+# <a id="toc-building-nodes"></a>构建节点
+
+编写转换时，通常需要构建一些要插入的节点进入AST。 如前所述，您可以使用 `babel-types` 包中的<a href="#toc-builders">builder<a/>方法。
+
+构建器的方法名称就是您想要的节点类型的名称，除了第一个字母小写。例如，如果您想建立一个 `MemberExpression` 您可以使用` t.memberExpression(...)`。
+
+这些构建器的参数由节点定义决定。有一些正在做的工作，以生成易于阅读的文档定义，但现在他们都可以在[此处](https://github.com/babel/babel/tree/master/packages/babel-types/src/definitions)找到。
+
+节点定义如下所示：
+
+```js
+defineType("MemberExpression", {
+  builder: ["object", "property", "computed"],
+  visitor: ["object", "property"],
+  aliases: ["Expression", "LVal"],
+  fields: {
+    object: {
+      validate: assertNodeType("Expression")
+    },
+    property: {
+      validate(node, key, val) {
+        let expectedType = node.computed ? "Expression" : "Identifier";
+        assertNodeType(expectedType)(node, key, val);
+      }
+    },
+    computed: {
+      default: false
+    }
+  }
+});
+```
+
+在这里你可以看到关于这个特定节点类型的所有信息，包括如何构建它，遍历它，并验证它。
+
+通过查看 `builder` 属性, 可以看到调用生成器方法(`t. MemberExpression`)所需的3个参数。
+
+```js
+builder: ["object", "property", "computed"],
+```
+
+>请注意，有时在节点上可以定制的属性比`builder数组`包含的属性更多。 这是为了防止生成器有太多的参数。在这些情况下，您需要手动设置属性。 一个例子就是[ClassMethod](https://github.com/babel/babel/blob/bbd14f88c4eea88fa584dd877759dd6b900bf35e/packages/babel-types/src/definitions/es2015.js#L238-L276)。
+
+```js
+// Example
+// because the builder doesn't contain `async` as a property
+var node = t.classMethod(
+  "constructor",
+  t.identifier("constructor"),
+  params,
+  body
+)
+// set it manually after creation
+node.async = true;
+```
+
+您可以通过 `fields` 对象查看生成器参数的验证。
+
+```js
+fields: {
+  object: {
+    validate: assertNodeType("Expression")
+  },
+  property: {
+    validate(node, key, val) {
+      let expectedType = node.computed ? "Expression" : "Identifier";
+      assertNodeType(expectedType)(node, key, val);
+    }
+  },
+  computed: {
+    default: false
+  }
+}
+```
+
+可以看到`object`需要是一个`Expression`, `property`应该是`Expression`或者`Identifier`, （具体是哪个）这取决于成员表达式是否是可计算的(`computed`),并且`computed`是一个布尔值，默认为false。
+
+因此，我们可以像下面这样构建 `MemberExpression` ：
+
+```js
+t.memberExpression(
+  t.identifier('object'),
+  t.identifier('property')
+  // `computed` is optional
+);
+```
+
+构建结果为：
+
+```js
+object.property
+```
