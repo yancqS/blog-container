@@ -1828,3 +1828,90 @@ t.memberExpression(
 ```js
 object.property
 ```
+
+但是，我们说过 `object` 需要是一个表达式(Expression)，那么为什么标识符(Identifier)有效呢？
+
+如果我们看一下 `Identifier` 的定义，我们会发现它有一个 `aliases` 属性，表示它也是一个表达式。
+
+```js
+aliases: ["Expression", "LVal"],
+```
+
+So since `MemberExpression` is a type of `Expression`, we could set it as the `object` of another `MemberExpression`:
+
+因此，由于 `MemberExpression` 是表达式(Expression)的一种类型，所以我们可以将其设置为另一个 `MemberExpression` 的 `object`：
+
+```js
+t.memberExpression(
+  t.memberExpression(
+    t.identifier('member'),
+    t.identifier('expression')
+  ),
+  t.identifier('property')
+)
+```
+
+构建结果为：
+
+```js
+member.expression.property
+```
+
+你几乎不太可能记住每一种节点类型的`builder`方法的标识，因此，你需要花更多的时间去理解它们是如何从节点定义中生成的。
+
+* * *
+
+# <a id="toc-best-practices"></a>最佳实践
+
+## <a id="toc-create-helper-builders-and-checkers"></a> 创建构建器和检查器的帮助函数
+
+将某些检查（如果节点是特定类型）提取到它们自己的帮助函数中以及提取特定节点类型的帮助函数是非常简单的。
+
+```js
+function isAssignment(node) {
+  return node && node.operator === opts.operator + "=";
+}
+
+function buildAssignment(left, right) {
+  return t.assignmentExpression("=", left, right);
+}
+```
+
+## <a id="toc-avoid-traversing-the-ast-as-much-as-possible"></a>尽量避免遍历抽象语法树（AST）
+
+遍历AST是昂贵的，而且很容易意外地遍历AST超过必要的次数。这将产生很多额外的操作。
+
+Babel optimizes this as much as possible, merging visitors together if it can in order to do everything in a single traversal.
+
+Babel尽可能地优化这一点，将访问者合并到一起（如果可以合并的话），以便在一次遍历中完成所有操作。
+
+### <a id="toc-merge-visitors-whenever-possible"></a>及时合并访问者对象
+
+在写访问者时，可能会在逻辑上需要的多个地方调用“path.traverse”。
+
+```js
+path.traverse({
+  Identifier(path) {
+    // ...
+  }
+});
+
+path.traverse({
+  BinaryExpression(path) {
+    // ...
+  }
+});
+```
+
+但是，最好将它们编写为只运行一次的单个访问者。否则将无缘无故地多次遍历同一棵语法树。
+
+```js
+path.traverse({
+  Identifier(path) {
+    // ...
+  },
+  BinaryExpression(path) {
+    // ...
+  }
+});
+```
