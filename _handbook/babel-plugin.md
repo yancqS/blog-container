@@ -1915,3 +1915,49 @@ path.traverse({
   }
 });
 ```
+
+### <a id="toc-do-not-traverse-when-manual-lookup-will-do"></a>可以手动查找就不要遍历
+
+当寻找特定的节点类型时，可能会很想调用`path.traverse`。
+
+```js
+const nestedVisitor = {
+  Identifier(path) {
+    // ...
+  }
+};
+
+const MyVisitor = {
+  FunctionDeclaration(path) {
+    path.get('params').traverse(nestedVisitor);
+  }
+};
+```
+
+但是，如果您正在寻找特定的、浅显的内容，那么建议手动查找所需的节点，而无需执行代价高昂的遍历。
+
+```js
+const MyVisitor = {
+  FunctionDeclaration(path) {
+    path.node.params.forEach(function() {
+      // ...
+    });
+  }
+};
+```
+
+## <a id="toc-optimizing-nested-visitors"></a>优化嵌套的访问者对象
+
+当您嵌套访问者（visitor）时，把它们嵌套在您的代码中可能是有意义的。
+
+```js
+const MyVisitor = {
+  FunctionDeclaration(path) {
+    path.traverse({
+      Identifier(path) {
+        // ...
+      }
+    });
+  }
+};
+```
