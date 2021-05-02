@@ -1961,3 +1961,243 @@ const MyVisitor = {
   }
 };
 ```
+
+但是，每当调用`FunctionDeclaration()`时都会创建一个新的访问者对象。其代价是昂贵的，因为每次传入新的`visitor`对象时，Babel都会进行一些处理（例如分解包含多个类型的键、执行验证和调整对象结构）。之所以要进行这些处理是因为Babel在visitor对象上存储标志，表明它已经执行了该处理，所以最好将visitor存储在一个变量中，每次都传递相同的对象。
+
+```js
+const nestedVisitor = {
+  Identifier(path) {
+    // ...
+  }
+};
+
+const MyVisitor = {
+  FunctionDeclaration(path) {
+    path.traverse(nestedVisitor);
+  }
+};
+```
+
+如果您在嵌套的访问者中需要一些状态，像这样：
+
+```js
+const MyVisitor = {
+  FunctionDeclaration(path) {
+    var exampleState = path.node.params[0].name;
+
+    path.traverse({
+      Identifier(path) {
+        if (path.node.name === exampleState) {
+          // ...
+        }
+      }
+    });
+  }
+};
+```
+
+你可以将其作为状态传递给`traverse()`方法，并可以在访问者的`this`上对其进行访问。
+
+```js
+const nestedVisitor = {
+  Identifier(path) {
+    if (path.node.name === this.exampleState) {
+      // ...
+    }
+  }
+};
+
+const MyVisitor = {
+  FunctionDeclaration(path) {
+    var exampleState = path.node.params[0].name;
+    path.traverse(nestedVisitor, { exampleState });
+  }
+};
+```
+
+## <a id="toc-being-aware-of-nested-structures"></a>留意嵌套结构
+
+有时候在思考给定结构的转换时，可能会忘记给定的转换结构可以是嵌套的。
+
+例如，假设我们想从 `Foo ClassDeclaration` 中查找 `constructor ClassMethod`。
+
+```js
+class Foo {
+  constructor() {
+    // ...
+  }
+}
+```
+
+```js
+const constructorVisitor = {
+  ClassMethod(path) {
+    if (path.node.name === 'constructor') {
+      // ...
+    }
+  }
+}
+
+const MyVisitor = {
+  ClassDeclaration(path) {
+    if (path.node.id.name === 'Foo') {
+      path.traverse(constructorVisitor);
+    }
+  }
+}
+```
+
+我们忽略了类可以嵌套的事实，使用遍历的话，上面我们也会得到一个嵌套的`构造函数(constructor)`：
+
+```js
+class Foo {
+  constructor() {
+    class Bar {
+      constructor() {
+        // ...
+      }
+    }
+  }
+}
+```
+
+## <a id="toc-unit-testing"></a>单元测试
+
+有几种主要的方法来测试babel插件：快照测试，AST测试和执行测试。对于这个例子，我们将使用[jest](http://facebook.github.io/jest/) ，因为它支持盒外快照测试。我们在这里创建的示例是托管在这个[repo](https://github.com/brigand/babel-plugin-testing-example)。 
+
+首先我们需要一个babel插件，我们将把它放在`src/index.js`中。
+
+```js
+module.exports = function testPlugin(babel) {
+  return {
+    visitor: {
+      Identifier(path) {
+        if (path.node.name === 'foo') {
+          path.node.name = 'bar';
+        }
+      }
+    }
+  };
+};
+```
+
+### 快照测试
+
+接下来，用 `npm install --save-dev babel-core jest` 安装我们的依赖， 然后我们可以开始写我们的第一个测试：快照测试。 快照测试允许我们直观地检查babel插件的输出。 我们给它一个输入，告诉它一个快照，并将其保存到一个文件。 我们可以在git中检查快照。 这使我们能够看到何时影响了测试用例的输出。 在拉请求的时候，它也给出了使用差异。 当然，你可以用任何测试框架来做到这一点，但是使用jest更新快照就像 `jest -u` 一样简单。
+
+```js
+// src/__tests__/index-test.js
+const babel = require('babel-core');
+const plugin = require('../');
+
+var example = `
+    var foo = 1;
+    if (foo) console.log(foo);
+`;
+
+it('works', () => {
+  const {code} = babel.transform(example, {plugins: [plugin]});
+  expect(code).toMatchSnapshot();
+});
+```
+
+这给了我们一个快照文件在 `src/__tests__/__snapshots__/index-test.js.snap`。
+
+```js
+exports[`test works 1`] = `
+    "var bar = 1;
+    if (bar) console.log(bar);"
+`;
+```
+
+如果我们在插件中将“bar”更改为“baz”并再次运行，则可以得到以下结果：
+
+```diff
+接收到的值与存储的快照1不匹配。
+
+    - Snapshot
+    + Received
+
+    @@ -1,3 +1,3 @@
+     "
+    -var bar = 1;
+    -if (bar) console.log(bar);"
+    +var baz = 1;
+    +if (baz) console.log(baz);"
+```
+
+我们可以看到对插件代码的更改是如何影响插件的输出的，如果输出看起来不错，我们可以运行jest-u来更新快照。
+
+### AST 测试
+
+除了快照测试之外，我们还可以手动检查AST。这是一个简单的例子。对于更复杂的情况，你可能希望利用`babel traverse`。它允许你使用`visitor`键指定一个对象，就像您用于插件本身一样。
+
+```js
+it('contains baz', () => {
+  const {ast} = babel.transform(example, {plugins: [plugin]});
+  const program = ast.program;
+  const declaration = program.body[0].declarations[0];
+  assert.equal(declaration.id.name, 'baz');
+  // or babelTraverse(program, {visitor: ...})
+});
+```
+
+### Exec Tests(执行测试)
+
+在这里，我们将转换代码，然后评估它的行为是否正确。 请注意，我们在测试中没有使用`assert`。 这确保了如果我们的插件做了一些奇怪的事情，比如意外删除断言，测试仍然会失败。
+
+```js
+it('foo is an alias to baz', () => {
+  var input = `
+    var foo = 1;
+    // test that foo was renamed to baz
+    var res = baz;
+  `;
+  var {code} = babel.transform(input, {plugins: [plugin]});
+  var f = new Function(`
+    ${code};
+    return res;
+  `);
+  var res = f();
+  assert(res === 1, 'res is 1');
+});
+```
+
+`Babel core`使用类似的方法进行快照和执行测试。
+
+### [babel-plugin-tester](https://github.com/kentcdodds/babel-plugin-tester)
+
+这个包使测试插件更容易。 如果您熟悉ESLint的[ RuleTester](http://eslint.org/docs/developer-guide/working-with-rules#rule-unit-tests)，那么应该对此比较熟悉。 您可以看看[文档](https://github.com/kentcdodds/babel-plugin-tester/blob/master/README.md)去充分了解可能的情况，但这里有一个简单的例子：
+
+```js
+import pluginTester from 'babel-plugin-tester';
+import identifierReversePlugin from '../identifier-reverse-plugin';
+
+pluginTester({
+  plugin: identifierReversePlugin,
+  fixtures: path.join(__dirname, '__fixtures__'),
+  tests: {
+    'does not change code with no identifiers': '"hello";',
+    'changes this code': {
+      code: 'var hello = "hi";',
+      output: 'var olleh = "hi";',
+    },
+    'using fixtures files': {
+      fixture: 'changed.js',
+      outputFixture: 'changed-output.js',
+    },
+    'using jest snapshots': {
+      code: `
+        function sayHi(person) {
+          return 'Hello ' + person + '!'
+        }
+      `,
+      snapshot: true,
+    },
+  },
+});
+```
+
+* * *
+
+> ***对于将来的更新，请跟随 @thejameskyle 和 @babeljs 的Twitter。
