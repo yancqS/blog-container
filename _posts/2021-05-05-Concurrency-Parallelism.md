@@ -33,7 +33,7 @@ Let’s understand more in detail that what I mean when I say Concurrency vs. Pa
 >并发
 
 Concurrency is essentially applicable when we talk about minimum two tasks or more. When an application is capable of executing two tasks virtually at same time, we call it concurrent application. Though here tasks run looks like simultaneously, but essentially they MAY not. They take advantage of CPU time-slicing feature of operating system where each task run part of its task and then go to waiting state. When first task is in waiting state, CPU is assigned to second task to complete it’s part of task.
->当我们讨论最少两个或更多任务时，并发基本上是适用的。当一个应用程序能够同时执行两个任务时，我们称之为并发应用程序。虽然这里的任务看起来是同时运行的，但本质上它们可能不是。它们利用了操作系统的CPU***时间切片***特性，每个任务运行其部分任务，然后进入等待状态。当第一个任务处于等待状态时，CPU被分配给第二个任务来完成任务的一部分。
+>当我们讨论最少两个或更多任务时，并发基本上是适用的。当一个应用程序能够同时执行两个任务时，我们称之为并发应用程序。虽然这里的任务看起来是同时运行的，但本质上它们可能不是。它们利用了操作系统的CPU ***时间切片*** 特性，每个任务运行其部分任务，然后进入等待状态。当第一个任务处于等待状态时，CPU被分配给第二个任务来完成任务的一部分。
 
 Operating system based on priority of tasks, thus, assigns CPU and other computing resources e.g. memory; turn by turn to all tasks and give them chance to complete. To end user, it seems that all tasks are running in parallel. This is called concurrency.
 >操作系统根据任务的优先级分配CPU和其他计算资源（例如内存）依次完成所有任务。对于终端用户来说，**似乎**所有任务都是并行运行的。这称为并发。
