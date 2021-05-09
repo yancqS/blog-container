@@ -172,7 +172,30 @@ RTT（Round-Trip Time）:从发送方发送数据开始到发送方收到接收�
 
 - 封装成帧
 
-封装成帧就是在一段数据的前后分别添加首部和尾部，然后就构成了一个帧。
+封装成帧就是在一段数据的前后分别添加首部和尾部，然后就构成了一个帧。首部和尾部的一个重要作用就是进行帧定界。
+
+![](https://gitee.com/yancqS/blogImage/raw/master/blogImage/20210507230441.png)
+
+MTU：最大传送单元
+
+控制字符`SOH`放在一帧的最前面，表示帧的首部开始。另一个控制字符`EOT`表示帧的结束。
+
+>`SOH`和`EOT`都是控制字符的名称，它们的16进制编码分别事01和04。`SOH`(或`EOT`)并不是S，O，H (或E, O, T)三个字符。
+
+![](https://gitee.com/yancqS/blogImage/raw/master/blogImage/20210507231523.png)
 
 - 透明传输
+
+透明传输是指不管所传数据是什么样的比特组合，都应当能够在链路上传送。当所传数据中的比特组合恰巧与某一个控制信息（`SOH`或`EOT`）一样时，数据链路层就会错误的找到帧的边界。
+
+![](https://gitee.com/yancqS/blogImage/raw/master/blogImage/20210507232837.png)
+
+解决办法：用字节填充解决透明传输的问题。
+
+![](https://gitee.com/yancqS/blogImage/raw/master/blogImage/20210507233154.png)
+
+>转义字符`ESC`的16进制编码为 1B。
+
 - 差错检测
+
+为了保证数据传输的可靠性，在计算机网络传输数据时，必须采用各种差错检测措施。目前在数据链路层广泛使用了**循环冗余检测CRC**的检错技术。
