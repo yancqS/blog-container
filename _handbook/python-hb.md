@@ -96,4 +96,79 @@ Python没有内置的常量类型，但python程序员会使用全大写来指�
 MAX_CONNECTION = 5000
 ```
 
+## 列表简介
+
+### 列表是什么
+
+**列表**由一系列特定顺序排列的元素组成，元素之间可以没有任何关系。在Python中，用方括号(`[]`)表示列表，并用逗号分割其中的元素。
+
+```py
+letters = ['a', 'b', 'c']
+print(letters) # ['a', 'b', 'c']
+```
+
+#### 访问/使用列表中的元素
+
+列表是有序集合，因此要访问列表中的任何元素，只要将该元素的位置（索引）告诉python即可。
+
+```py
+letters = ['a', 'b', 'c']
+print(letters[0]) # a
+print(letters[0].upper()) # A
+print(letters[-1]) # c
+print(letters[-2]) # b
+message = f'The first letter is { letters[0] }'
+print(message) # The first letter is a
+```
+
+#### 修改、添加和删除元素
+
+```py
+students = ['Tom', 'jack', 'kevin', 'Eric']
+print(students) # ['Tom', 'jack', 'kevin', 'Eric']
+
+# 修改
+students[1] = 'Eva'
+print(students) # ['Tom', 'Eva', 'kevin', 'Eric']
+
+# 末尾添加元素
+students.append('Cat')
+print(students) # ['Tom', 'Eva', 'kevin', 'Eric', 'Cat']
+
+# 插入元素
+students.insert(1, 'snake')
+print(students) # ['Tom', 'snake', 'Eva', 'kevin', 'Eric', 'Cat']
+
+# 删除元素：del语句删除
+del students[0]
+print(students) # ['snake', 'Eva', 'kevin', 'Eric', 'Cat']
+
+# 删除元素：pop()方法删除末尾元素
+popped_student = students.pop()
+print(popped_student) # Cat
+print(students) # ['snake', 'Eva', 'kevin', 'Eric']
+
+# pop弹出列表中任何位置的元素
+second_student = students.pop(1)
+print(f'The second student is { second_student }')
+print(students) # ['snake', 'kevin', 'Eric']
+
+# 根据值删除元素
+students.remove('kevin')
+print(students) # ['snake', Eric']
+
+fake_student = 'snake'
+students.remove(fake_student)
+print(f"{ fake_student } isn't a student") # snake isn't a student
+print(students) # ['Eric']
+```
+
+>方法remove()只删除第一个指定的值。如果要删除的值可能在列表中出现多次，就需要循环来确保每个值都删除。
+
+### 组织列表
+
+```py
+# 使用sort()方法对列表永久排序
+cars = ['bmw', 'audi', 'toyota', 'subaru']
+```
 
