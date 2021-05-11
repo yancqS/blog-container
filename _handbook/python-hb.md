@@ -5,9 +5,9 @@ languages:
   - python
 ---
 
-# 变量和简单数据类型
+## 变量和简单数据类型
 
-## 变量
+### 变量
 
 变量命名规则：
 - 变量名只能包含字母、数字和下划线。变量名能以字母或下划线打头，但不能以数字打头。
@@ -21,7 +21,7 @@ message = 'hello world'
 print(message)
 ```
 
-## 字符串
+### 字符串
 
 字符串就是一系列字符。在python中，用引号引起来的都是字符串，其中引号可以是单引号，也可以是双引号。
 
@@ -33,7 +33,7 @@ print(message)
 
 ![](https://gitee.com/yancqS/blogImage/raw/master/blogImage/20210509223536.png)
 
-### 在字符串中使用变量
+#### 在字符串中使用变量
 
 要在字符串中插入变量的值，可在首引号前加上字母f，再将要插入的变量放在花括号内。这种字符串为**f字符串**。f是format的简写，因为python通过把花括号内的变量替换为其值来设置字符串的格式。
 
@@ -46,7 +46,7 @@ print(f'Hello, { full_name.title() }')
 
 >注意, f字符串是python3.6引入的。在之前的版本中，需要使用`format()`方法。比如：`full_name = '{} {}'.format(first_name, last_name)`
 
-### 增加空白
+#### 增加空白
 
 在编程中，空白泛指任何任何非打印字符，比如空格，制表符和换行符。(`\t`, `\n`)
 
@@ -54,13 +54,13 @@ print(f'Hello, { full_name.title() }')
 print('Language: \n\tPython\n\tC\n\tJavaScript')
 ```
 
-### 删除空白
+#### 删除空白
 
 - String.rstrip(): 删除字符串末尾空白
 - String.lstrip(): 删除字符串开头的空白
 - String.srtip(): 删除字符串两边的空白
 
-## 数
+### 数
 
 在Python中，可对整数执行加(`+`)减(`-`)乘(`*`)除(`/`)运算。使用两个乘号表示乘方运算。
 
