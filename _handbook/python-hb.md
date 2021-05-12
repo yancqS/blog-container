@@ -167,8 +167,46 @@ print(students) # ['Eric']
 
 ### 组织列表
 
+#### 列表排序
+
 ```py
 # 使用sort()方法对列表永久排序
 cars = ['bmw', 'audi', 'toyota', 'subaru']
+cars.sort()
+print(cars) #  ['audi', 'bmw', 'subaru', 'toyota']
+
+# 相反的顺序排序
+cars = ['bmw', 'audi', 'toyota', 'subaru']
+cars.sort(reverse=True)
+print(cars) #  ['toyota', 'subaru', 'bmw', 'audi']
+
+# 使用函数sorted()对列表临时排序
+cars = ['bmw', 'audi', 'toyota', 'subaru']
+print(cars) #  ['bmw', 'audi', 'toyota', 'subaru']
+print(sorted(cars)) #  ['audi', 'bmw', 'subaru', 'toyota']
+print(cars) # ['bmw', 'audi', 'toyota', 'subaru']
+print(sorted(cars, reverse=True)) #  ['toyota', 'subaru', 'bmw', 'audi']
 ```
 
+#### 反转列表元素
+
+反转列表排列顺序，可使用方法`reverse()`
+
+```py
+cars = ['bmw', 'audi', 'toyota', 'subaru']
+print(cars) #  ['bmw', 'audi', 'toyota', 'subaru']
+print(cars.reverse()) #  ['subaru', 'toyota', 'audi', 'bmw']
+```
+
+方法`reverse()`也是永久性修改列表元素的排列顺序，但可随时恢复到原来的排列顺序，只需要对列表再次调用`reverse()`方法即可。
+
+#### 确定列表长度
+
+`len()`函数可获得列表长度。
+
+```py
+cars = ['bmw', 'audi', 'toyota', 'subaru']
+print(len(cars)) #  4
+```
+
+## 操作列表
