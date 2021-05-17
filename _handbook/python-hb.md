@@ -292,3 +292,118 @@ print(squares) # [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
 ### 切片
 
 我们已经知道如何访问单个列表元素，以及处理列表的所有元素。除此之外，我们还可以处理列表部分，python称之为**切片**。
+
+要创建切片，可指定要使用的第一个元素和最后一个元素的索引。
+
+```py
+players = ['charles', 'martina', 'michnel', 'florance', 'eli']
+
+print(players[0:3])  # ['charles', 'martina', 'michnel']
+
+print(players[:4])  #  ['charles', 'martina', 'michnel', 'florance']
+
+print(players[:4:2])  # ['charles', 'michnel']
+
+print(players[2:])  # ['michnel', 'florance', 'eli']
+
+print(players[-3:])  # ['michnel', 'florance', 'eli']
+
+print(players[: -3])  # ['charles', 'martina']
+
+print(players[:])  # ['charles', 'martina', 'michnel', 'florance', 'eli']
+```
+
+如果没有指定起始索引，python从列表开头开始提取；如果省略终止索引,切片终止于列表末尾。
+
+可在切片的方括号内指定第三个值，来告诉python在指定范围内每隔多少元素提取一个。
+
+#### 遍历切片 & 复制列表
+
+```py
+players = ['charles', 'martina', 'michnel', 'florance', 'eli']
+
+for play in players[:3]:
+    print(play.title())
+
+# 输出：
+Charles
+Martina
+Michnel
+```
+
+复制列表
+
+```py
+my_foods = ['pizza', 'falafel', 'carrot cake']
+
+frineds_foods = my_foods[:] #  深拷贝
+other_friend = my_foods #  浅拷贝
+
+print('my_foods:', my_foods)
+print('frineds_foods:', frineds_foods)
+print('other_friend:', other_friend)
+
+my_foods.append('ice cream')
+frineds_foods.append('cannoli')
+other_friend.append('dumpling')
+
+print('-' * 40)
+
+print('my_foods:', my_foods)
+print('frineds_foods:', frineds_foods)
+print('other_friend:', other_friend)
+```
+
+输出为：
+
+```py
+my_foods: ['pizza', 'falafel', 'carrot cake']
+frineds_foods: ['pizza', 'falafel', 'carrot cake']
+other_friend: ['pizza', 'falafel', 'carrot cake']
+----------------------------------------
+my_foods: ['pizza', 'falafel', 'carrot cake', 'ice cream', 'dumpling']
+frineds_foods: ['pizza', 'falafel', 'carrot cake', 'cannoli']
+other_friend: ['pizza', 'falafel', 'carrot cake', 'ice cream', 'dumpling']
+```
+
+### 元组
+
+列表非常适合用于存储在程序运行期间可能变化的数据集。列表是可以修该的。然而，有时候你需要创建一系列不可修改的元素，**元组**可以满足这种需求。
+
+#### 定义元组 & 遍历元组
+
+元组看起来很像列表，但使用圆括号而非中括号来标识。定义元组后，就可以使用索引来访问其元素，就像访问列表一样。
+
+```py
+dimensions = (200, 50)
+print(dimensions[0])  # 200
+print(dimensions[1])  # 50
+
+# dimensions[0] = 300 #  会导致python报错 TypeError: 'tuple' object does not support item assignment
+```
+
+>严格来说，元组是由逗号标识的，圆括号只是让元组看起来更加整洁、更清晰。如果要定义只包含一个元素的元组，必须在这个元素的后面加上逗号：
+>`mt_t = (3,)`
+
+遍历元组：
+
+```py
+dimensions = (200, 50)
+
+for dimension in dimensions:
+    print(dimension)
+```
+
+和遍历列表一样。
+
+#### 修改元组变量
+
+虽然不能修改元组的元素，但是可以给存储元组的变量赋值。
+
+```py
+dimensions = (100, 200)
+
+dimensions = (200, 400)
+```
+
+## if语句
