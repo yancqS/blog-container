@@ -408,4 +408,42 @@ dimensions = (200, 400)
 
 ## if语句
 
+### 检查多个条件
 
+```py
+# 使用and检查多个条件
+age_0 = 22
+age_1 = 18
+
+age_0 >= 21 and age_1 >= 21 #  False
+
+age_1 = 22
+age_0 >= 21 and age_1 >= 21 #  True
+
+# 使用or检查多个条件
+age_0 = 22
+age_1 = 18
+
+age_0 >= 21 or age_1 >= 21 #  True
+
+age_0 = 18
+age_0 >= 21 or age_1 >= 21 #  False
+```
+
+检查特定值是否包含在列表中:
+
+```py
+list = ['mushroom', 'onions', 'pineapple']
+'mushroom' in list # True
+'pepperoni' in list # False 
+```
+
+检查特定值是否不包含在列表中:
+
+```py
+ban_users = ['andrew', 'carlion', 'david']
+user = 'marie'
+
+if user not in ban_users:
+    print(f'{user.title()}, you can post a response if you wash')
+```
