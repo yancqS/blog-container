@@ -7,7 +7,7 @@ script:
   - node getReadme.js && node append.js && yarn build && node deleteComponent.js
 deploy:
   provider: pages
-  cleanup: false
+  skip_cleanup: true
   local_dir: .vuepress/dist
   repo: yancqS/blog
   github_token: $GH_TOKEN
