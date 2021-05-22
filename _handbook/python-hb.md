@@ -584,3 +584,97 @@ Sorry, we don't have french fries
 Adding extra cheese
 Finished !
 ```
+## 字典
+
+在python中，**字典**是一系列**键值对**。每个键都与一个值相关联,可以使用键来访问相关联的值。与键相关联的值可以是数、字符串、列表乃至字典。
+
+### 使用字典
+
+```py
+# 获取字典中的值
+alien_0 = {
+    'color': 'yellow'
+}
+print(alien_0['color']) # yellow
+
+# 添加键值对
+
+alien_1 = {}
+
+alien_1['x_pos'] = 20
+alien_1['y_pos'] = 30
+
+print(alien_1) # {'x_pos': 20, 'y_pos': 30}
+
+# 修改字典中的值
+
+alien_1['x_pos'] = 50
+
+print(alien_1) # {'x_pos': 50, 'y_pos': 30}
+
+# 删除键值对
+# 使用del语句时，必须要指定字典明和要删除的键
+del alien_1['x_pos']
+
+print(alien_1) # {'y_pos': 30}
+```
+
+### 使用get()方法来访问值
+
+使用放在方括号内的键从字典中获取相关联的值时，如果指定的键不存在就会出错。
+
+```py
+favorite_language = {
+    'Tom': 'c'
+}
+
+print(favorite_language['John'])
+
+# 报错
+# Traceback (most recent call last):
+#   File "simple_message.py", line 188, in <module>
+#     print(favorite_language['John'])
+# KeyError: 'John'
+
+```
+
+可以使用get()方法在指定的键不存在时返回一个默认值，从而避免这样的错误。
+
+get()方法的第一个参数用于指定键，是必不可少的，第二个参数为指定的键不存在时要返回的值，是可选的。
+
+```py
+favorite_language = {
+    'Tom': 'c'
+}
+
+language = favorite_language.get('Tom', 'Python')
+print(f'favorite language: {language}') #  favorite language: c
+
+language = favorite_language.get('John', 'Python')
+print(f'favorite language: {language}') #  favorite language: Python
+```
+
+>调用get()方法时，如果没有指定第二个参数且指定的键不存在时，Python将返回`None`。
+
+### 遍历字典
+
+```py
+favorite_language = {
+    'Tom': 'c',
+    'Eric': 'Java'
+}
+
+print(favorite_language.items())
+print(favorite_language.keys())
+print(favorite_language.values())
+```
+
+输出为：
+
+```
+dict_items([('Tom', 'c'), ('Eric', 'Java')])
+dict_keys(['Tom', 'Eric'])
+dict_values(['c', 'Java'])
+```
+
+因此我们可以遍历字典的所有键值对、所有键、所有值。
