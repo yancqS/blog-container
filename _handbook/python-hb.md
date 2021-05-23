@@ -678,3 +678,132 @@ dict_values(['c', 'Java'])
 ```
 
 因此我们可以遍历字典的所有键值对、所有键、所有值。
+
+首先是遍历**键值对**：
+
+```py
+favorite_language = {
+    'Tom': 'c',
+    'Eric': 'Java'
+}
+
+for k, v in favorite_language.items():
+    print(f'Key: {k}', end='\t')
+    print(f'Value: {v}')
+```
+
+然后时遍历字典中的**键**：
+
+```py
+favorite_language = {
+    'Tom': 'c',
+    'Eric': 'Java'
+}
+
+for k in favorite_language.keys():
+    print(f'Key: {k}')
+```
+
+遍历字典时，会默认遍历所有的键。因此上述代码中的：
+
+```py
+for k in favorite_language.keys():
+```
+
+替换为：
+
+```py
+for k in favorite_language:
+```
+
+输出将不变。
+
+按照特定顺序遍历字典中的所有键：
+
+>从 python3.7 起，遍历字典时将按照插入的顺序返回其中的元素。
+
+要以特定顺序返回元素，可以使用`sorted()`来获得按特定顺序排列的键列表的副本：
+
+```py
+favorite_language = {
+    'Tom': 'c',
+    'Eric': 'Java',
+    'Alice': 'ruby'
+}
+
+for name in sorted(favorite_language.keys()):
+    print(name, favorite_language[name])
+
+print('*' * 40)
+
+for name in sorted(favorite_language.keys(), reverse=True):
+    print(name, favorite_language[name])
+```
+
+输出为：
+
+```py
+Alice ruby
+Eric Java
+Tom c
+****************************************
+Tom c
+Eric Java
+Alice ruby
+```
+
+然后时遍历字典中所有**值**：
+
+```py
+favorite_language = {
+    'Tom': 'c',
+    'Eric': 'Java',
+    'Alice': 'ruby',
+    'phil': 'ruby'
+}
+
+for v in favorite_language.values():
+    print(f'Value: {v}')
+```
+
+输出为：
+
+```
+Value: c
+Value: Java
+Value: ruby
+Value: ruby
+```
+
+这种做法时提取字典中所有的值，没有考虑重复项。为了剔除重复项，可以使用**集合(set)**。集合中的每个元素都必须时独一无二的。
+
+```py
+favorite_language = {
+    'Tom': 'c',
+    'Eric': 'Java',
+    'Alice': 'ruby',
+    'phil': 'ruby'
+}
+
+for v in set(favorite_language.values()):
+    print(f'Value: {v}')
+```
+
+输出为：
+
+```
+Value: Java
+Value: ruby
+Value: c
+```
+
+**注意：**
+
+可以使用一对花括号直接创建集合，并在其中用逗号分隔元素：
+
+```py
+languages = {'c', 'java', 'ruby', 'java'}
+print(languages) #  {'c', 'ruby', 'java'}
+```
+
+集合和字典很容易混淆，因为它们都是用一对花括号定义的。当花括号内没有键值对时。定义的很可能是集合。**不同于列表和字典，集合不会以特定的顺序存储元素。**
