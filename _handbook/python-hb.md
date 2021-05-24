@@ -807,3 +807,61 @@ print(languages) #  {'c', 'ruby', 'java'}
 ```
 
 集合和字典很容易混淆，因为它们都是用一对花括号定义的。当花括号内没有键值对时。定义的很可能是集合。**不同于列表和字典，集合不会以特定的顺序存储元素。**
+
+### 嵌套
+
+#### 字典列表
+
+```py
+alien_0 = {'color': 'green', 'point': 5}
+alien_1 = {'color': 'green', 'point': 6}
+alien_2 = {'color': 'green', 'point': 7}
+
+aliens = [alien_0, alien_1, alien_2]
+
+for alien in aliens:
+    if alien['point'] == 5:
+        alien['color'] = 'red'
+        alien['point'] = 10
+
+print(aliens)
+```
+
+### 字典中存储列表
+
+```py
+pizza = {
+    'crust': 'thick',
+    'toppings': ['mushrooms', 'extra cheese']
+}
+
+for topping in pizza['toppings']:
+    print('\t' + topping)
+```
+
+### 字典中存储字典
+
+```py
+users = {
+    'Tom': {
+        'first': 'tom',
+        'second': 'twice',
+        'location': 'beijing'
+    },
+    'john': {
+        'first': 'john',
+        'second': 'eric',
+        'location': 'shandong'
+    }
+}
+
+for username, user_info in users.items():
+    print(f'\nUsername: {username}')
+    full_name = f'{user_info["first"]} {user_info["second"]}'
+    location = user_info['location']
+
+    print(f'\tFull name: {full_name.title()}')
+    print(f'\tLocation: {location.title()}')
+```
+
+## 用户输入和while循环
