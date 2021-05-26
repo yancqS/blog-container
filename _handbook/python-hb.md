@@ -865,3 +865,34 @@ for username, user_info in users.items():
 ```
 
 ## 用户输入和while循环
+
+### 函数input()的工作原理
+
+函数 `input()` 让程序暂停运行，等待用户输入一下文本，获取用户输入后，Python将其赋给一个变量，以方便使用。
+
+```py
+message = input("Tell me something, and I will repeat it back to you: ")
+print(message)
+```
+
+### 使用int()来获取数值输入
+
+使用函数 `input()` 时，Python将用户输入解读为字符串。
+
+```py
+message = input("Tell me something, and I will repeat it back to you: ")
+print(message > 18)
+```
+
+假如输入为数字20，但 `input()` 函数返回的是'21'，因此这样比较与数字18的大小就会报错：
+
+```
+TypeError: '>' not supported between instances of 'str' and 'int'
+```
+
+为了解决这个问题，可以使用 `int()` 函数，将数的字符串表示转换为数值表示。
+
+```py
+message = int(input("Tell me something, and I will repeat it back to you: "))
+print(message > 18) #  True
+```
