@@ -897,3 +897,51 @@ message = int(input("Tell me something, and I will repeat it back to you: "))
 print(message > 18) #  True
 ```
 
+求模运算符（`%`）,它将两个数想除并返回余数。
+
+```py
+4 % 3 # 1
+5 % 3 # 2
+6 % 3 # 0
+7 % 3 # 1 
+```
+
+### while 循环
+
+for循环用于针对集合中的每个元素都执行一个代码块。而while循环则不断执行，直到指定的条件不满足为止。
+
+```py
+current_num = 0
+while current_num <= 5:
+    print(current_num)
+    current_num += 1
+```
+
+让用户选择何时退出, 可以使用 `while` 循环让程序在用户愿意时不断执行：
+
+```py
+prompt = "\nTell me something, and I will repeat it back to you:"
+prompt += "\nEnter 'quit' to end the program."
+message = ""
+
+while message != "quit":
+    message = input(prompt)
+    if message != "quit":
+        print(message)
+```
+
+或者可以使用**标志(flag)**:
+
+```py
+prompt = "\nTell me something, and I will repeat it back to you:"
+prompt += "\nEnter 'quit' to end the program."
+
+active = True
+
+while active:
+    message = input(prompt)
+    if message != "quit":
+        active = False
+    else:
+        print(message)
+```
