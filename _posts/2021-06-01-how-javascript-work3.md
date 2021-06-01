@@ -1,5 +1,5 @@
 ---
-title: How JavaScript works: memory management + how to handle 4 common memory leaks
+title: How JavaScript works - memory management + how to handle 4 common memory leaks
 description: How Javascript works
 date: '2021-06-01'
 author: Yoha
