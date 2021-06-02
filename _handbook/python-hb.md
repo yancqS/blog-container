@@ -940,8 +940,41 @@ active = True
 
 while active:
     message = input(prompt)
-    if message != "quit":
+    if message == "quit":
         active = False
     else:
         print(message)
 ```
+
+#### break & continue
+
+要立即退出while循环，不再运行循环中余下的代码，也不管条件测试的结果如何，可使用 `break` 语句。
+
+```py
+prompt = "\nTell me something, and I will repeat it back to you:"
+prompt += "\nEnter 'quit' to end the program."
+
+active = True
+
+while active:
+    message = input(prompt)
+    if message == "quit":
+        break
+    else:
+        print(message)
+```
+
+要返回循环开头，并根据条件测试结果决定是否继续执行循环，可使用 `continue` 语句，它不像 `break` 语句那样不再执行余下的代码并退出整个循环。
+
+```py
+current = 0
+
+while current <= 10:
+    current += 1
+    if current % 2 != 0:
+        continue
+
+    print(current)
+```
+
+### 使用while循环处理列表和字典
