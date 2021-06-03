@@ -28,32 +28,50 @@ featured: true
 >概览
 
 Languages, like C, have low-level memory management primitives such as `malloc()` and `free()`. These primitives are used by the developer to explicitly allocate and free memory from and to the operating system.
->
+>像C这样的语言，拥有底层内存管理原语，例如 `malloc()` 和 `free()`。开发人员使用这些原语显式地分配和释放操作系统中的内存。
+
+---
+
+关于原语定义可参考[原语-百度百科](https://baike.baidu.com/item/%E5%8E%9F%E8%AF%AD)和[什么是『原语』？](https://my.oschina.net/sukai/blog/369079)
+
+---
 
 At the same time, JavaScript allocates memory when things (objects, strings, etc.) are created and “automatically” frees it up when they are not used anymore, a process called garbage collection. This seemingly “automatical” nature of freeing up resources is a source of confusion and gives JavaScript (and other high-level-language) developers the false impression they can choose not to care about memory management. **This is a big mistake**.
+>与此同时，当创建事物(对象，字符串等)的时候，JavaScript 分配内存并且当它们不再使用的时候 "自动释放" 内存，这一过程称为内存垃圾回收。这个看起来 "自动化释放资源" 的特性是引起混乱的原因，并且给予 JavaScript(及其它高级语言)开发者一个错误的印象即他们可以选择忽略内存管理。**这是一个巨大的错误**。
 
 Even when working with high-level languages, developers should have an understanding of memory management (or at least the basics). Sometimes there are issues with the automatic memory management (such as bugs or implementation limitations in the garbage collectors, etc.) which developers have to understand in order to handle them properly (or to find a proper workaround, with a minimum trade off and code debt).
+>即使是当使用高级语言的时候，开发者也应该要理解内存管理(或者至少是一些基础)。有时候自动化内存管理会存在一些问题(比如垃圾回收中的 bugs 或者实施的局限性等等)，为了能够合理地处理内存泄漏问题(或者以最小代价和代码缺陷来寻找一个合适的方案)，开发者就必须理解内存管理。
 
 ## Memory life cycle
+>内存生命周期
 
 No matter what programming language you’re using, memory life cycle is pretty much always the same:
+>不管你使用哪种编程语言，内存生命周期几乎是一样的：
 
 ![](https://gitee.com/yancqS/blogImage/raw/master/blogImage/20210517122820.png)
 
 Here is an overview of what happens at each step of the cycle:
+>以下是每一步生命周期所发生事情的一个概述:
 
 - **Allocate memory** — memory is allocated by the operating system which allows your program to use it. In low-level languages (e.g. C) this is an explicit operation that you as a developer should handle. In high-level languages, however, this is taken care of for you.
+> - 分配内存 - 内存是由操作系统分配，这样程序就可以使用它。在底层语言(例如 C 语言)，开发者可以显式地操作内存。而在高级语言中，操作系统帮你处理。
 - **Use memory** — this is the time when your program actually makes use of the previously allocated memory. **Read** and **write** operations are taking place as you’re using the allocated variables in your code.
+> - 使用内存 - 这是程序实际使用之前分配的内存的阶段。当你在代码中使用已分配的变量的时候，就会发生内存读写的操作。
 - **Release memory** — now is the time to release the entire memory that you don’t need so that it can become free and available again. As with the **Allocate memory** operation, this one is explicit in low-level languages.
+> - 释放内存 - 该阶段你可以释放你不再使用的整块内存，该内存就可以被释放且可以被再利用。和内存分配操作一样，该操作也是用底层语言显式编写的。
 
 For a quick overview of the concepts of the call stack and the memory heap, you can read our first post on the topic.
+>为快速浏览调用堆栈和动态内存管理的概念，你可以阅读第一篇[文章](https://yancqs.github.io/blog/2020/11/12/how-javascript-work1/)。
 
 ## What is memory?
+>什么是内存
 
 Before jumping straight to memory in JavaScript, we’ll briefly discuss what memory is in general and how it works in a nutshell.
+>在直接跳向 JavaScript 内存管理之前，先来简要地介绍一下内存及其工作原理。
 
 On a hardware level, computer memory consists of a large number of
-flip flops. Each flip flop contains a few transistors and is capable of storing one bit. Individual flip flops are addressable by a **unique identifier**, so we can read and overwrite them. Thus, conceptually, we can think of our entire computer memory as a just one giant array of bits that we can read and write.
+[flip flops](https://en.wikipedia.org/wiki/Flip-flop_%28electronics%29). Each flip flop contains a few transistors and is capable of storing one bit. Individual flip flops are addressable by a **unique identifier**, so we can read and overwrite them. Thus, conceptually, we can think of our entire computer memory as a just one giant array of bits that we can read and write.
+>从硬件层面看，计算机内存是由大量的 flip flops 所组成的(这里大概查了下，即大量的二进制电路所组成的)。每个 flip flop 包含少量晶体管并能够存储一个比特位。单个的 flip flops 可以通过一个唯一标识符寻址，所以就可以读和覆写它们。因此，理论上，我们可以把整个计算机内存看成是由一个巨大的比特位数组所组成的，这样就可以进行读和写。
 
 Since as humans, we are not that good at doing all of our thinking and arithmetic in bits, we organize them into larger groups, which together can be used to represent numbers. 8 bits are called 1 byte. Beyond bytes, there are words (which are sometimes 16, sometimes 32 bits).
 

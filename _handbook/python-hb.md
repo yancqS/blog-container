@@ -978,3 +978,94 @@ while current <= 10:
 ```
 
 ### 使用while循环处理列表和字典
+
+for循环是一种遍历列表的有效方式，但不应该在for循环中修改列表，否则将导致Python难以跟踪其中的元素。要在遍历列表的同时对其进行修改，可以使用while循环。
+
+```py
+# 在列表之间移动元素
+
+unconfirmed_user = ['alice', 'brain', 'candace']
+confirmed_user = []
+
+while unconfirmed_user:
+    current_user = unconfirmed_user.pop()
+
+    print(f'Verifying user: {current_user.title()}')
+    confirmed_user.append(current_user)
+
+print('\nThe following users have been confirmed:')
+for user in reversed(confirmed_user):
+    print(user.title())
+```
+
+输出为：
+
+```
+Verifying user: Candace
+Verifying user: Brain
+Verifying user: Alice
+
+The following users have been confirmed:
+Alice
+Brain
+Candace
+```
+
+```py
+# 删除为特定值的所有列表元素
+
+pets = ['dog', 'cat', 'dog', 'goldfish', 'cat', 'rabbit', 'cat']
+print(pets)
+
+while 'cat' in pets:
+    pets.remove('cat')
+
+print(pets)
+```
+
+输出为：
+
+```
+['dog', 'cat', 'dog', 'goldfish', 'cat', 'rabbit', 'cat']
+['dog', 'dog', 'goldfish', 'rabbit']
+```
+
+```py
+# 使用用户输入填充字典
+
+responses = {}
+
+polling = True
+
+while polling:
+    name = input("\nWhat is your name? ")
+    response = input("Which mountain would you like to climb someday? ")
+
+    responses[name] = response
+
+    repeat = input("Would you like to let another person respond? (yes/no) ")
+    if repeat == 'no':
+        polling = False
+
+print("\n--- Poll Results ---")
+for name, response in responses.items():
+    print(f"{name} would like to climb {response}.")
+```
+
+输出为：
+
+```
+What is your name? Tom
+Which mountain would you like to climb someday? 泰山
+Would you like to let another person respond? (yes/no) yes
+
+What is your name? Jack
+Which mountain would you like to climb someday? 华山
+Would you like to let another person respond? (yes/no) no
+
+--- Poll Results ---
+Tom would like to climb 泰山.
+Jack would like to climb 华山.
+```
+
+## 函数
