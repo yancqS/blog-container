@@ -496,12 +496,12 @@ setInterval(replaceThing, 1000);
 ```
 
 Once `replaceThing` is called, `theThing` gets a new object which consists of a big array and a new closure (`someMethod`). Yet, `originalThing` is referenced by a closure that’s held by the `unused` variable (which is `theThing` variable from the previous call to `replaceThing`). The thing to remember is that **once a scope for closures is created for closures in the same parent scope, the scope is shared**.
->当调用 `replaceThing` 的时候，`theThing` 对象由一个大数组和新的闭包(`someMethod`)所组成。而 `originalThing` 由 `unused` 变量创建的闭包所引用(即引用 `replaceThing` 函数之前的 `theThing` 变量)。**需要记住的是当一旦为同一个父作用域中的闭包创建闭包作用域的时候，该闭包作用域是共享的**。
+>当调用 `replaceThing` 的时候，`theThing` 对象由一个大数组和新的闭包(`someMethod`)所组成。而 `originalThing` 由 `unused` 变量创建的闭包所引用(即引用 `replaceThing` 函数之前的 `theThing` 变量)。**需要记住的是当为同一个父作用域中的闭包创建闭包作用域的时候，该闭包作用域是共享的**。
 
 In this case, the scope created for the closure `someMethod` is shared with unused. `unused` has a reference to `originalThing`. Even though `unused` is never used, `someMethod` can be used through `theThing` outside of the scope of `replaceThing` (e.g. somewhere globally). And as `someMethod` shares the closure scope with `unused`, the reference `unused` has to `originalThing` forces it to stay active (the whole shared scope between the two closures). This prevents its collection.
->在这样的情况下，闭包 `someMethod` 和 `unused` 共享相同的作用域。`unused` 引用了 `origintalThing`。即使 `unused` 永不使用，也可以在 `replaceThing` 的作用域外使用 `someMethod` 函数。然后由于 `someMethod` 和 `unused` 共享相同的闭包作用域，`unused` 变量引用 `originalThing` 会强迫 `unused` 保持激活状态(两个闭包共享作用域)。这会阻止内存垃圾回收。
+>在这样的情况下，闭包 `someMethod` 和 `unused` 共享相同的作用域。`unused` 引用了 `origintalThing`。即使 `unused` 永不使用，也可以通过 `theThing` 在 `replaceThing` 的作用域外使用 `someMethod` 函数(例如，全局某处)。然后由于 `someMethod` 和 `unused` 共享相同的闭包作用域，`unused` 变量引用 `originalThing` 会强迫 `unused` 保持激活状态(两个闭包共享作用域)。这会阻止内存垃圾回收。
 
-In the above example, the scope created for the closure `someMethod` is shared with `unused`, while `unused` references `originalThing`. `someMethod` can be used through `theThing` outside of the `replaceThing` scope, despite the fact that unused is never used. The fact that unused references originalThing requires that it remains active since `someMethod` shares the closure scope with unused.
+In the above example, the scope created for the closure `someMethod` is shared with `unused`, while `unused` references `originalThing`. `someMethod` can be used through `theThing` outside of the `replaceThing` scope, despite the fact that unused is never used. The fact that `unused` references `originalThing` requires that it remains active since `someMethod` shares the closure scope with unused.
 >在以上例子中，闭包 `someMethod` 和 `unused` 共享作用域，而 `unused` 引用 `origintalThing`。可以在 `replaceThing` 作用域外通过 `theThing` 使用 `someMethod`，即使 `unused` 从未被使用。事实上，由于 `someMethod` 和 `unused` 共享闭包作用域，`unused` 引用 `origintalThing` 要求 `unused` 保持激活状态。
 
 All this can result in a considerable memory leak. You can expect to see a spike in memory usage when the above snippet is run over and over again. Its size won’t shrink when the garbage collector runs. A linked list of closures is created (its root is `theThing` variable in this case), and each the closure scopes carries forward an indirect reference to the big array.
@@ -511,8 +511,10 @@ This issue was found by the Meteor team and [they have a great article](https://
 >该问题是由 Metor 小组发现的并且他们写了一篇很好的[文章](https://blog.meteor.com/an-interesting-kind-of-javascript-memory-leak-8b47d2e7f156)来详细描述该问题。
 
 4. Out of DOM references
+>4. 出于DOM引用
 
 There are cases in which developers store DOM nodes inside data structures. Suppose you want to rapidly update the contents of several rows in a table. If you store a reference to each DOM row in a dictionary or an array, there will be two references to the same DOM element: one in the DOM tree and another in the dictionary. If you decide to get rid of these rows, you need to remember to make both references unreachable.
+>有时候，开发者会在数据结构中存储 DOM 节点。假设你想要快速更新几行表格内容。如果你在一个字典或者数组中保存对每个表格行的引用，这将会造成重复引用相同的 DOM 元素：一个在 DOM 树中而另一个在字典中。如果你想要释放对这些表格行的引用，你需要记得让这些引用变成不可获得。
 
 ```js
 var elements = {
@@ -525,16 +527,25 @@ function doStuff() {
 }
 
 function removeImage() {
-    // The image is a direct child of the body element.
+    // image 元素是 body 元素的直系后代元素
     document.body.removeChild(document.getElementById('image'));
-    
-    // At this point, we still have a reference to #button in the
-    //global elements object. In other words, the button element is
-    //still in memory and cannot be collected by the GC.
+    // 这时，我们仍然在 elements 全局对象中引用了 #button 元素
+    // 换句话说，按钮元素仍然在内存中且不能够被垃圾回收器收集
 }
 ```
 
 There’s an additional consideration that has to be taken into account when it comes to references to inner or leaf nodes inside a DOM tree. If you keep a reference to a table cell (a `<td>` tag) in your code and decide to remove the table from the DOM yet keep the reference to that particular cell, you can expect a major memory leak to follow. You might think that the garbage collector would free up everything but that cell. This will not be the case, however. Since the cell is a child node of the table and children keep references to their parents, **this single reference to the table cell would keep the whole table in memory**.
+>你还需要额外考虑的情况是引用 DOM 树中的内节点或者叶节点。如果你在代码中保存着对一个单元格的引用，这时候当你决定从 DOM 中移除表格，却仍然会保持对该单元格的引用，这就会导致大量的内存泄漏。你可以认为内存垃圾回收器将会释放除了该单元格以外的内存。而这还没完。因为单元格是表格的一个后代元素而后代元素保存着对其父节点的引用，**对一个单元格的引用会导致无法释放整个表格所占用的内存**。
+
+---
+
+以下非原文：
+
+## 内存管理心得
+
+
+
+---
 
 ## 参考文章
 - [JavaScript工作原理：内存泄露 + 如何处理4中常见的内存泄露](https://github.com/Troland/how-javascript-works/blob/master/memory-management.md)
