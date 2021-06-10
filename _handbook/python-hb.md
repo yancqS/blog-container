@@ -1069,3 +1069,43 @@ Jack would like to climb 华山.
 ```
 
 ## 函数
+
+### 定义函数
+
+```py
+def greet(user_name):
+    print(f'hello, {user_name.title()}')
+
+
+greet('jesse')
+```
+
+关键字 `def` 来定义函数，向Python指出了函数名，还会在圆括号内指出函数为完成任务需要什么样的信息，即使不需要信息也不可以省略，最后定义以冒号结尾。紧跟在 `def greet():` 后面的所有缩进行构成了函数体。
+
+函数定义中的变量称为*形参*，函数调用中的变量称为*实参*。
+
+### 传递参数
+
+向函数传递实参的方式有很多：可使用**位置实参**，这要求实参的顺序和形参的顺序相同；也可以使用**关键字实参**，其中每个实参都由变量名和值组成；还可以使用列表和字典。
+
+- 位置实参
+
+```py
+def des_pet(animal_type, pet_name):
+    print(f'\nI have a {animal_type}')
+    print(f"My {animal_type}'s name is {pet_name}")
+
+
+des_pet('dog', 'Tom')
+```
+
+- 关键字实参
+
+```py
+def des_pet(animal_type, pet_name):
+    print(f'\nI have a {animal_type}')
+    print(f"My {animal_type}'s name is {pet_name}")
+
+
+des_pet(pet_name='Tom', animal_type='dog')
+```
