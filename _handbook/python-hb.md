@@ -1109,3 +1109,54 @@ def des_pet(animal_type, pet_name):
 
 des_pet(pet_name='Tom', animal_type='dog')
 ```
+
+### 默认值
+
+```py
+def des_pet(pet_name, animal_type='dog'):
+    print(f'\nI have a {animal_type}')
+    print(f"My {animal_type}'s name is {pet_name}")
+
+
+des_pet('Tom')
+des_pet(pet_name='Tom', animal_type='Cat')
+des_pet('Tom', 'Cat')
+des_pet(animal_type='CCC', pet_name='Toom')
+des_pet('CCC', animal_type='Toom')
+```
+
+### 返回值
+
+在函数中，可使用`return`语句将值返回调用函数的代码行。返回值能让程序将大部分繁重的工作移到函数中去完成，从而简化主程序。
+
+- 返回简单值
+
+```py
+def format_name(first_name, last_name, middle_name=''):
+    """返回整洁的姓名"""
+    if middle_name:
+        full_name = f'{first_name} {middle_name} {last_name}'
+    else:
+        full_name = f'{first_name} {last_name}'
+    return full_name.title()
+
+
+print(format_name('john', 'tom'))
+print(format_name('john', 'tom', 'Selina'))
+print(format_name.__doc__)
+```
+
+- 返回字典
+
+```py
+def build_person(first_name, last_name, age=None):
+    """可将None视为占位值。在条件测试中。None相当于False"""
+    person = {'first': first_name, 'last': last_name}
+    if age:
+        person['age'] = age
+    return person
+
+
+print(build_person("tom", "john"))
+print(build_person("tom", "john", 27))
+```
