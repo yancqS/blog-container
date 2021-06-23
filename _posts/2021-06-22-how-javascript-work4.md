@@ -384,6 +384,383 @@ There is something very important here — in that snippet, we treated `x` and `
 
 Of course, this rough callbacks-based approach leaves much to be desired. It’s just a first tiny step towards understanding the benefits of reasoning about future values without worrying about the time aspect of when they will be available.
 
+## Promise Value
 
+Let’s just briefly glimpse at how we can express the x + y example with Promises:
 
+```js
+function sum(xPromise, yPromise) {
+	// `Promise.all([ .. ])` takes an array of promises,
+	// and returns a new promise that waits on them
+	// all to finish
+	return Promise.all([xPromise, yPromise])
 
+	// when that promise is resolved, let's take the
+	// received `X` and `Y` values and add them together.
+	.then(function(values){
+		// `values` is an array of the messages from the
+		// previously resolved promises
+		return values[0] + values[1];
+	} );
+}
+
+// `fetchX()` and `fetchY()` return promises for
+// their respective values, which may be ready
+// *now* or *later*.
+sum(fetchX(), fetchY())
+
+// we get a promise back for the sum of those
+// two numbers.
+// now we chain-call `then(...)` to wait for the
+// resolution of that returned promise.
+.then(function(sum){
+    console.log(sum);
+});
+```
+
+There are two layers of Promises in this snippet.
+
+`fetchX()` and `fetchY()` are called directly, and the values they return (promises!) are passed to `sum(...)`. The underlying values these promises represent may be ready *now* or *later*, but each promise normalizes its behavior to be the same regardless. We reason about `x` and `y` values in a time-independent way. They are *future values*, period.
+
+The second layer is the promise that `sum(...)` creates
+(via `Promise.all([ ... ])`) and returns, which we wait on by calling `then(...)`. When the `sum(...)` operation completes, our sum future value is ready and we can print it out. We hide the logic for waiting on the `x` and `y` *future values* inside of `sum(...)`.
+
+**Note**: Inside `sum(…)`, the `Promise.all([ … ])` call creates a promise (which is waiting on `promiseX` and `promiseY` to resolve). The chained call to `.then(...)` creates another promise, which the return
+`values[0] + values[1]` line immediately resolves (with the result of the addition). Thus, the `then(...)` call we chain off the end of the `sum(...)` call — at the end of the snippet — is actually operating on that second promise returned, rather than the first one created by `Promise.all([ ... ])`. Also, although we are not chaining off the end of that second `then(...)`, it too has created another promise, had we chosen to observe/use it. This Promise chaining stuff will be explained in much greater detail later in this chapter.
+
+With Promises, the `then(...)` call can actually take two functions, the first for fulfillment (as shown earlier), and the second for rejection:
+
+```js
+sum(fetchX(), fetchY())
+.then(
+    // fullfillment handler
+    function(sum) {
+        console.log( sum );
+    },
+    // rejection handler
+    function(err) {
+    	console.error( err ); // bummer!
+    }
+);
+```
+
+If something went wrong when getting `x` or `y`, or something somehow failed during the addition, the promise that `sum(...)` returns would be rejected, and the second callback error handler passed to `then(...)` would receive the rejection value from the promise.
+
+Because Promises encapsulate the time-dependent state — waiting on the fulfillment or rejection of the underlying value — from the outside, the Promise itself is time-independent, and thus Promises can be composed (combined) in predictable ways regardless of the timing or outcome underneath.
+
+Moreover, once a Promise is resolved, it stays that way forever — it becomes an immutable value at that point — and can then be observed as many times as necessary.
+
+It’s really useful that you can actually chain promises:
+
+```js
+function delay(time) {
+    return new Promise(function(resolve, reject){
+        setTimeout(resolve, time);
+    });
+}
+
+delay(1000)
+.then(function(){
+    console.log("after 1000ms");
+    return delay(2000);
+})
+.then(function(){
+    console.log("after another 2000ms");
+})
+.then(function(){
+    console.log("step 4 (next Job)");
+    return delay(5000);
+})
+// ...
+```
+
+Calling `delay(2000)` creates a promise that will fulfill in 2000ms, and then we return that from the first `then(...)` fulfillment callback, which causes the second `then(...)`'s promise to wait on that 2000ms promise.
+
+**Note**: Because a Promise is externally immutable once resolved, it’s now safe to pass that value around to any party, knowing that it cannot be modified accidentally or maliciously. This is especially true in relation to multiple parties observing the resolution of a Promise. It’s not possible for one party to affect another party’s ability to observe Promise resolution. Immutability may sound like an academic topic, but it’s actually one of the most fundamental and important aspects of Promise design, and shouldn’t be casually passed over.
+
+## To Promise or not to Promise?
+
+An important detail about Promises is knowing for sure if some value is an actual Promise or not. In other words, is it a value that will behave like a Promise?
+
+We know that Promises are constructed by the `new Promise(…)` syntax, and you might think that `p instanceof Promise` would be a sufficient check. Well, not quite.
+
+Mainly because you can receive a Promise value from another browser window (e.g. iframe), which would have its own Promise, different from the one in the current window or frame, and that check would fail to identify the Promise instance.
+
+Moreover, a library or framework may choose to vend its own Promises and not use the native ES6 Promise implementation to do so. In fact, you may very well be using Promises with libraries in older browsers that have no Promise at all.
+
+## Swallowing exceptions
+
+If at any point in the creation of a Promise, or in the observation of its resolution, a JavaScript exception error occurs, such as a `TypeError` or `ReferenceError`, that exception will be caught, and it will force the Promise in question to become rejected.
+
+For example:
+
+```js
+var p = new Promise(function(resolve, reject){
+    foo.bar();	  // `foo` is not defined, so error!
+    resolve(374); // never gets here :(
+});
+
+p.then(
+    function fulfilled(){
+        // never gets here :(
+    },
+    function rejected(err){
+        // `err` will be a `TypeError` exception object
+	// from the `foo.bar()` line.
+    }
+);
+```
+
+But what happens if a Promise is fulfilled yet there was a JS exception error during the observation (in a `then(…)` registered callback)? Even though it won’t be lost, you may find the way they’re handled a bit surprising. Until you dig a little deeper:
+
+```js
+var p = new Promise( function(resolve,reject){
+	resolve(374);
+});
+
+p.then(function fulfilled(message){
+    foo.bar();
+    console.log(message);   // never reached
+},
+    function rejected(err){
+        // never reached
+    }
+);
+```
+
+It looks like the exception from `foo.bar()` really did get swallowed. It wasn’t, though. There was something deeper that went wrong, however, which we failed to listen for. The `p.then(…)` call itself returns another promise, and it’s that promise that will be rejected with the TypeError exception.
+
+## Handling uncaught exceptions
+
+There are other approaches which many would say are *better*.
+
+A common suggestion is that Promises should have a `done(…)` added to them, which essentially marks the Promise chain as “done.” `done(…)` doesn’t create and return a Promise, so the callbacks passed to `done(..)` are obviously not wired up to report problems to a chained Promise that doesn’t exist.
+
+It’s treated as you might usually expect in uncaught error conditions: any exception inside a `done(..)` rejection handler would be thrown as a global uncaught error (in the developer console, basically):
+
+```js
+var p = Promise.resolve(374);
+
+p.then(function fulfilled(msg){
+    // numbers don't have string functions,
+    // so will throw an error
+    console.log(msg.toLowerCase());
+})
+.done(null, function() {
+    // If an exception is caused here, it will be thrown globally 
+});
+```
+
+## What’s happening in ES8? Async/await
+
+JavaScript ES8 introduced `async/await` that makes the job of working with Promises easier. We’ll briefly go through the possibilities `async/await` offers and how to leverage them to write async code.
+
+## How to use async/await?
+
+You define an asynchronous function using the async function declaration. Such functions return an AsyncFunction object. The [AsyncFunction](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/AsyncFunction) object represents the asynchronous function which executes the code, contained within that function.
+
+When an async function is called, it returns a `Promise` . When the async function returns a value, that’s not a `Promise` , a `Promise` will be automatically created and it will be resolved with the returned value from the function. When the async function throws an exception, the Promise will be rejected with the thrown value.
+
+An `async` function can contain an `await` expression, that pauses the execution of the function and waits for the passed Promise’s resolution, and then resumes the async function’s execution and returns the resolved value.
+
+You can think of a `Promise` in JavaScript as the equivalent of Java’s `Future` or `C#`'s Task.
+
+>*The purpose of `async/await` is to simplify the behavior of using promises.*
+
+Let’s take a look at the following example:
+
+```js
+// Just a standard JavaScript function
+function getNumber1() {
+    return Promise.resolve('374');
+}
+// This function does the same as getNumber1
+async function getNumber2() {
+    return 374;
+}
+```
+
+Similarly, functions that are throwing exceptions are equivalent to functions that return promises that have been rejected:
+
+```js
+function f1() {
+    return Promise.reject('Some error');
+}
+async function f2() {
+    throw 'Some error';
+}
+```
+
+The `await` keyword can only be used in `async` functions and allows you to synchronously wait on a Promise. If we use promises outside of an `async` function, we’ll still have to use then callbacks:
+
+```js
+async function loadData() {
+    // `rp` is a request-promise function.
+    var promise1 = rp('https://api.example.com/endpoint1');
+    var promise2 = rp('https://api.example.com/endpoint2');
+   
+    // Currently, both requests are fired, concurrently and
+    // now we'll have to wait for them to finish
+    var response1 = await promise1;
+    var response2 = await promise2;
+    return response1 + ' ' + response2;
+}
+// Since, we're not in an `async function` anymore
+// we have to use `then`.
+loadData().then(() => console.log('Done'));
+```
+
+You can also define async functions using an “async function expression”. An async function expression is very similar to and has almost the same syntax as, an async function statement. The main difference between an async function expression and an async function statement is the function name, which can be omitted in async function expressions to create anonymous functions. An async function expression can be used as an IIFE (Immediately Invoked Function Expression) which runs as soon as it is defined.
+
+It looks like this:
+
+```js
+var loadData = async function() {
+    // `rp` is a request-promise function.
+    var promise1 = rp('https://api.example.com/endpoint1');
+    var promise2 = rp('https://api.example.com/endpoint2');
+   
+    // Currently, both requests are fired, concurrently and
+    // now we'll have to wait for them to finish
+    var response1 = await promise1;
+    var response2 = await promise2;
+    return response1 + ' ' + response2;
+}
+```
+
+More importantly, async/await is supported in all major browsers:
+
+![](https://gitee.com/yancqS/blogImage/raw/master/blogImage/20210623161840.png)
+
+At the end of the day, the important thing is not to blindly choose the “latest” approach to writing async code. It’s essential to understand the internals of async JavaScript, learn why it’s so critical and comprehend in-depth the internals of the method you have chosen. Every approach has pros and cons as with everything else in programming.
+
+## 5 Tips on writing highly maintainable, non-brittle async code
+
+1. **Clean code**: Using async/await allows you to write a lot less code. Every time you use async/await you skip a few unnecessary steps: write .then, create an anonymous function to handle the response, name the response from that callback e.g.
+
+```js
+// `rp` is a request-promise function.
+rp(‘https://api.example.com/endpoint1').then(function(data) {
+ // …
+});
+```
+
+Versus:
+
+```js
+// `rp` is a request-promise function.
+var response = await rp(‘https://api.example.com/endpoint1');
+```
+
+2. **Error handling**: Async/await makes it possible to handle both sync and async errors with the same code construct — the well-known try/catch statements. Let’s see how it looks with Promises:
+
+```js
+function loadData() {
+    try { // Catches synchronous errors.
+        getJSON().then(function(response) {
+            var parsed = JSON.parse(response);
+            console.log(parsed);
+        }).catch(function(e) { // Catches asynchronous errors
+            console.log(e); 
+        });
+    } catch(e) {
+        console.log(e);
+    }
+}
+```
+
+Versus:
+
+```js
+async function loadData() {
+    try {
+        var data = JSON.parse(await getJSON());
+        console.log(data);
+    } catch(e) {
+        console.log(e);
+    }
+}
+```
+
+3. **Conditionals**: Writing conditional code with async/await is a lot more straightforward:
+
+```js
+function loadData() {
+  return getJSON()
+    .then(function(response) {
+      if (response.needsAnotherRequest) {
+        return makeAnotherRequest(response)
+          .then(function(anotherResponse) {
+            console.log(anotherResponse)
+            return anotherResponse
+          })
+      } else {
+        console.log(response)
+        return response
+      }
+    })
+}
+```
+
+Versus:
+
+```js
+async function loadData() {
+  var response = await getJSON();
+  if (response.needsAnotherRequest) {
+    var anotherResponse = await makeAnotherRequest(response);
+    console.log(anotherResponse)
+    return anotherResponse
+  } else {
+    console.log(response);
+    return response;    
+  }
+}
+```
+
+4. **Stack Frames**: Unlike with `async/await`, the error stack returned from a promise chain gives no clue of where the error happened. Look at the following:
+
+```js
+function loadData() {
+  return callAPromise()
+    .then(callback1)
+    .then(callback2)
+    .then(callback3)
+    .then(() => {
+      throw new Error("boom");
+    })
+}
+loadData()
+  .catch(function(e) {
+    console.log(err);
+// Error: boom at callAPromise.then.then.then.then (index.js:8:13)
+});
+```
+
+Versus:
+
+```js
+async function loadData() {
+  await callAPromise1()
+  await callAPromise2()
+  await callAPromise3()
+  await callAPromise4()
+  await callAPromise5()
+  throw new Error("boom");
+}
+loadData()
+  .catch(function(e) {
+    console.log(err);
+    // output
+    // Error: boom at loadData (index.js:7:9)
+});
+```
+
+5. **Debugging**: If you have used promises, you know that debugging them is a nightmare. For example, if you set a breakpoint inside a .then block and use debug shortcuts like “stop-over”, the debugger will not move to the following .then because it only “steps” through synchronous code.
+With async/await you can step through await calls exactly as if they were normal synchronous functions.
+
+## 参考文章
+
+- [https://github.com/getify/You-Dont-Know-JS/blob/master/async%20%26%20performance/ch2.md](https://github.com/getify/You-Dont-Know-JS/blob/master/async%20%26%20performance/ch2.md)
+- [https://github.com/getify/You-Dont-Know-JS/blob/master/async%20%26%20performance/ch3.md](https://github.com/getify/You-Dont-Know-JS/blob/master/async%20%26%20performance/ch3.md)
+- [http://nikgrozev.com/2017/10/01/async-await/](http://nikgrozev.com/2017/10/01/async-await/)
