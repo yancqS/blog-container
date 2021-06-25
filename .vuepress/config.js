@@ -1,6 +1,6 @@
 module.exports = {
   title: 'Yoha\'s Blog',
-  description: 'Blog is mainly used to record daily learning',
+  description: '保持思考🤔 永远年轻🤟',
   markdown: {
     lineNumbers: true
   },
@@ -53,7 +53,7 @@ module.exports = {
     },
     about: {
       fullName: 'Qing',
-      bio: '科幻迷😄  漫威粉🤟  爱前端🥰  爱米线🌟  搓炉石🎮  LOL云玩家🎮',
+      bio: '科幻迷😄  漫威粉🤟  爱前端🥰  爱米线🌟  搓炉石🎮  LOL云玩家🎮  被写代码耽误的大厨🤣',
       image: 'https://gitee.com/yancqS/blogImage/raw/master/blogImage/20201018002803.jpg',
     },
     logo: 'https://gitee.com/yancqS/blogImage/raw/master/blogImage/20210414163022.jpeg',
