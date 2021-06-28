@@ -429,10 +429,10 @@ listen('click', function (e){
     setTimeout(function(){
         ajax('https://api.example.com/endpoint', function (text){
             if (text == "hello") {
-	        doSomething();
-	    }
-	    else if (text == "world") {
-	        doSomethingElse();
+	        		doSomething();
+	    			}
+	    			else if (text == "world") {
+	        		doSomethingElse();
             }
         });
     }, 500);
@@ -441,11 +441,19 @@ listen('click', function (e){
 
 We’ve got a chain of three functions nested together, each one representing a step in an asynchronous series.
 
+> 我们有三个链式嵌套函数，每个函数代表一个异步操作。
+
 This kind of code is often called a “callback hell”. But the “callback hell” actually has almost nothing to do with the nesting/indentation. It’s a much deeper problem than that.
+
+> 这类代码通常被称为『回调地狱』。但是，实际上『回调地狱』和代码嵌套及缩进没有任何关系。这是一个更加深刻的问题。
 
 First, we’re waiting for the “click” event, then we’re waiting for the timer to fire, then we’re waiting for the Ajax response to come back, at which point it might get all repeated again.
 
+> 首先，我们监听点击事件，然后，等待定时器执行，最后等待 Ajax 返回数据，在 Ajax 返回数据的时候，可以重复执行这一过程。
+
 At first glance, this code may seem to map its asynchrony naturally to sequential steps like:
+
+> 乍一眼看上去，可以上把以上具有异步特性的代码拆分为按步骤执行的代码，如下所示：
 
 ```js
 listen('click', function (e) {
@@ -455,6 +463,8 @@ listen('click', function (e) {
 
 Then we have:
 
+> 之后：
+
 ```js
 setTimeout(function(){
     // ..
@@ -463,6 +473,8 @@ setTimeout(function(){
 
 Then later we have:
 
+> 再后来：
+
 ```js
 ajax('https://api.example.com/endpoint', function (text){
     // ..
@@ -470,6 +482,8 @@ ajax('https://api.example.com/endpoint', function (text){
 ```
 
 And finally:
+
+> 最后：
 
 ```js
 if (text == "hello") {
@@ -482,9 +496,13 @@ else if (text == "world") {
 
 So, such a sequential way of expressing your async code seems a lot more natural, doesn’t it? There must be such a way, right?
 
+> 因此，以这样顺序执行的方式来表示异步代码看起来一气呵成，应该有这样的方法吧？
+
 ## Promises
 
 Take a look at the following code:
+
+> 查看一下代码：
 
 ```js
 var x = 1;
@@ -494,7 +512,11 @@ console.log(x + y);
 
 It’s all very straightforward: it sums the values of `x` and `y` and prints it to the console. What if, however, the value of `x` or `y` was missing and was still to be determined? Say, we need to retrieve the values of both `x` and `y` from the server, before they can be used in the expression. Let’s imagine that we have a function `loadX` and `loadY` that respectively load the values of `x` and `y` from the server. Then, imagine that we have a function sum that sums the values of `x` and `y` once both of them are loaded.
 
+> 这个很直观：计算出 `x` 和 `y` 的值然后在控制台打印出来。但是，如果 `x` 或者 `y` 的初始值是不存在的且不确定的呢？假设，在表达式中使用 `x` 和`y` 之前，我们需要从服务器得到 `x` 和 `y` 的值。想象下，我们拥有函数 `loadX` 和 `loadY` 分别从服务器获取 x 和 y 的值。然后，一旦获得 `x` 和 `y` 的值，就可以使用 `sum` 函数计算出和值。
+
 It could look like this (quite ugly, isn’t it):
+
+> 类似如下这样：
 
 ```js
 function sum(getX, getY, callback) {
@@ -529,11 +551,19 @@ sum(fetchX, fetchY, function(result) {
 
 There is something very important here — in that snippet, we treated `x` and `y` as future values, and we expressed an operation sum(…) that (from the outside) did not care whether x or y or both were or weren’t available right away.
 
+> 在这段代码中需要注意的是：`x` 和 `y` 是未来值，我们用 `sum(..)`(从外部)来计算来两值之和，但是并没有关注 `x` 和 `y` 是否马上同时有值。
+
 Of course, this rough callbacks-based approach leaves much to be desired. It’s just a first tiny step towards understanding the benefits of reasoning about future values without worrying about the time aspect of when they will be available.
+
+> 当然，这个粗糙的基于回调的技术还有很多需要改进的地方。这只是向理解推出未来值而不用担心何时有返回值的好处迈出的一小步。
 
 ## Promise Value
 
+> Promise 值
+
 Let’s just briefly glimpse at how we can express the x + y example with Promises:
+
+> 让我们简略地看一下`x+y`这个例子的 Promises 版本  ：
 
 ```js
 function sum(xPromise, yPromise) {
@@ -567,15 +597,23 @@ sum(fetchX(), fetchY())
 
 There are two layers of Promises in this snippet.
 
+> 以上代码片段含有两种层次的 Promise。
+
 `fetchX()` and `fetchY()` are called directly, and the values they return (promises!) are passed to `sum(...)`. The underlying values these promises represent may be ready *now* or *later*, but each promise normalizes its behavior to be the same regardless. We reason about `x` and `y` values in a time-independent way. They are *future values*, period.
 
-The second layer is the promise that `sum(...)` creates
-(via `Promise.all([ ... ])`) and returns, which we wait on by calling `then(...)`. When the `sum(...)` operation completes, our sum future value is ready and we can print it out. We hide the logic for waiting on the `x` and `y` *future values* inside of `sum(...)`.
+> `fetchX()` 和 `fetchY()` 都是直接调用，它们的返回值(promises!)都被传入 `sum(…)` 作为参数。虽然这些 promises 的 返回值也许会在现在或之后返回，但是无论如何每个 promise 都具有相同的异步行为。我们可以认为 `x` 和 `y` 是与时间无关的值。暂时称他们为未来值。
 
-**Note**: Inside `sum(…)`, the `Promise.all([ … ])` call creates a promise (which is waiting on `promiseX` and `promiseY` to resolve). The chained call to `.then(...)` creates another promise, which the return
-`values[0] + values[1]` line immediately resolves (with the result of the addition). Thus, the `then(...)` call we chain off the end of the `sum(...)` call — at the end of the snippet — is actually operating on that second promise returned, rather than the first one created by `Promise.all([ ... ])`. Also, although we are not chaining off the end of that second `then(...)`, it too has created another promise, had we chosen to observe/use it. This Promise chaining stuff will be explained in much greater detail later in this chapter.
+The second layer is the promise that `sum(...)` creates (via `Promise.all([ ... ])`) and returns, which we wait on by calling `then(...)`. When the `sum(...)` operation completes, our sum future value is ready and we can print it out. We hide the logic for waiting on the `x` and `y` *future values* inside of `sum(...)`.
+
+> 第二层次的 Promise 是由 `sum(...)`(通过`Promise.all([...])`)所创建和返回的，然后通过调用`then(...)`来等待promise的返回值。当`sun(...)`运行结束，返回 sum 未来值然后就可以打印出来。我们在 `sum(…)` 内部隐藏了等待未来值 `x` 和 `y` 的逻辑。
+
+**Note**: Inside `sum(…)`, the `Promise.all([ … ])` call creates a promise (which is waiting on `promiseX` and `promiseY` to resolve). The chained call to `.then(...)` creates another promise, which the return `values[0] + values[1]` line immediately resolves (with the result of the addition). Thus, the `then(...)` call we chain off the end of the `sum(...)` call — at the end of the snippet — is actually operating on that second promise returned, rather than the first one created by `Promise.all([ ... ])`. Also, although we are not chaining off the end of that second `then(...)`, it too has created another promise, had we chosen to observe/use it. This Promise chaining stuff will be explained in much greater detail later in this chapter.
+
+> **注意**：在 `sum(…)` 内部，`Promise.all([ … ])`创建了一个 promise(在等待 `promiseX` 和 `promiseY` 解析之后)。链式调用 `.then(…)` 创建了另一个 promise，该 promise 会由代码 `values[0] + values[1]` 立刻进行解析(返回相加结果)。因此，在代码片段的末尾即 `sum(…)` 的末尾链式调用 `then(…)`－实际上是在操作第二个返回的 promise 而不是第一个由 `Promise.all([ ... ])` 创建返回的 promise。同样地，虽然我们没有在第二个`then(…)` 之后进行链式调用，但是它也创建了另一个 promise，我们可以选择观察／使用该 promise。我们将会在本章的随后内容中进行详细地探讨 promise 的链式调用相关。
 
 With Promises, the `then(...)` call can actually take two functions, the first for fulfillment (as shown earlier), and the second for rejection:
+
+> 在 Promises 中，实际上 `then(…)` 函数可以传入两个函数作为参数，第一个函数是成功函数，第二个是失败函数。
 
 ```js
 sum(fetchX(), fetchY())
@@ -593,11 +631,19 @@ sum(fetchX(), fetchY())
 
 If something went wrong when getting `x` or `y`, or something somehow failed during the addition, the promise that `sum(...)` returns would be rejected, and the second callback error handler passed to `then(...)` would receive the rejection value from the promise.
 
+> 当获取 `x` 或者 `y` 出现错误或者计算和值的时候出现错误，`sum(…)` 返回的 promise 将会失败，并将promise的失败原因（拒绝值）传递给 `then(...)` 的第二个回调错误处理程序。
+
 Because Promises encapsulate the time-dependent state — waiting on the fulfillment or rejection of the underlying value — from the outside, the Promise itself is time-independent, and thus Promises can be composed (combined) in predictable ways regardless of the timing or outcome underneath.
+
+> 因为 Promise 封装与时间相关的状态—等待外部成功或失败的返回值——所以 Promise 本身是与时间无关的，因此 Promise 可以以可预测的方式组合（合并），而不用关心时序或者返回结果。
 
 Moreover, once a Promise is resolved, it stays that way forever — it becomes an immutable value at that point — and can then be observed as many times as necessary.
 
+> 此外，一旦 Promise 解析完成，它就会一直保持不可变的状态且可以被随意观察。
+
 It’s really useful that you can actually chain promises:
+
+> 链式调用 promise 真的很管用：
 
 ```js
 function delay(time) {
@@ -622,6 +668,8 @@ delay(1000)
 ```
 
 Calling `delay(2000)` creates a promise that will fulfill in 2000ms, and then we return that from the first `then(...)` fulfillment callback, which causes the second `then(...)`'s promise to wait on that 2000ms promise.
+
+> 调用 `delay(2000)` 创建一个将在 2 秒后返回成功的 promise，然后，从第一个 `then(…)` 的成功回调函数中返回该 promise，这会使得第二个 `then(…)` 返回的 promise 在等待 2 秒后返回。
 
 **Note**: Because a Promise is externally immutable once resolved, it’s now safe to pass that value around to any party, knowing that it cannot be modified accidentally or maliciously. This is especially true in relation to multiple parties observing the resolution of a Promise. It’s not possible for one party to affect another party’s ability to observe Promise resolution. Immutability may sound like an academic topic, but it’s actually one of the most fundamental and important aspects of Promise design, and shouldn’t be casually passed over.
 
