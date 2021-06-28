@@ -673,21 +673,39 @@ Calling `delay(2000)` creates a promise that will fulfill in 2000ms, and then we
 
 **Note**: Because a Promise is externally immutable once resolved, it’s now safe to pass that value around to any party, knowing that it cannot be modified accidentally or maliciously. This is especially true in relation to multiple parties observing the resolution of a Promise. It’s not possible for one party to affect another party’s ability to observe Promise resolution. Immutability may sound like an academic topic, but it’s actually one of the most fundamental and important aspects of Promise design, and shouldn’t be casually passed over.
 
+> **注意**：因为一个 promise 一旦解析其状态就不可以从外部改变，正是由于它的状态不可以被随意修改，所以可以安全地把状态值分发给任意第三方。当涉及多方观察 Promise 的返回结果时候更是如此。一方影响另一方观察 Promise 返回结果的能力是不可能。不可变性听起来像是个晦涩的科学课题，但是，实际上这是 Promise 最根本和重要的方面，你得好好研究研究。
+
 ## To Promise or not to Promise?
+
+> Promise使用时机
 
 An important detail about Promises is knowing for sure if some value is an actual Promise or not. In other words, is it a value that will behave like a Promise?
 
+> Promise 的一个重要细节即确定某些值是否是真正的 Promise。换句话说，这个值是否具有 Promise 的行为。
+
 We know that Promises are constructed by the `new Promise(…)` syntax, and you might think that `p instanceof Promise` would be a sufficient check. Well, not quite.
+
+> 我们知道可以利用 `new Promise(…)` 语法来创建 Promise，然后，你会认为使用 `p instanceof Promise` 来检测某个对象是否是 Promise 类的实例。然而，并不全然如此。
 
 Mainly because you can receive a Promise value from another browser window (e.g. iframe), which would have its own Promise, different from the one in the current window or frame, and that check would fail to identify the Promise instance.
 
+> 主要的原因在于你可以从另一个浏览器窗口(比如 iframe)获得 Promise 实例，iframe 中的 Promise 不同于当前浏览器窗口或框架中的 Promise，因此，会导致检测 Promise 实例失败。
+
 Moreover, a library or framework may choose to vend its own Promises and not use the native ES6 Promise implementation to do so. In fact, you may very well be using Promises with libraries in older browsers that have no Promise at all.
+
+> 除此之外，库或框架或许会选择使用自身自带的 Promise 而不是原生的 ES6 实现的 Promise。实际工作中，你可以使用库自带的 Promise 来兼容不支持 Promise 的老版本浏览器。
 
 ## Swallowing exceptions
 
+> 异常捕获
+
 If at any point in the creation of a Promise, or in the observation of its resolution, a JavaScript exception error occurs, such as a `TypeError` or `ReferenceError`, that exception will be caught, and it will force the Promise in question to become rejected.
 
+> 如果在创建 Promise 或者是在观察解析 Promise 返回结果期间，遇到了诸如 `TypeError` 或者 `ReferenceError` 的 JavaScript 错误异常，这个异常会被捕获进而强制 Promise 为失败状态。
+
 For example:
+
+> 比如
 
 ```js
 var p = new Promise(function(resolve, reject){
@@ -708,6 +726,8 @@ p.then(
 
 But what happens if a Promise is fulfilled yet there was a JS exception error during the observation (in a `then(…)` registered callback)? Even though it won’t be lost, you may find the way they’re handled a bit surprising. Until you dig a little deeper:
 
+> 但是，如果 Promise 成功解析了而在成功解析的监听函数(`then(…)` 注册回调)中抛出 JS 运行错误会怎么样？仍然可以捕捉到该异常，但或许你会发现处理这些异常的方式有些让人奇怪。直到深入理解其中原理：
+
 ```js
 var p = new Promise( function(resolve,reject){
 	resolve(374);
@@ -725,13 +745,51 @@ p.then(function fulfilled(message){
 
 It looks like the exception from `foo.bar()` really did get swallowed. It wasn’t, though. There was something deeper that went wrong, however, which we failed to listen for. The `p.then(…)` call itself returns another promise, and it’s that promise that will be rejected with the TypeError exception.
 
+> 看起来 `foo.bar()` 抛出的错误异常真的被捕获到了。然而，事实上并没有。然而，深入理解你会发现我们没有监测到其中一些错误。`p.then(…)` 调用本身返回另一个 promise，该 promise 会返回 `TypeError` 类型的异常失败信息。
+
+---
+
+非原文：
+
+**拓展一下以上的说明，这是原文没有的**。
+
+```js
+var p = new Promise( function(resolve,reject){
+	resolve(374);
+});
+
+p.then(function fulfilled(message){
+    foo.bar();
+    console.log(message);   // 永不执行
+},
+    function rejected(err){
+        // 永不执行
+    }
+).then(
+	function() {},
+	function(err) { console.log('err', err);}
+);
+```
+
+如上代码所示就可以真正捕获到 promise 成功解析回调函数里面的代码错误。
+
+---
+
 ## Handling uncaught exceptions
+
+> 处理未捕获的异常
 
 There are other approaches which many would say are *better*.
 
+> 有其它据说更好的处理异常的技巧。
+
 A common suggestion is that Promises should have a `done(…)` added to them, which essentially marks the Promise chain as “done.” `done(…)` doesn’t create and return a Promise, so the callbacks passed to `done(..)` are obviously not wired up to report problems to a chained Promise that doesn’t exist.
 
+> 普遍的做法是为 Promises 添加 `done(..)` 回调，本质上这会标记 promise 链的状态为 "done."。`done(…)` 并不会创建和返回 promise，因此，当不存在链式 promise 的时候，传入 `done(..)` 的回调显然并不会抛出错误。
+
 It’s treated as you might usually expect in uncaught error conditions: any exception inside a `done(..)` rejection handler would be thrown as a global uncaught error (in the developer console, basically):
+
+> 和未捕获的错误状况一样：任何在 `done(..)` 失败处理函数中的异常都将会被抛出为全局错误(基本上是在开发者控制台)。
 
 ```js
 var p = Promise.resolve(374);
@@ -748,21 +806,39 @@ p.then(function fulfilled(msg){
 
 ## What’s happening in ES8? Async/await
 
+> ES8中的Async/await
+
 JavaScript ES8 introduced `async/await` that makes the job of working with Promises easier. We’ll briefly go through the possibilities `async/await` offers and how to leverage them to write async code.
+
+> JavaScript ES8 中介绍了 `async/await`，这使得处理 Promises 更加地容易。我们将会简要介绍 `async/await` 的所有可能的使用方式并利用其来书写异步代码。
 
 ## How to use async/await?
 
+> 如何使用 async/await
+
 You define an asynchronous function using the async function declaration. Such functions return an AsyncFunction object. The [AsyncFunction](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/AsyncFunction) object represents the asynchronous function which executes the code, contained within that function.
+
+> 使用 `async` 函数定义一个异步函数。该函数会返回[异步函数](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/AsyncFunction)对象。`AsyncFunction` 对象表示在异步函数中运行其内部代码。
 
 When an async function is called, it returns a `Promise` . When the async function returns a value, that’s not a `Promise` , a `Promise` will be automatically created and it will be resolved with the returned value from the function. When the async function throws an exception, the Promise will be rejected with the thrown value.
 
+> 当调用异步函数的时候，它会返回一个 `Promise`。异步函数返回值并**非** `Promise`，在函数执行过程中会自动创建一个 `Promise` 并使用函数的返回值来解析该 `Promise`。当 `async` 函数抛出异常，`Promise` 失败回调会获取抛出的异常值。
+
 An `async` function can contain an `await` expression, that pauses the execution of the function and waits for the passed Promise’s resolution, and then resumes the async function’s execution and returns the resolved value.
+
+> `async` 函数可以包含一个 `await` 表达式，这样就可以暂停函数的执行来等待传入的 Promise 的返回结果，之后重启异步函数的执行并返回解析值。
 
 You can think of a `Promise` in JavaScript as the equivalent of Java’s `Future` or `C#`'s Task.
 
+> 你可以把 JavaScript 中的 `Promise` 看作 Java 中的 `Future` 或 `C#` 中的 Task。
+
 >*The purpose of `async/await` is to simplify the behavior of using promises.*
 
+> `async/await` 本意是用来简化 promises 的使用。
+
 Let’s take a look at the following example:
+
+> 看一下代码：
 
 ```js
 // Just a standard JavaScript function
@@ -777,6 +853,8 @@ async function getNumber2() {
 
 Similarly, functions that are throwing exceptions are equivalent to functions that return promises that have been rejected:
 
+> 类似地，抛出异常的函数等价于返回失败的 promises。
+
 ```js
 function f1() {
     return Promise.reject('Some error');
@@ -787,6 +865,8 @@ async function f2() {
 ```
 
 The `await` keyword can only be used in `async` functions and allows you to synchronously wait on a Promise. If we use promises outside of an `async` function, we’ll still have to use then callbacks:
+
+> `await` 关键字只能在 `async` 函数中使用并且允许你同步等待 Promise。如果在 `async` 函数外使用 promises，我们仍然必须要使用 `then` 回调。
 
 ```js
 async function loadData() {
@@ -807,7 +887,11 @@ loadData().then(() => console.log('Done'));
 
 You can also define async functions using an “async function expression”. An async function expression is very similar to and has almost the same syntax as, an async function statement. The main difference between an async function expression and an async function statement is the function name, which can be omitted in async function expressions to create anonymous functions. An async function expression can be used as an IIFE (Immediately Invoked Function Expression) which runs as soon as it is defined.
 
+> 你也可以使用异步函数表达式来定义异步函数。异步函数表达式拥有和异步函数语句相近的语法。异步函数表达式和异步函数语句的主要区别在于函数名，异步函数表达式可以忽略函数名来创建匿名函数。异步函数表达式可以被用作 IIFE(立即执行函数表达式)，可以在定义的时候立即运行。
+
 It looks like this:
+
+> 像这样：
 
 ```js
 var loadData = async function() {
@@ -825,13 +909,23 @@ var loadData = async function() {
 
 More importantly, async/await is supported in all major browsers:
 
+> 更为重要的是，所有的主流浏览器都支持 async/await。
+
 ![](https://gitee.com/yancqS/blogImage/raw/master/blogImage/20210623161840.png)
+
+如果该兼容性不符合你的需求，你可以使用诸如 [Babel](https://babeljs.io/docs/plugins/transform-async-to-generator/) 和 [TypeScript](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-3.html) 的 JS 转译器来转换为自己需要的兼容程度。
 
 At the end of the day, the important thing is not to blindly choose the “latest” approach to writing async code. It’s essential to understand the internals of async JavaScript, learn why it’s so critical and comprehend in-depth the internals of the method you have chosen. Every approach has pros and cons as with everything else in programming.
 
+> 最后要说的是，不要盲目地使用最新的技术来写异步代码。理解 JavaScript 中 async 的内部原理是非常重要的，学习为什么深入理解所选择的方法是很重要的。正如编程中的其它东西一样，每种技术都有其优缺点。
+
 ## 5 Tips on writing highly maintainable, non-brittle async code
 
+> 书写高可用，强壮的异步代码的 5 条小技巧
+
 1. **Clean code**: Using async/await allows you to write a lot less code. Every time you use async/await you skip a few unnecessary steps: write .then, create an anonymous function to handle the response, name the response from that callback e.g.
+
+   > 简洁：使用 async/await 可以让你写更少的代码。每次书写 async/await 代码，你都可以跳过书写一些不必要的步骤： 比如不用写 `.then` 回调，创建匿名函数来处理返回值，命名回调返回值。
 
 ```js
 // `rp` is a request-promise function.
@@ -842,12 +936,16 @@ rp(‘https://api.example.com/endpoint1').then(function(data) {
 
 Versus:
 
+> 对比
+
 ```js
 // `rp` is a request-promise function.
 var response = await rp(‘https://api.example.com/endpoint1');
 ```
 
 2. **Error handling**: Async/await makes it possible to handle both sync and async errors with the same code construct — the well-known try/catch statements. Let’s see how it looks with Promises:
+
+   > 错误处理：Async/await 允许使用日常的 try/catch 代码结构体来处理同步和异步错误。看下和 Promise 是如何写的：
 
 ```js
 function loadData() {
@@ -878,6 +976,8 @@ async function loadData() {
 ```
 
 3. **Conditionals**: Writing conditional code with async/await is a lot more straightforward:
+
+   > 条件语句：使用 `async/await` 来书写条件语句会更加直观。
 
 ```js
 function loadData() {
@@ -914,6 +1014,8 @@ async function loadData() {
 ```
 
 4. **Stack Frames**: Unlike with `async/await`, the error stack returned from a promise chain gives no clue of where the error happened. Look at the following:
+
+   > 堆栈桢：和 `async/await` 不同的是，从链式 promise 返回的错误堆栈中无法得知发生错误的地方。看如下代码：
 
 ```js
 function loadData() {
@@ -952,7 +1054,12 @@ loadData()
 ```
 
 5. **Debugging**: If you have used promises, you know that debugging them is a nightmare. For example, if you set a breakpoint inside a .then block and use debug shortcuts like “stop-over”, the debugger will not move to the following .then because it only “steps” through synchronous code.
-With async/await you can step through await calls exactly as if they were normal synchronous functions.
+
+  > 调试：如果使用 promise，你就会明白调试它们是一场噩梦。例如，如果你在 .then 代码块中设置一个断点并且使用诸如 "stop-over" 的调试快捷键，调试器不会移动到下一个 .then 代码块，因为调试器只会步进同步代码。
+
+  With async/await you can step through await calls exactly as if they were normal synchronous functions.
+
+  > 使用 `async/await` 你可以就像同步代码那样步进到下一个 await 调用。
 
 ## 参考文章
 
