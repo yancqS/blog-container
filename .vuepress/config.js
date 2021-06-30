@@ -62,6 +62,10 @@ module.exports = {
         name: '阮一峰个人网站',
         link: 'http://www.ruanyifeng.com/home.html'
       },
+      {
+        name: 'MDN',
+        link: 'https://developer.mozilla.org/zh-CN/'
+      }
     ],
     sitemap: true,
     footer: {
