@@ -35,15 +35,14 @@ featured: true
 
 `JavaScript` 操作压缩图片原理不难，已有成熟 `API`，然而在实际输出压缩后结果却总有意外，有些图片竟会越压缩越大，加之终端（手机）类型众多，有些手机压缩图片甚至变黑。
 
-<img src="https://gitee.com/yancqS/blogImage/raw/master/blogImage/20210628222235.png" style="zoom:67%;" />
+![](https://gitee.com/yancqS/blogImage/raw/master/blogImage/20210628222235.png)
 
 所以本文将试图解决如下问题
 
-- [x] 弄清楚Image对象、data URL、Canvas和File(Blob)之间的转化关系
+- 弄清楚Image对象、data URL、Canvas和File(Blob)之间的转化关系
 
-- [x] 图片压缩的关键
-
-- [ ] 超大图片压缩黑屏问题
+- 图片压缩的关键
+- 超大图片压缩黑屏问题
 
 ## 转化关系
 
@@ -308,7 +307,7 @@ class ImageCompress {
 }
 ```
 
-## 图片上次本地服务器
+## 图片上传本地服务器
 
 ```js
 // app.js
