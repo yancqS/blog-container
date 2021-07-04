@@ -4,7 +4,7 @@ date: "2020-07-02"
 author: Yoha
 tags:
     - 算法
-    - leetcode
+    - Leetcode
 location: Beijing
 image: https://gitee.com/yancqS/blogImage/raw/master/blogImage/20201017111554.jpg
 meta:
