@@ -56,9 +56,9 @@ print('Language: \n\tPython\n\tC\n\tJavaScript')
 
 #### 删除空白
 
-- String.rstrip(): 删除字符串末尾空白
-- String.lstrip(): 删除字符串开头的空白
-- String.srtip(): 删除字符串两边的空白
+- `String.rstrip()`: 删除字符串末尾空白
+- `String.lstrip()`: 删除字符串开头的空白
+- `String.srtip()`: 删除字符串两边的空白
 
 ### 数
 
@@ -163,7 +163,7 @@ print(f"{ fake_student } isn't a student") # snake isn't a student
 print(students) # ['Eric']
 ```
 
->方法remove()只删除第一个指定的值。如果要删除的值可能在列表中出现多次，就需要循环来确保每个值都删除。
+>方法`remove()`只删除第一个指定的值。如果要删除的值可能在列表中出现多次，就需要循环来确保每个值都删除。
 
 ### 组织列表
 
@@ -268,9 +268,9 @@ print(list(range(6, 2))) #  []
 
 有几个专门用于处理数字列表的python函数：
 
-- min(list) 找出数字列表中最小值
-- max(list) 找出数字列表中最大值
-- sun(list) 数字列表总和
+- `min(list)` 找出数字列表中最小值
+- `max(list)` 找出数字列表中最大值
+- `sun(list)` 数字列表总和
 
 
 #### 列表解析
@@ -799,7 +799,7 @@ Value: c
 
 **注意：**
 
-可以使用一对花括号直接创建集合，并在其中用逗号分隔元素：
+可以使用一对花括号直接创建**集合**，并在其中用逗号分隔元素：
 
 ```py
 languages = {'c', 'java', 'ruby', 'java'}
@@ -1160,4 +1160,42 @@ def build_person(first_name, last_name, age=None):
 print(build_person("tom", "john"))
 print(build_person("tom", "john", 27))
 ```
+
+### 传递列表
+
+向函数传递列表很有用，其中包括的可能是名字、数或更复杂的对象（如字典）。
+
+```python
+def print_model(un_print_design, printed_design=[]):
+    """
+    模拟打印每个设计，直到没有未打印的设计为止
+    :param un_print_design: 
+    :param printed_design: 
+    :return: 
+    """
+    while un_print_design:
+        current_design = un_print_design.pop()
+        print(f'Printing Model is: {current_design}')
+        printed_design.append(current_design)
+
+
+def show_printed_model(printed_design):
+    """
+    显示打印好的所有模型
+    :param printed_design: 
+    :return: 
+    """
+    print(f'\nThe following model have been printed:\n')
+    for design in printed_design:
+        print(design)
+
+
+un_print_design = ['phone case', 'robot case', 'other case']
+printed_design = []
+
+print_model(un_print_design, printed_design)
+show_printed_model(printed_design)
+```
+
+### 传递任意数量的实参
 
