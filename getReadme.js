@@ -25,7 +25,10 @@ if(fs.existsSync(readme_path)) {
   fs.unlinkSync(readme_path);
 }
 
-fs.writeFileSync(readme_path, `# <center>目录</center>\n\n![](https://img.shields.io/badge/Yoha's%20Blog-Count%20${files.length}-green)\n\n`)
+fs.writeFileSync(readme_path, `# <center>目录</center>\n\n![](https://img.shields.io/badge/Yoha's%20Blog-Count%20${files.length}-green)\n\n`);
+fs.appendFileSync(readme_path, `![](https://img.shields.io/github/last-commit/yancqS/blog-container/master)`);
+fs.appendFileSync(readme_path, `![](https://img.shields.io/badge/vuepress-V1.8.2-green)`);
+
 
 //异步去写文件会导致顺序发生变化。这个应该有解法。我要再想一下。先用同步读写操作。
 

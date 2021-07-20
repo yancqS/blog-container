@@ -1199,5 +1199,46 @@ show_printed_model(printed_design)
 
 ### 传递任意数量的实参
 
+有时候，预先不知道函数需要接受多少个实参，好在Python允许函数从调用语句中收集任意数量的实参。
 
+```python
+def pizza(*toppings):
+    print(toppings)
+    
+    
+pizza('a', 'b', 'c') # ('a', 'b', 'c')
+```
+
+形参名`*toppings`中的星号让Python创建一个名为`toppings`的空元组，并将收到的所有值都封装到这个元组中。
+
+### 结合使用位置实参和任意数量实参
+
+如果要让函数接受不同类型的实参，必须在函数定义中接纳任意数量实参的形参放在最后。Python先匹配位置实参和关键字实参，再将剩余的实参都收集到最后一个形参中。
+
+```python
+def pizza(size, *toppings):
+    print(f"\nMaking a {size}-inch pizza with the following toppings:")
+    for topping in toppings:
+        print(f"- {topping}")
+
+
+pizza(16, 'a', 'b', 'c')
+```
+
+### 使用任意数量的关键字实参
+
+```python
+def build_profile(first, last, **user_info):
+    user_info['first_name'] = first
+    user_info['last_name'] = last
+    return user_info
+
+
+user_profile = build_profile('albert', 'einstein', location='princton', field='physics')
+print(user_profile)
+```
+
+形参名`**user_info`中的两个星号让Python创建一个名为`user_info`的空字典，并将收到的所有键值对都放到这个字典中。
+
+### 将函数存储在模块中
 
