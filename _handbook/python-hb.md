@@ -1242,3 +1242,85 @@ print(user_profile)
 
 ### 将函数存储在模块中
 
+我们可以将函数存储在称为**模块**的独立文件中，再将模块导入到主程序中。
+
+- 导入整个模块
+
+语法如下：
+
+> import *module_name*
+>
+> module_name.function_name()
+
+创建`pizza.py`文件：
+
+```python
+def make_pizza(size, *toppings):
+    print(f"\nMaking a {size}-inch pizza with the following toppings:")
+    for topping in toppings:
+        print(f"- {topping}")
+```
+
+然后在同一目录创建一个名为`making_pizza.py`的文件。这个文件导入刚创建的模块，再调用make_pizza()两次：
+
+```python
+import pizza
+
+pizza.make_pizza(16, 'a', 'b', 'c')
+pizza.make_pizza(12, 'a', 'b')
+```
+
+- 导入特定的函数
+
+语法如下：
+
+> from *module_name* import *function_name1, function_name2*
+
+上面的例子可重写为：
+
+```python
+from pizza import make_pizza
+
+make_pizza(16, 'a', 'b', 'c')
+make_pizza(12, 'a', 'b')
+```
+
+- 使用as给函数指定别名
+
+语法如下：
+
+> from *module_name* import *function_name* as *fn*
+
+```python
+from pizza import make_pizza as mp
+
+mp(16, 'a', 'b', 'c')
+mp(12, 'a', 'b')
+```
+
+- 使用as给模块指定别名
+
+语法如下：
+
+> import *module_name* as *mn*
+
+```python
+import pizza as p
+
+p.make_pizza(16, 'a', 'b', 'c')
+p.make_pizza(12, 'a', 'b')
+```
+
+- 导入模块中所有函数
+
+语法如下：
+
+> from *module_name* import *
+
+```python
+from pizza import *
+
+make_pizza(16, 'a', 'b', 'c')
+make_pizza(12, 'a', 'b')
+```
+
