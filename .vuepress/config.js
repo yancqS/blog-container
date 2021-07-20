@@ -93,6 +93,9 @@ module.exports = {
           link: '',
         },
       ],
+    },
+    busuanzi: {
+      enable: true
     }
   },
   plugins: [
