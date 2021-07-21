@@ -326,3 +326,21 @@ deploy:
     branch: master
 ```
 
+---
+
+## UV & PV 统计
+
+> 更新时间2021-07-21
+
+利用**不蒜子**做的PV和UV的统计，网上参考文章很多。可自行百度。
+
+然后在footer同层级添加如下配置，表示开启统计。
+
+```json
+footer: {
+  // ...
+},
+busuanzi: {
+  enable: true
+}
+```
