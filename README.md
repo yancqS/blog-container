@@ -336,7 +336,7 @@ deploy:
 
 然后在footer同层级添加如下配置，表示开启统计。
 
-```json
+```js
 footer: {
   // ...
 },
