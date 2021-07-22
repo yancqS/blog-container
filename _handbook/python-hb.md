@@ -1324,3 +1324,32 @@ make_pizza(16, 'a', 'b', 'c')
 make_pizza(12, 'a', 'b')
 ```
 
+## 类
+
+### 创建和使用类
+
+```python
+class Dog:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def sit(self):
+        print(f"{self.name} is now sitting")
+
+    def roll_over(self):
+        print(f"{self.name} rolled over")
+
+
+my_dog = Dog("Willine", 3)
+my_dog.roll_over()
+my_dog.sit()
+print(f"My dog's name is {my_dog.name}, {my_dog.age} years old")
+```
+
+类中的函数称为**方法**。`__init__`是一个特殊的方法，每当你根据`Dog`类创建新实例时，Python都会自动运行它。以`self`为前缀的变量可供类中的所有方法使用，可以供类的任何实例来访问。像这种可以通过实例来访问的变量称为**属性**。
+
+> `__init__`方法类似与JS类中`constructor`方法，`self`相当于`this`.
+
+
+
