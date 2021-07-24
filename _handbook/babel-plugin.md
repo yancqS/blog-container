@@ -1739,7 +1739,7 @@ export default function({ types: t }) {
 
 # <a id="toc-building-nodes"></a>构建节点
 
-编写转换时，通常需要构建一些要插入的节点进入AST。 如前所述，您可以使用 `babel-types` 包中的<a href="#toc-builders">builder<a/>方法。
+编写转换时，通常需要构建一些要插入的节点进入AST。 如前所述，您可以使用 `babel-types` 包中的<a href="#toc-builders">builder</a>方法。
 
 构建器的方法名称就是您想要的节点类型的名称，除了第一个字母小写。例如，如果您想建立一个 `MemberExpression` 您可以使用` t.memberExpression(...)`。
 
@@ -2200,4 +2200,4 @@ pluginTester({
 
 * * *
 
-> ***对于将来的更新，请跟随 @thejameskyle 和 @babeljs 的Twitter。
+> 对于将来的更新，请跟随 @thejameskyle 和 @babeljs 的Twitter。
