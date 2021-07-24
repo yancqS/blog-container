@@ -1342,14 +1342,133 @@ class Dog:
 
 
 my_dog = Dog("Willine", 3)
+your_dog = Dog("Frag", 4)
 my_dog.roll_over()
 my_dog.sit()
 print(f"My dog's name is {my_dog.name}, {my_dog.age} years old")
+print(f"Your dog's name is {your_dog.name}, {your_dog.age} years old")
 ```
 
 类中的函数称为**方法**。`__init__`是一个特殊的方法，每当你根据`Dog`类创建新实例时，Python都会自动运行它。以`self`为前缀的变量可供类中的所有方法使用，可以供类的任何实例来访问。像这种可以通过实例来访问的变量称为**属性**。
 
 > `__init__`方法类似与JS类中`constructor`方法，`self`相当于`this`.
+
+### 使用类和实例
+
+我们首先写一个表示汽车的类：
+
+```python
+class Car:
+    def __init__(self, make, model, year):
+        self.make = make
+        self.model = model
+        self.year = year
+
+    def get_descriptive_name(self):
+        long_name = f"{self.year} {self.make} {self.model}"
+        return long_name
+```
+
+在创建实例时，有些属性无需通过形参来定义，可在`__init__`方法中为其指定默认值。下面我们创建一个属性，并且其初始值为0；再创建一个方法来读取这个属性的值。
+
+```diff
+class Car:
+    def __init__(self, make, model, year):
+        self.make = make
+        self.model = model
+        self.year = year
++       self.meter = 0
+
+    def get_descriptive_name(self):
+        long_name = f"{self.year} {self.make} {self.model}"
+        return long_name
+    
++   def get_meter(self):
++       print(f"This car has {self.meter} miles on it")
+```
+
+#### 修改属性值
+
+- 直接修改属性的值
+
+要修改属性的值最简单的方式是通过**实例**直接访问它。
+
+```python
+my_new_car = Car('audi', 'a4', 2019)
+my_new_car.get_meter()
+my_new_car.meter = 50
+my_new_car.get_meter()
+```
+
+- 通过方法修改属性的值
+
+```python
+class Car:
+  --snip--
+  def update_meter(self, meter):
+      if meter > self.meter:
+          self.meter = meter
+      else:
+          print("You can't roll back an meter")
+          
+
+my_new_car = Car('audi', 'a4', 2019)
+long_name = my_new_car.get_descriptive_name()
+print(long_name)
+my_new_car.get_meter()
+my_new_car.meter = 50
+my_new_car.get_meter()
+
+print('*' * 40)
+
+my_new_car.update_meter(80)
+my_new_car.update_meter(30)
+my_new_car.get_meter()
+```
+
+输出为：
+
+```
+2019 audi a4
+This car has 0 miles on it
+This car has 50 miles on it
+****************************************
+You can't roll back an meter
+This car has 80 miles on it
+```
+
+- 通过方法对属性的值进行递增
+
+```diff
+class Car:
+    def __init__(self, make, model, year):
+        self.make = make
+        self.model = model
+        self.year = year
+        self.meter = 0
+
+    def get_descriptive_name(self):
+        long_name = f"{self.year} {self.make} {self.model}"
+        return long_name
+
+    def get_meter(self):
+        print(f"This car has {self.meter} miles on it")
+
+    def update_meter(self, meter):
+        if meter > self.meter:
+            self.meter = meter
+        else:
+            print("You can't roll back an meter")
+
++   def increment_meter(self, miles):
++       self.meter += miles
+```
+
+## 继承
+
+
+
+
 
 
 
