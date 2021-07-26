@@ -1466,7 +1466,78 @@ class Car:
 
 ## 继承
 
+编写类时，并非总要从空白开始，如果要编写的类是另一个现成类的特殊版本，可以使用**继承**。一个类**继承**另一个类时，将自动获得另一个类的所有属性和方法。原有的类称为**父类**，而新类称为**子类**。
 
+在既有类的基础上编写新类时，通常要调用父类的方法`__init__()`。这将初始化在父类`__init__()`方法中定义的所有属性，从而让子类包含这些属性。
+
+```python
+class E_car(Car):
+    def __init__(self, make, model, year):
+        super().__init__(make, model, year)
+
+
+my_e_car = E_car('tesla', 'model S', 2019)
+long_name_e = my_e_car.get_descriptive_name()
+print(long_name_e) # 2019 tesla model S
+```
+
+### 给子类定义属性和方法
+
+```python
+class E_car(Car):
+    def __init__(self, make, model, year):
+        super().__init__(make, model, year)
+        self.battery = 75
+
+    def get_bettery(self):
+        print(f"This car has a {self.battery}-kwh battery")
+
+
+my_e_car = E_car('tesla', 'model S', 2019)
+long_name_e = my_e_car.get_descriptive_name()
+print(long_name_e)
+my_e_car.get_bettery()
+```
+
+输出为：
+
+```
+2019 tesla model S
+This car has a 75-kwh battery
+```
+
+### 重写父类的方法
+
+可在子类中定义一个与要重写的父类方法同名的方法。这样Python将不会考虑这个父类方法，而只关注在子类中定义的相关方法。
+
+```python
+class E_car(Car):
+    def __init__(self, make, model, year):
+        super().__init__(make, model, year)
+        self.battery = 75
+
+    def get_bettery(self):
+        print(f"This car has a {self.battery}-kwh battery")
+
+    def get_descriptive_name(self):
+        long_name = f"e_car info: {self.year} {self.make} {self.model}"
+        return long_name
+
+
+my_e_car = E_car('tesla', 'model S', 2019)
+long_name_e = my_e_car.get_descriptive_name()
+print(long_name_e)
+my_e_car.get_bettery()
+```
+
+输出为：
+
+```
+e_car info: 2019 tesla model S
+This car has a 75-kwh battery
+```
+
+### 将实例用作属性
 
 
 
