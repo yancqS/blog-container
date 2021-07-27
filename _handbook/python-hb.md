@@ -1464,7 +1464,7 @@ class Car:
 +       self.meter += miles
 ```
 
-## 继承
+### 继承
 
 编写类时，并非总要从空白开始，如果要编写的类是另一个现成类的特殊版本，可以使用**继承**。一个类**继承**另一个类时，将自动获得另一个类的所有属性和方法。原有的类称为**父类**，而新类称为**子类**。
 
@@ -1481,7 +1481,7 @@ long_name_e = my_e_car.get_descriptive_name()
 print(long_name_e) # 2019 tesla model S
 ```
 
-### 给子类定义属性和方法
+#### 给子类定义属性和方法
 
 ```python
 class E_car(Car):
@@ -1506,7 +1506,7 @@ my_e_car.get_bettery()
 This car has a 75-kwh battery
 ```
 
-### 重写父类的方法
+#### 重写父类的方法
 
 可在子类中定义一个与要重写的父类方法同名的方法。这样Python将不会考虑这个父类方法，而只关注在子类中定义的相关方法。
 
@@ -1537,7 +1537,49 @@ e_car info: 2019 tesla model S
 This car has a 75-kwh battery
 ```
 
-### 将实例用作属性
+#### 将实例用作属性
+
+当给类添加的细节越多时，属性和方法清单及文件都越来越长。在这种情况下，可能需要将类的一部分提取出来，作为一个独立的类。可以将大型类拆分为多个协同工作的小型类。
+
+```python
+class E_car(Car):
+    def __init__(self, make, model, year):
+        super().__init__(make, model, year)
+        self.battery = Battery()
+
+    def get_descriptive_name(self):
+        long_name = f"e_car info: {self.year} {self.make} {self.model}"
+        return long_name
+
+
+class Battery:
+    def __init__(self, battery_size=75):
+        self.battery_size = battery_size
+
+    def get_bettery(self):
+        print(f"This car has a {self.battery_size}-kwh battery")
+
+
+my_e_car = E_car('tesla', 'model S', 2019)
+long_name_e = my_e_car.get_descriptive_name()
+print(long_name_e)
+my_e_car.battery.get_bettery()
+```
+
+输出为：
+
+```
+e_car info: 2019 tesla model S
+This car has a 75-kwh battery
+```
+
+### 导入类
+
+随着不断给类添加功能，文件可能会变的很长，即便稳妥的使用了继承亦是如此。为遵循Python的总体理念，应该让文件尽可能整洁。Python在这方面提供了帮助，允许将类储存在模块中，然后在主程序中导入所需的模块。
+
+#### 导入单个类
+
+
 
 
 
