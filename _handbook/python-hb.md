@@ -16,7 +16,7 @@ languages:
 
 >就目前而言，应该使用小写的python变量名。虽然大写字母不会导致错误，但是大写字母在变量名中有特殊含义，后面会提及。
 
-```py
+```Python
 message = 'hello world'
 print(message)
 ```
@@ -37,7 +37,7 @@ print(message)
 
 要在字符串中插入变量的值，可在首引号前加上字母f，再将要插入的变量放在花括号内。这种字符串为**f字符串**。f是format的简写，因为python通过把花括号内的变量替换为其值来设置字符串的格式。
 
-```py
+```Python
 first_name = 'ada'
 last_name = 'lovelace'
 full_name = f'{ first_name } { last_name }'
@@ -50,7 +50,7 @@ print(f'Hello, { full_name.title() }')
 
 在编程中，空白泛指任何任何非打印字符，比如空格，制表符和换行符。(`\t`, `\n`)
 
-```py
+```Python
 print('Language: \n\tPython\n\tC\n\tJavaScript')
 ```
 
@@ -68,7 +68,7 @@ print('Language: \n\tPython\n\tC\n\tJavaScript')
 
 在其他运算中，如果一个操作数是整数，另一个操作数时浮点数，结果也总是浮点数。
 
-```py
+```Python
 print(4 / 2) # 2.0
 print(1 + 2.0) # 3.0
 print(2 * 3,0) # 6.0
@@ -77,7 +77,7 @@ print(3.0 ** 2) # 9.0
 
 书写很大的数时，可使用下划线将其中的数字分组，使其更加清晰易读：
 
-```py
+```Python
 big_number = 14_000_00000_0
 print(big_number) # 14000000000
 ```
@@ -86,13 +86,13 @@ print(big_number) # 14000000000
 
 同时给多个变量赋值:
 
-```py
+```Python
 x, y, z = 0, 0, 0
 ```
 
 Python没有内置的常量类型，但python程序员会使用全大写来指出应将某个变量视为常量，其值应始终不变：
 
-```py
+```Python
 MAX_CONNECTION = 5000
 ```
 
@@ -102,7 +102,7 @@ MAX_CONNECTION = 5000
 
 **列表**由一系列特定顺序排列的元素组成，元素之间可以没有任何关系。在Python中，用方括号(`[]`)表示列表，并用逗号分割其中的元素。
 
-```py
+```Python
 letters = ['a', 'b', 'c']
 print(letters) # ['a', 'b', 'c']
 ```
@@ -111,7 +111,7 @@ print(letters) # ['a', 'b', 'c']
 
 列表是有序集合，因此要访问列表中的任何元素，只要将该元素的位置（索引）告诉python即可。
 
-```py
+```Python
 letters = ['a', 'b', 'c']
 print(letters[0]) # a
 print(letters[0].upper()) # A
@@ -123,7 +123,7 @@ print(message) # The first letter is a
 
 #### 修改、添加和删除元素
 
-```py
+```Python
 students = ['Tom', 'jack', 'kevin', 'Eric']
 print(students) # ['Tom', 'jack', 'kevin', 'Eric']
 
@@ -169,7 +169,7 @@ print(students) # ['Eric']
 
 #### 列表排序
 
-```py
+```Python
 # 使用sort()方法对列表永久排序
 cars = ['bmw', 'audi', 'toyota', 'subaru']
 cars.sort()
@@ -192,7 +192,7 @@ print(sorted(cars, reverse=True)) #  ['toyota', 'subaru', 'bmw', 'audi']
 
 反转列表排列顺序，可使用方法`reverse()`
 
-```py
+```Python
 cars = ['bmw', 'audi', 'toyota', 'subaru']
 print(cars) #  ['bmw', 'audi', 'toyota', 'subaru']
 print(cars.reverse()) #  ['subaru', 'toyota', 'audi', 'bmw']
@@ -204,7 +204,7 @@ print(cars.reverse()) #  ['subaru', 'toyota', 'audi', 'bmw']
 
 `len()`函数可获得列表长度。
 
-```py
+```Python
 cars = ['bmw', 'audi', 'toyota', 'subaru']
 print(len(cars)) #  4
 ```
@@ -213,7 +213,7 @@ print(len(cars)) #  4
 
 ### 遍历列表
 
-```py
+```Python
 magicians = ['alice', 'david', 'carolina']
 for magician in magicians:
     print(magician)
@@ -234,7 +234,7 @@ That was a great magic show
 
 Python函数`range()`可以生成一系列数。比如：
 
-```py
+```Python
 for value in range(1, 5):
     print(value)
 
@@ -251,7 +251,7 @@ for value in range(1, 5):
 
 要创建数字列表，可使用函数`list()`将`range()`的结果直接转换为列表。
 
-```py
+```Python
 numbers = list(range(1, 6))
 print(numbers) #  [1, 2, 3, 4, 5]
 
@@ -277,7 +277,7 @@ print(list(range(6, 2))) #  []
 
 列表解析将for循环和创建新元素的代码合并到一行，并自动附加新元素。
 
-```py
+```Python
 # 列表解析
 squares = [value ** 2 for value in range(1, 11)]
 print(squares) #  [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
@@ -295,7 +295,7 @@ print(squares) # [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
 
 要创建切片，可指定要使用的第一个元素和最后一个元素的索引。
 
-```py
+```Python
 players = ['charles', 'martina', 'michnel', 'florance', 'eli']
 
 print(players[0:3])  # ['charles', 'martina', 'michnel']
@@ -319,7 +319,7 @@ print(players[:])  # ['charles', 'martina', 'michnel', 'florance', 'eli']
 
 #### 遍历切片 & 复制列表
 
-```py
+```Python
 players = ['charles', 'martina', 'michnel', 'florance', 'eli']
 
 for play in players[:3]:
@@ -333,7 +333,7 @@ Michnel
 
 复制列表
 
-```py
+```Python
 my_foods = ['pizza', 'falafel', 'carrot cake']
 
 frineds_foods = my_foods[:] #  深拷贝
@@ -356,7 +356,7 @@ print('other_friend:', other_friend)
 
 输出为：
 
-```py
+```Python
 my_foods: ['pizza', 'falafel', 'carrot cake']
 frineds_foods: ['pizza', 'falafel', 'carrot cake']
 other_friend: ['pizza', 'falafel', 'carrot cake']
@@ -374,7 +374,7 @@ other_friend: ['pizza', 'falafel', 'carrot cake', 'ice cream', 'dumpling']
 
 元组看起来很像列表，但使用圆括号而非中括号来标识。定义元组后，就可以使用索引来访问其元素，就像访问列表一样。
 
-```py
+```Python
 dimensions = (200, 50)
 print(dimensions[0])  # 200
 print(dimensions[1])  # 50
@@ -387,7 +387,7 @@ print(dimensions[1])  # 50
 
 遍历元组：
 
-```py
+```Python
 dimensions = (200, 50)
 
 for dimension in dimensions:
@@ -400,7 +400,7 @@ for dimension in dimensions:
 
 虽然不能修改元组的元素，但是可以给存储元组的变量赋值。
 
-```py
+```Python
 dimensions = (100, 200)
 
 dimensions = (200, 400)
@@ -410,7 +410,7 @@ dimensions = (200, 400)
 
 ### 检查多个条件
 
-```py
+```Python
 # 使用and检查多个条件
 age_0 = 22
 age_1 = 18
@@ -432,7 +432,7 @@ age_0 >= 21 or age_1 >= 21 #  False
 
 检查特定值是否包含在列表中:
 
-```py
+```Python
 list = ['mushroom', 'onions', 'pineapple']
 'mushroom' in list # True
 'pepperoni' in list # False 
@@ -440,7 +440,7 @@ list = ['mushroom', 'onions', 'pineapple']
 
 检查特定值是否不包含在列表中:
 
-```py
+```Python
 ban_users = ['andrew', 'carlion', 'david']
 user = 'marie'
 
@@ -450,7 +450,7 @@ if user not in ban_users:
 
 ### if语句/if-else语句/if-elif-else语句
 
-```py
+```Python
 # if语句
 
 age = 19
@@ -480,7 +480,7 @@ print(f'Your admission cost is ${price}')
 
 ### 使用多个elif代码块
 
-```py
+```Python
 age = 68
 if age < 4:
     price = 0
@@ -498,7 +498,7 @@ print(f'Your admission cost is ${price}')
 
 python并不要求if-elif结构后面必须游else代码块。
 
-```py
+```Python
 age = 68
 if age < 4:
     price = 0
@@ -518,7 +518,7 @@ print(f'Your admission cost is ${price}')
 
 然而，有时候必须检查你关心的所有条件，在这种情况下，应使用一系列不包含elif和else代码块的简单if语句。在存在多个条件为True且需要在每个条件为True时都采取相应措施时，适合用这种方法。
 
-```py
+```Python
 request_topping = ['mushrooms', 'extra cheese']
 
 if 'mushrooms' in request_topping:
@@ -535,7 +535,7 @@ print('Finished !')
 
 #### 检查特殊元素
 
-```py
+```Python
 request_topping = ['mushrooms',  'green peppers', 'extra cheese']
 
 for value in request_topping:
@@ -549,7 +549,7 @@ print('Finished !')
 
 #### 确定列表不是空的
 
-```py
+```Python
 request_topping = []
 
 if request_topping:
@@ -562,7 +562,7 @@ else:
 
 ### 使用多个列表
 
-```py
+```Python
 avaliable_toppings = ['mushrooms', 'olives', 'green peppers', 'pepperoni', 'pineapple', 'extra cheese']
 
 request_toppings = ['mushrooms', 'french fries', 'extra cheese']
@@ -590,7 +590,7 @@ Finished !
 
 ### 使用字典
 
-```py
+```Python
 # 获取字典中的值
 alien_0 = {
     'color': 'yellow'
@@ -623,7 +623,7 @@ print(alien_1) # {'y_pos': 30}
 
 使用放在方括号内的键从字典中获取相关联的值时，如果指定的键不存在就会出错。
 
-```py
+```Python
 favorite_language = {
     'Tom': 'c'
 }
@@ -642,7 +642,7 @@ print(favorite_language['John'])
 
 get()方法的第一个参数用于指定键，是必不可少的，第二个参数为指定的键不存在时要返回的值，是可选的。
 
-```py
+```Python
 favorite_language = {
     'Tom': 'c'
 }
@@ -658,7 +658,7 @@ print(f'favorite language: {language}') #  favorite language: Python
 
 ### 遍历字典
 
-```py
+```Python
 favorite_language = {
     'Tom': 'c',
     'Eric': 'Java'
@@ -681,7 +681,7 @@ dict_values(['c', 'Java'])
 
 首先是遍历**键值对**：
 
-```py
+```Python
 favorite_language = {
     'Tom': 'c',
     'Eric': 'Java'
@@ -694,7 +694,7 @@ for k, v in favorite_language.items():
 
 然后时遍历字典中的**键**：
 
-```py
+```Python
 favorite_language = {
     'Tom': 'c',
     'Eric': 'Java'
@@ -706,13 +706,13 @@ for k in favorite_language.keys():
 
 遍历字典时，会默认遍历所有的键。因此上述代码中的：
 
-```py
+```Python
 for k in favorite_language.keys():
 ```
 
 替换为：
 
-```py
+```Python
 for k in favorite_language:
 ```
 
@@ -724,7 +724,7 @@ for k in favorite_language:
 
 要以特定顺序返回元素，可以使用`sorted()`来获得按特定顺序排列的键列表的副本：
 
-```py
+```Python
 favorite_language = {
     'Tom': 'c',
     'Eric': 'Java',
@@ -742,7 +742,7 @@ for name in sorted(favorite_language.keys(), reverse=True):
 
 输出为：
 
-```py
+```Python
 Alice ruby
 Eric Java
 Tom c
@@ -754,7 +754,7 @@ Alice ruby
 
 然后时遍历字典中所有**值**：
 
-```py
+```Python
 favorite_language = {
     'Tom': 'c',
     'Eric': 'Java',
@@ -777,7 +777,7 @@ Value: ruby
 
 这种做法时提取字典中所有的值，没有考虑重复项。为了剔除重复项，可以使用**集合(set)**。集合中的每个元素都必须时独一无二的。
 
-```py
+```Python
 favorite_language = {
     'Tom': 'c',
     'Eric': 'Java',
@@ -801,7 +801,7 @@ Value: c
 
 可以使用一对花括号直接创建**集合**，并在其中用逗号分隔元素：
 
-```py
+```Python
 languages = {'c', 'java', 'ruby', 'java'}
 print(languages) #  {'c', 'ruby', 'java'}
 ```
@@ -812,7 +812,7 @@ print(languages) #  {'c', 'ruby', 'java'}
 
 #### 字典列表
 
-```py
+```Python
 alien_0 = {'color': 'green', 'point': 5}
 alien_1 = {'color': 'green', 'point': 6}
 alien_2 = {'color': 'green', 'point': 7}
@@ -829,7 +829,7 @@ print(aliens)
 
 ### 字典中存储列表
 
-```py
+```Python
 pizza = {
     'crust': 'thick',
     'toppings': ['mushrooms', 'extra cheese']
@@ -841,7 +841,7 @@ for topping in pizza['toppings']:
 
 ### 字典中存储字典
 
-```py
+```Python
 users = {
     'Tom': {
         'first': 'tom',
@@ -870,7 +870,7 @@ for username, user_info in users.items():
 
 函数 `input()` 让程序暂停运行，等待用户输入一下文本，获取用户输入后，Python将其赋给一个变量，以方便使用。
 
-```py
+```Python
 message = input("Tell me something, and I will repeat it back to you: ")
 print(message)
 ```
@@ -879,7 +879,7 @@ print(message)
 
 使用函数 `input()` 时，Python将用户输入解读为字符串。
 
-```py
+```Python
 message = input("Tell me something, and I will repeat it back to you: ")
 print(message > 18)
 ```
@@ -892,14 +892,14 @@ TypeError: '>' not supported between instances of 'str' and 'int'
 
 为了解决这个问题，可以使用 `int()` 函数，将数的字符串表示转换为数值表示。
 
-```py
+```Python
 message = int(input("Tell me something, and I will repeat it back to you: "))
 print(message > 18) #  True
 ```
 
 求模运算符（`%`）,它将两个数想除并返回余数。
 
-```py
+```Python
 4 % 3 # 1
 5 % 3 # 2
 6 % 3 # 0
@@ -910,7 +910,7 @@ print(message > 18) #  True
 
 for循环用于针对集合中的每个元素都执行一个代码块。而while循环则不断执行，直到指定的条件不满足为止。
 
-```py
+```python
 current_num = 0
 while current_num <= 5:
     print(current_num)
@@ -919,7 +919,7 @@ while current_num <= 5:
 
 让用户选择何时退出, 可以使用 `while` 循环让程序在用户愿意时不断执行：
 
-```py
+```python
 prompt = "\nTell me something, and I will repeat it back to you:"
 prompt += "\nEnter 'quit' to end the program."
 message = ""
@@ -932,7 +932,7 @@ while message != "quit":
 
 或者可以使用**标志(flag)**:
 
-```py
+```python
 prompt = "\nTell me something, and I will repeat it back to you:"
 prompt += "\nEnter 'quit' to end the program."
 
@@ -950,7 +950,7 @@ while active:
 
 要立即退出while循环，不再运行循环中余下的代码，也不管条件测试的结果如何，可使用 `break` 语句。
 
-```py
+```Python
 prompt = "\nTell me something, and I will repeat it back to you:"
 prompt += "\nEnter 'quit' to end the program."
 
@@ -966,7 +966,7 @@ while active:
 
 要返回循环开头，并根据条件测试结果决定是否继续执行循环，可使用 `continue` 语句，它不像 `break` 语句那样不再执行余下的代码并退出整个循环。
 
-```py
+```Python
 current = 0
 
 while current <= 10:
@@ -981,7 +981,7 @@ while current <= 10:
 
 for循环是一种遍历列表的有效方式，但不应该在for循环中修改列表，否则将导致Python难以跟踪其中的元素。要在遍历列表的同时对其进行修改，可以使用while循环。
 
-```py
+```Python
 # 在列表之间移动元素
 
 unconfirmed_user = ['alice', 'brain', 'candace']
@@ -1011,7 +1011,7 @@ Brain
 Candace
 ```
 
-```py
+```Python
 # 删除为特定值的所有列表元素
 
 pets = ['dog', 'cat', 'dog', 'goldfish', 'cat', 'rabbit', 'cat']
@@ -1030,7 +1030,7 @@ print(pets)
 ['dog', 'dog', 'goldfish', 'rabbit']
 ```
 
-```py
+```Python
 # 使用用户输入填充字典
 
 responses = {}
@@ -1072,7 +1072,7 @@ Jack would like to climb 华山.
 
 ### 定义函数
 
-```py
+```Python
 def greet(user_name):
     print(f'hello, {user_name.title()}')
 
@@ -1090,7 +1090,7 @@ greet('jesse')
 
 - 位置实参
 
-```py
+```Python
 def des_pet(animal_type, pet_name):
     print(f'\nI have a {animal_type}')
     print(f"My {animal_type}'s name is {pet_name}")
@@ -1101,7 +1101,7 @@ des_pet('dog', 'Tom')
 
 - 关键字实参
 
-```py
+```Python
 def des_pet(animal_type, pet_name):
     print(f'\nI have a {animal_type}')
     print(f"My {animal_type}'s name is {pet_name}")
@@ -1112,7 +1112,7 @@ des_pet(pet_name='Tom', animal_type='dog')
 
 ### 默认值
 
-```py
+```Python
 def des_pet(pet_name, animal_type='dog'):
     print(f'\nI have a {animal_type}')
     print(f"My {animal_type}'s name is {pet_name}")
@@ -1131,7 +1131,7 @@ des_pet('CCC', animal_type='Toom')
 
 - 返回简单值
 
-```py
+```Python
 def format_name(first_name, last_name, middle_name=''):
     """返回整洁的姓名"""
     if middle_name:
@@ -1148,7 +1148,7 @@ print(format_name.__doc__)
 
 - 返回字典
 
-```py
+```Python
 def build_person(first_name, last_name, age=None):
     """可将None视为占位值。在条件测试中。None相当于False"""
     person = {'first': first_name, 'last': last_name}
@@ -1579,7 +1579,143 @@ This car has a 75-kwh battery
 
 #### 导入单个类
 
+将Car类单独放在一个文件`car.py`模块中
 
+```python
+# car.py
+class Car:
+    def __init__(self, make, model, year):
+        self.make = make
+        self.model = model
+        self.year = year
+        self.meter = 0
+
+    def get_descriptive_name(self):
+        long_name = f"{self.year} {self.make} {self.model}"
+        return long_name
+
+    def get_meter(self):
+        print(f"This car has {self.meter} miles on it")
+
+    def update_meter(self, meter):
+        if meter > self.meter:
+            self.meter = meter
+        else:
+            print("You can't roll back an meter")
+
+    def increment_meter(self, miles):
+        self.meter += miles
+```
+
+然后在另外一个文件`my_car.py`中，在其中导入`Car`类并创建其实例：
+
+```python
+# my_car.py
+from car import Car
+
+my_new_car = Car('audi', 'a4', 2019)
+long_name = my_new_car.get_descriptive_name()
+print(long_name)
+my_new_car.get_meter()
+my_new_car.meter = 50
+my_new_car.get_meter()
+```
+
+输出为：
+
+```
+2019 audi a4
+This car has 0 miles on it
+This car has 50 miles on it
+```
+
+#### 在一个模块中存储多个类、从一个模块中导入多个类
+
+把`E_car`类和`Battery`类都放到`car.py`中,然后在`my_car.py`中把这些类导入：
+
+```python
+# my_car.py
+from car import Car, E_car
+
+my_new_car = Car('audi', 'a4', 2019)
+long_name = my_new_car.get_descriptive_name()
+print(long_name)
+my_new_car.get_meter()
+my_new_car.meter = 50
+my_new_car.get_meter()
+
+print('*' * 40)
+
+my_new_car.update_meter(80)
+my_new_car.update_meter(30)
+my_new_car.get_meter()
+my_new_car.increment_meter(20)
+my_new_car.get_meter()
+
+print('+' * 40)
+
+my_e_car = E_car('tesla', 'model S', 2019)
+long_name_e = my_e_car.get_descriptive_name()
+print(long_name_e)
+my_e_car.battery.get_bettery()
+```
+
+输出为：
+
+```
+2019 audi a4
+This car has 0 miles on it
+This car has 50 miles on it
+****************************************
+You can't roll back an meter
+This car has 80 miles on it
+This car has 100 miles on it
+++++++++++++++++++++++++++++++++++++++++
+e_car info: 2019 tesla model S
+This car has a 100-kwh battery
+```
+
+#### 导入整个模块
+
+```python
+import car
+
+my_new_car = car.Car('audi', 'a4', 2019)
+
+my_e_car = car.E_car('tesla', 'model S', 2019)
+```
+
+#### 导入模块中所有的类
+
+语法：from *module_name* import *
+
+> 不推荐这种写法。
+
+#### 在一个模块中导入另一个模块
+
+把`Battery`类单独放到`battery.py`文件，然后在`car.py`中引入（因为E_car类的battery属性是Battery类的实例）：
+
+```python
+# car.py
+from battery import Battery
+
+# ....
+
+class E_car(Car):
+    def __init__(self, make, model, year):
+        super().__init__(make, model, year)
+        self.battery = Battery(100)
+
+    def get_descriptive_name(self):
+        long_name = f"e_car info: {self.year} {self.make} {self.model}"
+        return long_name
+```
+
+#### 使用别名
+
+```python
+from car import E_car as EC, Car
+```
 
 
 
