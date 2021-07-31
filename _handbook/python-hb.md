@@ -1699,7 +1699,8 @@ my_e_car = car.E_car('tesla', 'model S', 2019)
 # car.py
 from battery import Battery
 
-# ....
+class Car:
+  # ....
 
 class E_car(Car):
     def __init__(self, make, model, year):
@@ -1717,7 +1718,9 @@ class E_car(Car):
 from car import E_car as EC, Car
 ```
 
+## 文件和异常
 
+ 
 
 
 
