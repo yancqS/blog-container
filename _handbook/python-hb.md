@@ -1720,7 +1720,26 @@ from car import E_car as EC, Car
 
 ## 文件和异常
 
- 
+### 从文件中读取数据
+
+新建一个文件`pi_digits.txt`,他包含精确到小数点后30位的圆周率值，且在小数点后10位处换行：
+
+```
+3.1415926535
+  8979323846
+  2463383297
+```
+
+ 下面的程序打开并读取这个文件，再将其显示在屏幕上：
+
+```python
+with open('pi_digits.txt') as file_object:
+    contents = file_object.read()
+
+print(contents)
+```
+
+
 
 
 
