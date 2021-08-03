@@ -1739,6 +1739,24 @@ with open('pi_digits.txt') as file_object:
 print(contents)
 ```
 
+函数`open()`返回一个表示文件的对象。在本例中，`open('pi_digits.txt')`返回一个表示文件`pi_digits.txt`的对象，Python将该对象赋给`file_object`供以后使用。
+
+关键字`with`在不需要访问文件后将其关闭。在这程序中调用了`open()`方法，但是没有调用`close()`方法。也可以调用`open()`和`close()`方法，但这样做时，如果程序存在bug导致方法`close()`未执行，文件将不会关闭。未妥善关闭的文件可能会导致数据丢失。如果在程序执行过程中过早的调用`clsoe()`方法，会发现在需要使用文件时它已关闭，这会导致更多的错误。但是使用`with`可以让Python去确定：你只管打开文件，并在需要时使用它，Python自会在合适的时候自动将其关闭。
+
+然后使用`read()`方法读取这个文件的全部内容，并将其作为一个长长的字符串赋给变量`contents`。
+
+#### 逐行读取
+
+```python
+file_name = "pi_digits.txt"
+
+with open(file_name) as file_object_line:
+    for line in file_object_line:
+        print(line.rstrip())
+```
+
+#### 创建一个包含文件各行内容的列表
+
 
 
 
