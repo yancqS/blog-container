@@ -1758,6 +1758,8 @@ with open(file_name) as file_object_line:
 #### 创建一个包含文件各行内容的列表
 
 ```python
+file_name = "pi_digits.txt"
+
 with open(file_name) as file_object_rline:
     lines = file_object_rline.readlines()
 
@@ -1769,7 +1771,22 @@ for line in lines:
 
 #### 使用文件内容
 
+```py
+file_name = "pi_digits.txt"
 
+with open(file_name) as file_object_rline:
+    lines = file_object_rline.readlines()
+
+pi_string = ''
+
+for line in lines:
+    pi_string += line.strip()
+
+print(pi_string) # 3.141592653589793238462463383297
+print(len(pi_string)) # 32
+```
+
+注意：读取文本文件时，Python将其中的所有文本都解读为字符串。如果读取的时数，并要将其作为数字使用，就必须使用函数`int()`将其转换为整数或使用函数`float()`将其转换为浮点数。
 
 
 
