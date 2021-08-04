@@ -1757,6 +1757,18 @@ with open(file_name) as file_object_line:
 
 #### 创建一个包含文件各行内容的列表
 
+```python
+with open(file_name) as file_object_rline:
+    lines = file_object_rline.readlines()
+
+print(lines) # ['3.1415926535\n', '  8979323846\n', '  2463383297']
+
+for line in lines:
+    print(line.rstrip())
+```
+
+#### 使用文件内容
+
 
 
 
