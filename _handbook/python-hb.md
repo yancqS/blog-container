@@ -1788,5 +1788,59 @@ print(len(pi_string)) # 32
 
 注意：读取文本文件时，Python将其中的所有文本都解读为字符串。如果读取的时数，并要将其作为数字使用，就必须使用函数`int()`将其转换为整数或使用函数`float()`将其转换为浮点数。
 
+### 写入文件
+
+#### 写入空文件
+
+要将文本写入文件，在调用`open()`时需要提供另一个实参，告诉Python你要写入打开的文件。
+
+```python
+file_name_w = 'pi.txt'
+
+with open(file_name_w, 'w') as file_object_w:
+    file_object_w.write('I love programming')
+```
+
+在本例中，调用`open()`时提供了两个实参。第一个仍然是要打开的文件名称。第二个实参('w')告诉Python，要以**写入模式**打开这个文件。如果要写入的文件不存在，函数`open()`会自动创建它。
+
+> 打开文件时，可指定读取模式('r')、写入模式('w')、附加模式('a')或读写模式('r+')。如果省略模式实参，Python将以默认的只读模式打开文件
+
+> Python只能将字符串写入文本文件，要将数值数据存储到文本文件中，必须先试用`str()`将其转换为字符串格式。
+
+#### 写入多行&附加到文件
+
+```python
+# 写入多行
+file_name_w = 'pi.txt'
+
+with open(file_name_w, 'w') as file_object_w:
+    file_object_w.write('I love programming\n')
+    file_object_w.write('I love programming too\n')
+
+# 附加到文件
+    
+with open(file_name_w, 'a') as file_object_a:
+    file_object_a.write('I also love finding meaning in large dataset.\n')
+    file_object_a.write('I also love finding meaning in large dataset too.\n')
+```
+
+此时`pi.txt`的内容为：
+
+```
+I love programming
+I love programming too
+I also love finding meaning in large dataset.
+I also love finding meaning in large dataset too.
+
+```
+
+### 异常
+
+
+
+
+
+
+
 
 
