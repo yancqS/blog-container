@@ -1836,10 +1836,111 @@ I also love finding meaning in large dataset too.
 
 ### 异常
 
+Python使用称为**异常**的特殊对象来管理程序执行期间发生的错误。异常时使用`try-except`代码块处理的，即便出现异常，程序也将继续运行：显示你编写的友好的提示信息。
 
+例如：
 
+```python
+try:
+    print(5/0)
+except ZeroDivisionError:
+    print('You can not divide by zero')
+```
 
+> `5/0`Python会抛出`ZeroDivisionError`错误对象。
 
+如果`try`代码块运行起来没有问题，Python将会跳过`except`代码块。
+
+#### else代码块
+
+依赖`try`代码块成功执行的代码都应该放到else代码块中。
+
+```py
+print('Give me two number, and I will divede them')
+print('Enter q to quit')
+
+while True:
+    first_num = input('\nFirst num: ')
+    if first_num == 'q':
+        break
+
+    second_num = input('Second num: ')
+    if second_num == 'q':
+        break
+
+    try:
+        answer = int(first_num) / int(second_num)
+    except ZeroDivisionError:
+        print('You can not divide by zero')
+    else:
+        print(answer)
+```
+
+#### 处理FileNotFoundError异常
+
+```python
+file_name = 'alice.txt'
+try:
+    with open(file_name, encoding='utf-8') as f:
+        content = f.read()
+except FileNotFoundError:
+    print('File Not Found')
+```
+
+#### 分析文本
+
+方法`split()`默认以空格为分隔符将字符串分拆为对个部分，并将这些部分存储到一个列表中。
+
+假如我们想分析一篇文章包含多少个单词，我们可以这么做：
+
+```python
+file_name = 'pi.txt'
+try:
+    with open(file_name, encoding='utf-8') as f:
+        content = f.read()
+except FileNotFoundError:
+    print('File Not Found')
+else:
+    print(f"The file has about {len(content.split())} words")
+```
+
+#### 静默失败
+
+Python有一个`pass`语句，可用于让Python在代码块中什么也不要做；此外`pass`语句还充当占位符，提醒你在程序中的某个地方什么都没做，并且以后也许要在这个地方做些什么。
+
+```python
+file_name = 'pi3.txt'
+try:
+    with open(file_name, encoding='utf-8') as f:
+        content = f.read()
+except FileNotFoundError:
+    pass
+else:
+    print(f"The file has about {len(content.split())} words")
+```
+
+### 存储数据
+
+模块`json`让你可以能够将简单的Python数据结构转储到文件中，并在程序再次运行时加载这些文件中的数据。
+
+#### 使用 json.dump() 和 json.load()
+
+我们来编写一个存储一组数的简单的程序，在编写一个将这些数读取到内存的程序。第一个程序将使用`json.dump()`来存储数据，而第二个程序将使`json.load()`。
+
+```python
+import json
+number = [1, 2, 3, 4, 5]
+
+file_name = 'number.json'
+
+with open(file_name, 'w', encoding='utf-8') as f:
+    json.dump(number, f)
+
+with open(file_name, encoding='utf-8') as f_r:
+    r_number = json.load(f_r)
+
+print(r_number)
+```
 
 
 
