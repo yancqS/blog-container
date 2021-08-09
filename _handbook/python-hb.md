@@ -1942,6 +1942,25 @@ with open(file_name, encoding='utf-8') as f_r:
 print(r_number)
 ```
 
+#### 保存和读取用户生成的数据
+
+```python
+file_name = 'username.json'
+
+try:
+    with open(file_name) as f:
+        username = json.load(f)
+except FileNotFoundError:
+    username = input('Input your name: ')
+    with open(file_name, 'w') as f_w:
+        json.dump(username, f_w)
+        print(f'we will remember you when you basck, {username}')
+else:
+    print(f'welcom back, {username}')
+```
+
+## 测试代码
+
 
 
 
