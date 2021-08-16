@@ -94,7 +94,7 @@ async function getColor(url) {
     canvas.width = img.naturalWidth;
     canvas.height = img.naturalHeight;
     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-    const PXdata = ctx.getImag展开上一步得到的数据：eData(0, 0, canvas.width, canvas.height).data;
+    const PXdata = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
     console.log(PXdata);
 }
 ```
