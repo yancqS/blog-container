@@ -53,7 +53,7 @@ featured: true
 
 我们这里以一个图片网站为例，来展示实际业务中应用较广的场景：
 
-![](https://gitee.com/yancqS/blogImage/raw/master/blogImage/20210815222839.gif)
+![](https://gitee.com/yancqS/blogImage/raw/master/blogImage/20210816101641.png)
 
 在弱网下，图片加载速度较慢，此时在图片完全加载之前，提取图片的主色调，然后填充为背景色。这样用户体验能有较大的提升。
 
@@ -175,7 +175,102 @@ arr.sort((a, b) => b.count - a.count);
 
 到这里我们就得到了图片色值出现次数从大到小的排序数组，我们来看排在第一位的`rgba(51,8,51,255)`。
 
-![](https://gitee.com/yancqS/blogImage/raw/master/blogImage/20210815231654.jpeg)
+![](https://gitee.com/yancqs/blogImage/raw/master/blogImage/20210815231654.jpeg)
+
+最终代码：
+
+```html
+// index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>取主题色</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        html, body {
+            height: 100%;
+            width: 100%;
+        }
+        img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+<script src="./index.js"></script>
+<script>
+    (async (url) => {
+        let data = await getColor(url);
+        document.body.style.background = 'rgba(' + data.color + ')';
+    })("./img/wukong.jpeg")
+</script>
+<body>
+    <img src="./img/wukong.jpeg" alt="">
+</body>
+</html>
+```
+
+```js
+// index.js
+function getImage(url) {
+    return new Promise(resolve => {
+        let img = new Image();
+        img.onload = () => {
+            resolve(img);
+        }
+        img.src = url;
+    })
+};
+
+async function getColor(url) {
+    const img = await getImage(url);
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = img.naturalWidth;
+    canvas.height = img.naturalHeight;
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    const PXdata = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+    return getCountColor(PXdata);
+}
+
+function getCountColor(data) {
+    let rgba = [];
+    let rgbaStr = '';
+    let colorList = {};
+    let arr = [];
+    for(let i = 0; i < data.length; i+=4) {
+        rgba[0] = data[i];
+        rgba[1] = data[i + 1];
+        rgba[2] = data[i + 2];
+        rgba[3] = data[i + 3];
+
+        rgbaStr = rgba.join();
+
+        if(colorList[rgbaStr]) {
+            colorList[rgbaStr] += 1;
+        } else {
+            colorList[rgbaStr] = 1;
+        }
+    }
+    for(let prop in colorList) {
+        arr.push({
+            color: prop,
+            count: colorList[prop]
+        })
+    }
+    arr.sort((a, b) => b.count - a.count);
+    return arr[0];
+}
+```
 
 ## 最后
 
