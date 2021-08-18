@@ -2,10 +2,13 @@
   "scripts": {
     "dev": "vuepress dev ./",
     "build": "vuepress build ./",
-    "deploy": "GH=1 yarn build && bash ./deploy.sh"
+    "deploy": "GH=1 yarn build && bash ./deploy.sh",
+    "commit": "git cz && npm run changelog",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md"
   },
   "license": "MIT",
   "devDependencies": {
+    "cz-conventional-changelog": "^3.3.0",
     "vuepress": "^1.7.0",
     "vuepress-plugin-crisp": "^1.0.0",
     "vuepress-plugin-mathjax": "^1.2.8",
@@ -15,5 +18,10 @@
   "dependencies": {
     "vuepress-plugin-reading-progress": "^1.0.10",
     "vuepress-theme-custom": "^1.0.1"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
