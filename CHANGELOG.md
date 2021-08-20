@@ -1,4 +1,4 @@
-#  (2021-08-19)
+#  (2021-08-20)
 
 
 ### Bug Fixes
@@ -10,6 +10,11 @@
 * paper image compress 错别字 ([08bb98a](https://github.com/yancqS/blog-container/commit/08bb98a68011d1bce1b78dee1f121e66ea4a61a8))
 * sci-note2 原文跳转链接错误 ([4b06acf](https://github.com/yancqS/blog-container/commit/4b06acf84e355b757870227a3941ee95625afd0c))
 * sci-note2 原文跳转链接错误 ([2beaf54](https://github.com/yancqS/blog-container/commit/2beaf54d56137db673bf02837816f3779d27600e))
+
+
+### Features
+
+* **py-hb :zap::** py-hb change ([c94fd90](https://github.com/yancqS/blog-container/commit/c94fd902becbf208404fd8043247302cf78e87dd))
 
 
 
