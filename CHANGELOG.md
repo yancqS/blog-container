@@ -1,4 +1,4 @@
-#  (2021-08-20)
+#  (2021-08-21)
 
 
 ### Bug Fixes
@@ -15,6 +15,7 @@
 ### Features
 
 * **py-hb :zap::** py-hb change ([c94fd90](https://github.com/yancqS/blog-container/commit/c94fd902becbf208404fd8043247302cf78e87dd))
+* **sci-note5#172 :100::** update paper sci-note[#172](https://github.com/yancqS/blog-container/issues/172) by ruanyf :rocket: ([4188b13](https://github.com/yancqS/blog-container/commit/4188b13803ff7006f92901ef2135cb8fe39e199e))
 
 
 
