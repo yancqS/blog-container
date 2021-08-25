@@ -47,10 +47,6 @@ module.exports = {
         emoji: '💕'
       },
     ],
-    posts: {
-      prepend: "Hi, I hope you'll <i>enjoy</i> this post!",
-      append: "Hi, I hope you've <b>enjoyed</b> this post!",
-    },
     about: {
       fullName: 'Qing',
       bio: '科幻迷😄  漫威粉🤟  爱前端🥰  爱米线🌟  搓炉石🎮  LOL云玩家🎮  被写代码耽误的大厨🤣',
@@ -65,6 +61,10 @@ module.exports = {
       {
         name: 'MDN',
         link: 'https://developer.mozilla.org/zh-CN/'
+      },
+      {
+        name: 'Hitokoto',
+        link: 'https://hitokoto.cn/'
       }
     ],
     sitemap: true,

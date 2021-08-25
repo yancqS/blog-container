@@ -8647,9 +8647,9 @@
     "smoothscroll-polyfill" "^0.4.3"
 
 "vuepress-theme-custom@^1.0.1":
-  "integrity" "sha512-yBPDfcfR7/GPCdgpdtqF+Z6kZKgeUujO423bX9NlTuypvbsazruIY48YNi8i8nvx2Uv/s1YxhJJFkxLu0v3YeA=="
-  "resolved" "https://registry.npmjs.org/vuepress-theme-custom/-/vuepress-theme-custom-1.0.22.tgz"
-  "version" "1.0.22"
+  "integrity" "sha512-/kJu1GzutphFBQf8i9cdTPXtw343ns6kQIzFT4YdzLqdPuO6vHKFzXVu4DweAJ4rtshaYb+lqLXgA/a9KCnLTg=="
+  "resolved" "https://registry.npmjs.org/vuepress-theme-custom/-/vuepress-theme-custom-1.0.23.tgz"
+  "version" "1.0.23"
   dependencies:
     "@vuepress/plugin-blog" "^1.9.2"
     "bootstrap" "^4.4.1"
