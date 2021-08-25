@@ -89,7 +89,7 @@ module.exports = {
           link: 'https://policies.google.com/privacy?hl=en-US',
         },
         {
-          text: `MIT Licensed Copyright © ${new Date().getFullYear()}-present`,
+          text: `MIT Licensed Copyright © 2018-${new Date().getFullYear()}`,
           link: '',
         },
       ],
@@ -101,6 +101,7 @@ module.exports = {
   plugins: [
     'reading-progress',
     'vuepress-plugin-mathjax',
+    'vuepress-plugin-reading-time',
     [
       'vuepress-plugin-medium-zoom',
       {
