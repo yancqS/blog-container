@@ -3,6 +3,7 @@
 
 ### Bug Fixes
 
+* **升级npm包 timetoread 时间修复:bug::** fix time to read unexcept number ([f3345af](https://github.com/yancqS/blog-container/commit/f3345afcc5e3f8985a4409844db499db9533765a))
 * babel-hb ([304d7d6](https://github.com/yancqS/blog-container/commit/304d7d65380de4685e096c27b575ed9872064b62))
 * first sci-note format error :zap: ([2570663](https://github.com/yancqS/blog-container/commit/2570663809903ab861b59685f945ddc7854b550c))
 * fix emoji display error ([c2e62bc](https://github.com/yancqS/blog-container/commit/c2e62bc055cdbb53d94ad496f75ff89433ae3f48))
