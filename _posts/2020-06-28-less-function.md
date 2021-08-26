@@ -13,7 +13,7 @@ meta:
   - name: description
     content: less内置函数
   - name: keywords
-    content: less
+    content: less function, less
   - name: author
     content: Yoha
 featured: true

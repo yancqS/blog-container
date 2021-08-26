@@ -13,7 +13,7 @@ meta:
   - name: description
     content: JS原生函数模拟实现new和instanceof及函数柯里化
   - name: keywords
-    content: JS原生函数模拟实现new和instanceof, 函数柯里化
+    content: new, instanceof, 函数柯里化, Object.assign
   - name: author
     content: Yoha
 featured: true

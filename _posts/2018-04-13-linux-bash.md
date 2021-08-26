@@ -12,7 +12,7 @@ meta:
   - name: description
     content: 关于linux丢失/root文件夹导致的-bash-4.1#(不显示路径)的解决办法
   - name: keywords
-    content: 关于linux丢失/root文件夹导致的-bash-4.1#(不显示路径)的解决办法
+    content: linux, /root文件夹, -bash-4.1#
   - name: author
     content: Yoha
 featured: true

@@ -13,7 +13,7 @@ meta:
   - name: description
     content: Ubuntu 18.04LTS系统设置窗口打不开或者消失解决办法
   - name: keywords
-    content: Ubuntu
+    content: Ubuntu, 系统设置
   - name: author
     content: Yoha
 featured: true

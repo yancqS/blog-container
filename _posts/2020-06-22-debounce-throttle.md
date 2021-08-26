@@ -13,7 +13,7 @@ meta:
   - name: description
     content: 函数防抖和节流、以及Promise.all实现
   - name: keywords
-    content: 防抖, 节流, Promise.all实现
+    content: 防抖, 节流, Promise.all
   - name: author
     content: Yoha
 featured: true

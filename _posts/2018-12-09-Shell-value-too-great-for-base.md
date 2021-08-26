@@ -13,7 +13,7 @@ meta:
   - name: description
     content: Shell value too great for base
   - name: keywords
-    content: shell, error, base
+    content: shell, value too great for base
   - name: author
     content: Yoha
 featured: true
