@@ -2035,3 +2035,22 @@ class AnonymousSurvey:
             print(f"- {response}")
 ```
 
+测试用例：
+
+```python
+import unittest
+from get_format_name import AnonymousSurvey
+
+
+class NameTestCase(unittest.TestCase):
+    def test_store_single_response(self):
+        question = 'How old are you?'
+        my_survey = AnonymousSurvey(question)
+        my_survey.store_response('20')
+        self.assertIn('20', my_survey.response)
+
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
