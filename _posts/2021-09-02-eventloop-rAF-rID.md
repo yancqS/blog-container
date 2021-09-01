@@ -4,7 +4,7 @@ description: 深入解析 EventLoop 和浏览器渲染、帧动画、空闲回�
 date: '2021-09-02'
 author: Yoha
 location: Beijing
-image: https://gitee.com/yancqS/blogImage/raw/master/blogImage/20210802155602.png
+image: https://gitee.com/yancqS/blogImage/raw/master/blogImage/20210901153710.png
 tags:
     - JavaScript
     - 转载
@@ -17,7 +17,7 @@ meta:
     content: EventLoop, 浏览器渲染, 帧动画, 空闲回调
   - name: author
     content: Yoha
-featured: false
+featured: true
 ---
 
 # 深入解析 EventLoop 和浏览器渲染、帧动画、空闲回调的关系
