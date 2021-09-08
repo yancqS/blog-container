@@ -270,7 +270,7 @@ print(list(range(6, 2))) #  []
 
 - `min(list)` 找出数字列表中最小值
 - `max(list)` 找出数字列表中最大值
-- `sun(list)` 数字列表总和
+- `sum(list)` 数字列表总和
 
 
 #### 列表解析
