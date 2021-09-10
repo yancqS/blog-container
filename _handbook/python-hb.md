@@ -433,9 +433,9 @@ age_0 >= 21 or age_1 >= 21 #  False
 检查特定值是否包含在列表中:
 
 ```Python
-list = ['mushroom', 'onions', 'pineapple']
-'mushroom' in list # True
-'pepperoni' in list # False 
+list_1 = ['mushroom', 'onions', 'pineapple']
+'mushroom' in list_1 # True
+'pepperoni' in list_1 # False 
 ```
 
 检查特定值是否不包含在列表中:
