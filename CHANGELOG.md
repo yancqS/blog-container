@@ -1,4 +1,4 @@
-#  (2021-09-10)
+#  (2021-09-11)
 
 
 ### Bug Fixes
@@ -13,6 +13,7 @@
 * **fix error word in sci-note#6 :bug::** 支出 -> 指出 :zap: ([ce3d292](https://github.com/yancqS/blog-container/commit/ce3d2924c0327d8fa9acc2013637c4989c9f9684)), closes [sci-note#6](https://github.com/sci-note/issues/6)
 * paper image compress 错别字 ([08bb98a](https://github.com/yancqS/blog-container/commit/08bb98a68011d1bce1b78dee1f121e66ea4a61a8))
 * **py-hb.md:** fix typo: change 'sun' to 'sum' :bug: ([5e561e5](https://github.com/yancqS/blog-container/commit/5e561e51beb66ad881c361d27a002fc986590e94))
+* **py-hb:** fix error: change 'list' to 'list_1' ([ee2826c](https://github.com/yancqS/blog-container/commit/ee2826cbff5f9b7ad83e971018725dd4699e8d90))
 * sci-note2 原文跳转链接错误 ([4b06acf](https://github.com/yancqS/blog-container/commit/4b06acf84e355b757870227a3941ee95625afd0c))
 * sci-note2 原文跳转链接错误 ([2beaf54](https://github.com/yancqS/blog-container/commit/2beaf54d56137db673bf02837816f3779d27600e))
 
