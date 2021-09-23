@@ -2043,14 +2043,70 @@ from get_format_name import AnonymousSurvey
 
 
 class NameTestCase(unittest.TestCase):
+    def test_first_last_name(self):
+        format_name = get_format_name('john', 'hans')
+        self.assertEqual(format_name, 'John Hans')
+
     def test_store_single_response(self):
         question = 'How old are you?'
         my_survey = AnonymousSurvey(question)
         my_survey.store_response('20')
         self.assertIn('20', my_survey.response)
 
+    def test_store_three_response(self):
+        question = 'what language did you first learn to sprak?'
+        my_survey = AnonymousSurvey(question)
+        responses = ['English', 'Spanish', 'Mandarin']
+        for response in responses:
+            my_survey.store_response(response)
+        for response in responses:
+            self.assertIn(response, my_survey.response)
+
 
 if __name__ == '__main__':
     unittest.main()
 ```
+
+#### setUp()
+
+在前面的测试用例中，我们在每个测试方法中都创建了AnonymousSurvey实例，并且在每个方法中都创建了答案。unittest.TestCase类包含的方法`setUp()`让我们只需创建这些对象一次，就能在各个测试方法中使用。
+
+如果在TestCase类中包含`setUp()`方法，Python将先运行它，再运行各个以test_开头的方法。这样在你编写的每个测试方法中，都可以使用在方法`setUp()`中创建的对象。
+
+```python
+import unittest
+from get_format_name import AnonymousSurvey
+
+
+class NameTestCase(unittest.TestCase):
+    def setUp(self) -> None:
+        question = 'what language did you first learn to sprak?'
+        self.my_survey = AnonymousSurvey(question)
+        self.responses = ['English', 'Spanish', 'Mandarin']
+
+    def test_store_single_response(self):
+        self.my_survey.store_response(self.responses[0])
+        self.assertIn(self.responses[0], self.my_survey.response)
+
+    def test_store_three_response(self):
+        for response in self.responses:
+            self.my_survey.store_response(response)
+
+        for response in self.responses:
+            self.assertIn(response, self.my_survey.response)
+
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+## 最后
+
+Python基础的学习就先记录到这，下一步更多会用Python来写爬虫，并在此过程中发现问题，解决问题。
+
+发现的问题也会持续更新到这篇文章。
+
+关于爬虫的记录文章不会在此处记录。
+
+
 
