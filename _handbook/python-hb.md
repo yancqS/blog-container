@@ -5,7 +5,7 @@ languages:
   - python
 ---
 
-## 变量和简单数据类型
+## 第二章 变量和简单数据类型
 
 ### 变量
 
@@ -27,7 +27,7 @@ print(message)
 
 ### 使用方法修改字符串的大小写
 
-- String.title(): 以首字母大写的方式先是每个单词
+- String.title(): 以首字母大写的方式显示每个单词
 - String.upper(): 将字符串改为全部大写
 - String.lower(): 将字符串改为全部小写
 
@@ -96,7 +96,7 @@ Python没有内置的常量类型，但python程序员会使用全大写来指�
 MAX_CONNECTION = 5000
 ```
 
-## 列表简介
+## 第三章 列表简介
 
 ### 列表是什么
 
@@ -209,7 +209,7 @@ cars = ['bmw', 'audi', 'toyota', 'subaru']
 print(len(cars)) #  4
 ```
 
-## 操作列表
+## 第四章 操作列表
 
 ### 遍历列表
 
@@ -406,7 +406,7 @@ dimensions = (100, 200)
 dimensions = (200, 400)
 ```
 
-## if语句
+## 第五章 if语句
 
 ### 检查多个条件
 
@@ -584,7 +584,7 @@ Sorry, we don't have french fries
 Adding extra cheese
 Finished !
 ```
-## 字典
+## 第六章 字典
 
 在python中，**字典**是一系列**键值对**。每个键都与一个值相关联,可以使用键来访问相关联的值。与键相关联的值可以是数、字符串、列表乃至字典。
 
@@ -864,7 +864,7 @@ for username, user_info in users.items():
     print(f'\tLocation: {location.title()}')
 ```
 
-## 用户输入和while循环
+## 第七章 用户输入和while循环
 
 ### 函数input()的工作原理
 
@@ -1068,7 +1068,7 @@ Tom would like to climb 泰山.
 Jack would like to climb 华山.
 ```
 
-## 函数
+## 第八章 函数
 
 ### 定义函数
 
@@ -1166,27 +1166,27 @@ print(build_person("tom", "john", 27))
 向函数传递列表很有用，其中包括的可能是名字、数或更复杂的对象（如字典）。
 
 ```python
-def print_model(un_print_design, printed_design=[]):
+def print_model(unprintdesign, printeddesign=[]):
     """
     模拟打印每个设计，直到没有未打印的设计为止
-    :param un_print_design: 
-    :param printed_design: 
-    :return: 
+    :param unprintdesign:
+    :param printeddesign:
+    :return:
     """
-    while un_print_design:
-        current_design = un_print_design.pop()
+    while unprintdesign:
+        current_design = unprintdesign.pop()
         print(f'Printing Model is: {current_design}')
-        printed_design.append(current_design)
+        printeddesign.append(current_design)
 
 
-def show_printed_model(printed_design):
+def show_printed_model(printeddesign):
     """
     显示打印好的所有模型
-    :param printed_design: 
-    :return: 
+    :param printeddesign:
+    :return:
     """
     print(f'\nThe following model have been printed:\n')
-    for design in printed_design:
+    for design in printeddesign:
         print(design)
 
 
@@ -1324,7 +1324,7 @@ make_pizza(16, 'a', 'b', 'c')
 make_pizza(12, 'a', 'b')
 ```
 
-## 类
+## 第九章 类
 
 ### 创建和使用类
 
@@ -1718,7 +1718,7 @@ class E_car(Car):
 from car import E_car as EC, Car
 ```
 
-## 文件和异常
+## 第十章 文件和异常
 
 ### 从文件中读取数据
 
@@ -1959,7 +1959,7 @@ else:
     print(f'welcom back, {username}')
 ```
 
-## 测试代码
+## 第十一章 测试代码
 
 在本章中将会学习如何使用Python模块 `unittest`中的工具来测试代码。
 
@@ -2039,7 +2039,7 @@ class AnonymousSurvey:
 
 ```python
 import unittest
-from get_format_name import AnonymousSurvey
+from get_format_name import get_format_name, AnonymousSurvey
 
 
 class NameTestCase(unittest.TestCase):
