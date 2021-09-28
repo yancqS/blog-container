@@ -1,8 +1,9 @@
-#  (2021-09-25)
+#  (2021-09-28)
 
 
 ### Bug Fixes
 
+* **_handbook/python-hb.md:** fix typo error :bug: ([5ca5c39](https://github.com/yancqS/blog-container/commit/5ca5c39db8e5c8184d5d802199ded1a532682e61))
 * **2021-09-02-eventloop-raf-rid:** 替换封面图 ([d826a3f](https://github.com/yancqS/blog-container/commit/d826a3f6d8b83890783a849064d4473dd5246457))
 * **升级npm包 timetoread 时间修复:bug::** fix time to read unexcept number ([f3345af](https://github.com/yancqS/blog-container/commit/f3345afcc5e3f8985a4409844db499db9533765a))
 * babel-hb ([304d7d6](https://github.com/yancqS/blog-container/commit/304d7d65380de4685e096c27b575ed9872064b62))
