@@ -1,4 +1,4 @@
-#  (2021-09-28)
+#  (2021-09-29)
 
 
 ### Bug Fixes
@@ -21,6 +21,7 @@
 
 ### Features
 
+* **_post/sci-note9&10.md:** add sci-note[#9](https://github.com/yancqS/blog-container/issues/9)[#10](https://github.com/yancqS/blog-container/issues/10) by ruanyf :art: ([86e2ffa](https://github.com/yancqS/blog-container/commit/86e2ffa78eda3a356b0cc5dcab44cd5763cd4293))
 * **2021-09-03-sci-note7.md:** add paper sci-note[#7](https://github.com/yancqS/blog-container/issues/7) by ruanyf :art: ([ad06e63](https://github.com/yancqS/blog-container/commit/ad06e632447d303e4fd1a9fcdf6e83b1999ea8ee))
 * **2021-09-11-sci-note8:** add new paper 2021-09-11-sci-note8 :art: :tada: ([cf5bdba](https://github.com/yancqS/blog-container/commit/cf5bdbaf681be00cad87c432901244edc10bc1d0))
 * **添加随机一句 :tada::** add random sentence support by hitokoto ([bad8fdd](https://github.com/yancqS/blog-container/commit/bad8fddb8caa4af7a2a9eba0b5b5a8c8fcb78265))
