@@ -1,4 +1,4 @@
-#  (2021-09-29)
+#  (2021-10-02)
 
 
 ### Bug Fixes
@@ -21,6 +21,7 @@
 
 ### Features
 
+* **_post/2021-09-29-sir.md:** add new paper about SIR :tada: ([8547b5e](https://github.com/yancqS/blog-container/commit/8547b5e24c7ca7671d07a5417c1caffb00f4276a))
 * **_post/sci-note9&10.md:** add sci-note[#9](https://github.com/yancqS/blog-container/issues/9)[#10](https://github.com/yancqS/blog-container/issues/10) by ruanyf :art: ([86e2ffa](https://github.com/yancqS/blog-container/commit/86e2ffa78eda3a356b0cc5dcab44cd5763cd4293))
 * **2021-09-03-sci-note7.md:** add paper sci-note[#7](https://github.com/yancqS/blog-container/issues/7) by ruanyf :art: ([ad06e63](https://github.com/yancqS/blog-container/commit/ad06e632447d303e4fd1a9fcdf6e83b1999ea8ee))
 * **2021-09-11-sci-note8:** add new paper 2021-09-11-sci-note8 :art: :tada: ([cf5bdba](https://github.com/yancqS/blog-container/commit/cf5bdbaf681be00cad87c432901244edc10bc1d0))
