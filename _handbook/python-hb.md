@@ -60,6 +60,15 @@ print('Language: \n\tPython\n\tC\n\tJavaScript')
 - `String.lstrip()`: 删除字符串开头的空白
 - `String.srtip()`: 删除字符串两边的空白
 
+---
+
+补充：
+
+- `String.decode(encoding='UTF-8',errors='strict')`以 encoding 指定的编码格式解码 string，如果出错默认报一个 ValueError 的 异 常 ， 除非 errors 指 定 的 是 'ignore' 或 者'replace'
+- `String.encode(encoding='UTF-8',errors='strict')`以 encoding 指定的编码格式编码 string，如果出错默认报一个ValueError 的异常，除非 errors 指定的是'ignore'或者'replace'
+
+---
+
 ### 数
 
 在Python中，可对整数执行加(`+`)减(`-`)乘(`*`)除(`/`)运算。使用两个乘号表示乘方运算。

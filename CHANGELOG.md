@@ -1,4 +1,4 @@
-#  (2021-10-02)
+#  (2021-10-10)
 
 
 ### Bug Fixes
@@ -9,6 +9,7 @@
 * babel-hb ([304d7d6](https://github.com/yancqS/blog-container/commit/304d7d65380de4685e096c27b575ed9872064b62))
 * **busuanzi overlap :bug::** add media search :zap: ([20d0fc4](https://github.com/yancqS/blog-container/commit/20d0fc48e9ac8221ea77b1308a2fc2fab6777a06))
 * first sci-note format error :zap: ([2570663](https://github.com/yancqS/blog-container/commit/2570663809903ab861b59685f945ddc7854b550c))
+* fix date error ([e02ee7e](https://github.com/yancqS/blog-container/commit/e02ee7e4a3f9656b283f995972910533a9362506))
 * fix emoji display error ([c2e62bc](https://github.com/yancqS/blog-container/commit/c2e62bc055cdbb53d94ad496f75ff89433ae3f48))
 * fix error url of sci-note3 :bug: ([d33f1c6](https://github.com/yancqS/blog-container/commit/d33f1c6bb7b5443ae5158fc2fd5deda61fa525bd))
 * **fix error word in sci-note#6 :bug::** 支出 -> 指出 :zap: ([ce3d292](https://github.com/yancqS/blog-container/commit/ce3d2924c0327d8fa9acc2013637c4989c9f9684)), closes [sci-note#6](https://github.com/sci-note/issues/6)
@@ -17,6 +18,7 @@
 * **py-hb:** fix error: change 'list' to 'list_1' ([ee2826c](https://github.com/yancqS/blog-container/commit/ee2826cbff5f9b7ad83e971018725dd4699e8d90))
 * sci-note2 原文跳转链接错误 ([4b06acf](https://github.com/yancqS/blog-container/commit/4b06acf84e355b757870227a3941ee95625afd0c))
 * sci-note2 原文跳转链接错误 ([2beaf54](https://github.com/yancqS/blog-container/commit/2beaf54d56137db673bf02837816f3779d27600e))
+* update new kwy words ([cdb5fb5](https://github.com/yancqS/blog-container/commit/cdb5fb5bf3c296bd6e3494ce962330795857341e))
 
 
 ### Features
