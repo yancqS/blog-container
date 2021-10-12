@@ -66,6 +66,7 @@ print('Language: \n\tPython\n\tC\n\tJavaScript')
 
 - `String.decode(encoding='UTF-8',errors='strict')`以 encoding 指定的编码格式解码 string，如果出错默认报一个 ValueError 的 异 常 ， 除非 errors 指 定 的 是 'ignore' 或 者'replace'
 - `String.encode(encoding='UTF-8',errors='strict')`以 encoding 指定的编码格式编码 string，如果出错默认报一个ValueError 的异常，除非 errors 指定的是'ignore'或者'replace'
+- `String.center(width)`返回一个原字符串居中,并使用空格填充至长度 width 的新字符串
 
 ---
 
