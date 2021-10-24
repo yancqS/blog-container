@@ -1969,6 +1969,38 @@ else:
     print(f'welcom back, {username}')
 ```
 
+---
+
+[Python3中的json.dumps()出现\uXXXX：json.dumps()将中文转换为unicode编码](https://blog.csdn.net/weixin_44870139/article/details/108263167)
+
+原因：
+
+- Python 3 已经将unicode作为默认编码
+- Python 3中的json在做dumps()操作时，会将中文转换成unicode编码，并以16进制方式存储，再做loads()逆向操作时，会将unicode编码转换回中文，因此json.dumps操作后，得到的字符串是\uXXXX
+
+解决：
+
+- json.dumps() 有一个ensure_ascii参数，当它为True的时候，所有非ASCII码字符显示为\uXXXX序列。在dump时将ensure_ascii设置为False，此时存入json的中文可正常显示。
+
+```python
+json.dumps(dic, ensure_ascii=False)
+```
+
+[Python字典的json格式化处理（换行与不换行）](https://www.cnblogs.com/langqi250/p/10942616.html)
+
+```python
+Prefer = {"jim": {"War": 1.9, "the big bang": 1.0, "The lord of wings": 4.0, "Beautiful America": 4.7}, "lily": {"War": 2.0, "Kongfu": 4.1, "The lord of wings": 3.6}, "tommy": {"War": 2.3, "Kongfu": 5.0, "The lord of wings": 3.0}, "jack": {"War": 2.8, "Kongfu": 5.5, "The lord of wings": 3.5}}
+print('将字典一行显示不换行')
+print(json.dumps(Prefer))
+
+print('将字典按照json样式可视化显示')
+print(json.dumps(Prefer,indent=4))
+```
+
+
+
+---
+
 ## 第十一章 测试代码
 
 在本章中将会学习如何使用Python模块 `unittest`中的工具来测试代码。

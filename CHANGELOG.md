@@ -1,4 +1,4 @@
-#  (2021-10-22)
+#  (2021-10-24)
 
 
 ### Bug Fixes
@@ -18,6 +18,7 @@
 * **py-hb:** fix error: change 'list' to 'list_1' ([ee2826c](https://github.com/yancqS/blog-container/commit/ee2826cbff5f9b7ad83e971018725dd4699e8d90))
 * sci-note2 原文跳转链接错误 ([4b06acf](https://github.com/yancqS/blog-container/commit/4b06acf84e355b757870227a3941ee95625afd0c))
 * sci-note2 原文跳转链接错误 ([2beaf54](https://github.com/yancqS/blog-container/commit/2beaf54d56137db673bf02837816f3779d27600e))
+* **sql.md:** fix: fix typo error :bug: ([c52845d](https://github.com/yancqS/blog-container/commit/c52845d426193eb4faa8dddc2b92222cdefcc5b2))
 * update new kwy words ([cdb5fb5](https://github.com/yancqS/blog-container/commit/cdb5fb5bf3c296bd6e3494ce962330795857341e))
 
 
