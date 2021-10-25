@@ -1,6 +1,6 @@
 module.exports = {
   title: 'Yoha\'s Blog',
-  description: '保持思考🤔 永远年轻🤟',
+  description: '道虽迩，不行不至；事虽小，不为不成',
   markdown: {
     lineNumbers: true
   },
