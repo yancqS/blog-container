@@ -413,7 +413,7 @@ featured: true
 
   输出为：
 
-  ```text
+  ```
   1cm
   0.0016
   5
@@ -517,7 +517,7 @@ isruleset(blue);     // false
 
   输出为：
 
-  ```text
+  ```
   9000ms
   140mm
   8

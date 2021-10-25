@@ -14,6 +14,7 @@ module.exports = {
   theme: "vuepress-theme-custom",
   summaryLength: 100,
   themeConfig: {
+    heroImage: 'https://gitee.com/yancqS/blogImage/raw/master/blogImage/20211025234701.png',
     translations: {
       read_more: 'Keep reading!',
       read_this_post: 'Read this post now!',

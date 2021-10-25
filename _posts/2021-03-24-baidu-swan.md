@@ -352,7 +352,7 @@ console.log(appInstance);
 
 在SWAN模板中书写一下代码：
 
-```swan
+```html
 <view>{{ me }}</view>
 <button bind:tap="setName">点击变值</button>
 ```
@@ -376,7 +376,7 @@ Page({
 
 - 基础数据绑定
 
-```swan
+```html
 <!-- xxx.swan -->
 <view>
     hi, {{name}}
@@ -395,7 +395,7 @@ Page({
 
 开发者可以通过在元素上添加s-for、s-if指令来进行渲染和视图层的逻辑判断。
 
-```swan
+```html
 <!-- xxx.swan -->
 <view s-for="name in names">
     {{name.name}}
@@ -443,7 +443,7 @@ tap | 手指触摸后马上离开动作
 
 开发者可以通过**dataset**在组件中自定义数据，并在事件发生时，由 SWAN 所在事件对象中，传递给绑定函数。
 
-```swan
+```html
 <!-- xxx.swan -->
 <view data-swan="{{test}}" bind:tap="viewtap">dataset-test</view>
 ```
@@ -511,7 +511,7 @@ Page() 函数用来注册一个页面。接受一个 object 参数，其指定�
 
 同时，类似于页面开发。开发自定义组件，可以在 swan 文件中编写组件模板，在 css 文件中引入样式，它们的写法和页面的写法类似。
 
-```swan
+```html
 <!-- custom.swan -->
 <view class="name" bind:tap="onTap">
     {{name}}{{age}}
@@ -577,7 +577,7 @@ Component({
 
 这样在页面的 swan 文件中，就可以像使用基础组件一样使用自定义组件。节点名即自定义组件的标签名，节点属性即传递给组件的属性值。
 
-```swan
+```html
 <!-- xxx.swan -->
 <view>
     <custom name="swanApp"></custom>
@@ -590,7 +590,7 @@ Component({
 
 在组建模板中可以提供一个`<slot>`节点，用于承载组件引用时提供的子节点。
 
-```swan
+```html
 <!-- custom.swan -->
 <view>
     {{name}}{{age}}
@@ -599,7 +599,7 @@ Component({
 </view>
 ```
 
-```swan
+```html
 <!-- xxxx.swan -->
 <view>
     <custom name="swanApp">
@@ -610,7 +610,7 @@ Component({
 
 通过 name 属性可以给 slot 命名。一个视图模板的声明可以包含一个默认 slot 和多个命名 slot。外层组件或页面的元素通过 slot="name" 的属性声明，可以指定自身的插入点。
 
-```swan
+```html
 <!-- custom.swan -->
 <view>
     <slot name="slot1"></slot>
@@ -618,7 +618,7 @@ Component({
 </view>
 ```
 
-```swan
+```html
 <!-- xxx.swan -->
 <view>
     <custom>
@@ -632,7 +632,7 @@ Component({
 
 在 slot 声明时应用 if 或 for 指令，可以让插槽根据组件数据动态化。
 
-```swan
+```html
 <view>
     <slot s-if="!visible" name="subcomponent"></slot>
 </view>
@@ -642,7 +642,7 @@ Component({
 
 与普通的 SWAN 模板类似，可以使用数据绑定，这样就可以向子组件的属性传递动态数据。
 
-```swan
+```html
 <view>
     <custom prop-a="{{dataFieldA}}" prop-b="{{dataFieldB}}">
         <view>这里是插入到组件slot中的内容</view>
@@ -660,7 +660,7 @@ Component({
 
 组件：
 
-```swan
+```html
 <!-- custom自定义组件 -->
 <view class="component-range">
     <slot name="inner"></slot>
@@ -677,7 +677,7 @@ Component({
 
 使用组件的页面或组件：
 
-```swan
+```html
 <view>
     <custom>
         <view slot="inner">{{name}}</view>
@@ -695,7 +695,7 @@ Page({
 
 渲染结果：
 
-```swan
+```html
 <view>
     <view class="component-range">
         <view>swan-outer</view>
@@ -709,7 +709,7 @@ Page({
 
 组件：
 
-```swan
+```html
 <!-- custom自定义组件 -->
 <view class="component-range">
     <slot name="inner" var-name="name"></slot>
@@ -726,7 +726,7 @@ Component({
 
 使用组件的页面或组件：
 
-```swan
+```html
 <view>
     <custom>
         <view slot="inner">{{name}}</view>
@@ -744,7 +744,7 @@ Page({
 
 渲染结果：
 
-```swan
+```html
 <view>
     <view class="component-range">
         <view>swan-inner</view>
@@ -763,14 +763,14 @@ Component({
 });
 ```
 
-```swan
+```html
 <!-- 组件 custom.swan -->
 <view class="external-class">这段文本的颜色由组件外的 class 决定</view>
 ```
 
 组件的使用者可以像使用其他属性一样，指定这个样式类对应的 class 。
 
-```swan
+```html
 <!-- 使用组件的页面或者组件 -->
 <custom external-class="red-text" />
 ```
@@ -834,7 +834,7 @@ Component({
 })
 ```
 
-```swan
+```html
 <!-- 引用组件的页面swan文件 -->
 <custom name="yanhaha" dataA="{{number1}}" bind:tap="increNum" bind:myEvent="listener">
     <view slot="slot1">我是slot1</view>
@@ -858,7 +858,7 @@ Page({
 
 - 通过 this.selectComponent 方法获取子组件示例对象
 
-```swan
+```html
 <!-- 使用组件的页面 -->
 <custom id="customid" name="yanhaha" dataA="{{number1}}" bind:tap="increNum" bind:myEvent="listener">
     <view slot="slot1">我是slot1</view>
@@ -1042,7 +1042,7 @@ Component({
 
 关于抽象节点：在自定义组件中的一些节点，其对应的自定义组件不是由自定义组件自身决定的，而是由自定义组件的调用者确定的。这个时候就可以把节点声明为“抽象节点”。
 
-```swan
+```html
 //selectable-group.swan
 <view s-for="{{labels}}">
   <label bindtap="itemTap" data-index="{{index}}">
@@ -1079,7 +1079,7 @@ Component({
 
 应该如何使用包含抽象节点的组件呢？
 
-```swan
+```html
 <!-- index.swan -->
 <view>selectable-group with custom-radio</view>
 <selectable-group generic:selectable="custom-radio" />
@@ -1179,7 +1179,7 @@ SWAN模板中的动态数据都从逻辑层Page中data对象中来。数据绑�
 
 代码示例：
 
-```swan
+```html
 <scroll-view
     scroll-top="{= scrollTop =}"
     scroll-into-view="{= scrollIntoView =}"
@@ -1259,7 +1259,7 @@ trackBy 后跟的值可以是 s-for 的 array 中 item 本身或者其属性（�
 
 >注意：`s-if`与`s-for`不可在同一标签下同时使用。
 
-```swan
+```html
 <view s-if="is4G">4G</view>
 <view s-elif="isWifi">Wifi</view>
 <view s-else>Other</view>
@@ -1277,7 +1277,7 @@ SWAN 提供模板 template 的用法，旨在提高工程化和代码可维护�
 
 代码示例：
 
-```swan
+```html
 <!-- template-demo.swan-->
 <template name="person-card">
     <view>
@@ -1319,7 +1319,7 @@ SWAN 提供模板 template 的用法，旨在提高工程化和代码可维护�
 
 代码示例：
 
-```swan
+```html
 <view id="wrap" bindtap="handleTap1">
     wrap
     <view id="module" catchtap="handleTap2">
@@ -1339,7 +1339,7 @@ SWAN 提供模板 template 的用法，旨在提高工程化和代码可维护�
 
 代码示例：capture-bind
 
-```swan
+```html
 <view id="wrap" bind:touchstart="handleTap1" capture-bind:touchstart="handleTap2">
     wrap
     <view id="inner" bind:touchstart="handleTap3" capture-bind:touchstart="handleTap4">
@@ -1352,7 +1352,7 @@ SWAN 提供模板 template 的用法，旨在提高工程化和代码可维护�
 
 代码示例：capture-catch
 
-```swan
+```html
 <view id="wrap" bind:touchstart="handleTap1" capture-catch:touchstart="handleTap2">
     wrap
     <view id="inner" bind:touchstart="handleTap3" capture-bind:touchstart="handleTap4">
@@ -1431,7 +1431,7 @@ SWAN可以通过 `import` 和 `include`来引用模板文件。
 
 首先，在person-card.swan中定义了一个叫person-card的template：
 
-```swan
+```html
 <!-- person-card.swan-->
 <template name="person-card">
     <view>
@@ -1443,7 +1443,7 @@ SWAN可以通过 `import` 和 `include`来引用模板文件。
 
 然后，在index.swan里引用文件person-card.swan，并使用它的模板：
 
-```swan
+```html
 <!-- index.swan-->
 <import src="./person-card.swan" />
 <template is="person-card" data="{{person}}" />
@@ -1467,7 +1467,7 @@ Page({
 
 通过`include`可以将目标模板整个（除了 template）引入到当前的位置，相当于`inline`。
 
-```swan
+```html
 <!-- index.swan -->
 <include src="header.swan"/>
 <view> body </view>
