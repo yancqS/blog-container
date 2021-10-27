@@ -12,9 +12,9 @@ module.exports = {
   ],
   base: '/blog/',
   theme: "vuepress-theme-custom",
-  summaryLength: 100,
   themeConfig: {
-    heroImage: 'https://gitee.com/yancqS/blogImage/raw/master/blogImage/20211025234701.png',
+    heroImage: 'https://gitee.com/yancqS/blogImage/raw/master/blogImage/20211027231332.jpeg',
+    summaryLength: 300,
     translations: {
       read_more: 'Keep reading!',
       read_this_post: 'Read this post now!',
@@ -51,7 +51,7 @@ module.exports = {
     about: {
       fullName: 'Qing',
       bio: '科幻迷😄  漫威粉🤟  爱前端🥰  爱米线🌟  搓炉石🎮  LOL云玩家🎮  被写代码耽误的大厨🤣',
-      image: 'https://gitee.com/yancqS/blogImage/raw/master/blogImage/20201018002803.jpg',
+      image: 'https://gitee.com/yancqS/blogImage/raw/master/blogImage/20211027232539.jpeg',
     },
     logo: 'https://gitee.com/yancqS/blogImage/raw/master/blogImage/20210414163022.jpeg',
     friendlink: [

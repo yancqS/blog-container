@@ -1,4 +1,4 @@
-#  (2021-10-26)
+#  (2021-10-27)
 
 
 ### Bug Fixes
@@ -33,6 +33,7 @@
 * **add paper eventloop raf-ric :art::** add paper eventloop raf-ric :art: ([b41120e](https://github.com/yancqS/blog-container/commit/b41120e271b5f9b1223839c5caa8af5b70138281))
 * **add paper sci-note#six :fire::** update paper sci-note#six bu ruanyf :art: ([7918eb0](https://github.com/yancqS/blog-container/commit/7918eb0dea31cd9cb4b309267f79be0e0d9f0628))
 * **life/promisetomarry.md:** promiseToMarry :tada: :tada: :tada: ([4b6fb4e](https://github.com/yancqS/blog-container/commit/4b6fb4e2f571dd6be299a02350ed526d5703ab65))
+* **node-color-console.md:** add new paper node-color-console.md :zap: ([e7c11e0](https://github.com/yancqS/blog-container/commit/e7c11e06f3a4828a8370587ffdfe0a6c3c69707a))
 * **py-hb :zap::** py-hb change ([c94fd90](https://github.com/yancqS/blog-container/commit/c94fd902becbf208404fd8043247302cf78e87dd))
 * **sci-note5#172 :100::** update paper sci-note[#172](https://github.com/yancqS/blog-container/issues/172) by ruanyf :rocket: ([4188b13](https://github.com/yancqS/blog-container/commit/4188b13803ff7006f92901ef2135cb8fe39e199e))
 * **sql.md :art::** add new paper about SQL :fire: ([bb1d07c](https://github.com/yancqS/blog-container/commit/bb1d07c8c836c65a616fbf1c2cdc8fc55d02f460))
