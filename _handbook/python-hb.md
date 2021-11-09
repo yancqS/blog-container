@@ -1844,6 +1844,67 @@ I also love finding meaning in large dataset too.
 
 ```
 
+---
+
+- [使用python删除一个文件或文件夹](https://www.cnblogs.com/aaronthon/p/9509538.html)
+
+使用python删除一个文件或文件夹，需要使用os模块。
+
+```python
+import os
+os.remove(path)  # path是文件的路径，如果这个路径是一个文件夹，则会抛出OSError的错误，这时需用用rmdir()来删除
+os.rmdir(path)  # path是文件夹路径，注意文件夹需要时空的才能被删除
+os.unlink('F:\新建文本文档.txt')  # unlink的功能和remove一样是删除一个文件，但是删除一个删除一个正在使用的文件会报错。
+```
+
+- [Python判断文件/目录是否存在](https://www.runoob.com/w3cnote/python-check-whether-a-file-exists.html)
+
+Python 操作文件时，我们一般要先判断指定的文件或目录是否存在，不然容易产生异常。
+
+例如我们可以使用 **os** 模块的 **os.path.exists()** 方法来检测文件是否存在：
+
+```python
+import os.path
+os.path.isfile(fname)
+```
+
+如果你要确定他是文件还是目录，从 Python 3.4 开始可以使用 pathlib 模块提供的面向对象的方法 (Python 2.7 为 pathlib2 模块):
+
+```python
+from pathlib import Path
+
+my_file = Path("/path/to/file")
+if my_file.is_file():
+    # 指定的文件存在
+```
+
+检测是否是一个目录
+
+```python
+if my_file.is_dir():
+    # 指定的目录存在
+```
+
+如果要检测路径是一个文件或目录可以使用 exists() 方法：
+
+```python
+if my_file.exists():
+    # 指定的文件或目录存在
+```
+
+在 try 语句块中你可以使用 resolve() 方法来判断：
+
+```py
+try:
+    my_abs_path = my_file.resolve()
+except FileNotFoundError:
+    # 不存在
+else:
+    # 存在
+```
+
+---
+
 ### 异常
 
 Python使用称为**异常**的特殊对象来管理程序执行期间发生的错误。异常时使用`try-except`代码块处理的，即便出现异常，程序也将继续运行：显示你编写的友好的提示信息。
