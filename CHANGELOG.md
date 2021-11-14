@@ -1,4 +1,4 @@
-#  (2021-11-11)
+#  (2021-11-14)
 
 
 ### Bug Fixes
@@ -32,6 +32,7 @@
 * **添加随机一句 :tada::** add random sentence support by hitokoto ([bad8fdd](https://github.com/yancqS/blog-container/commit/bad8fddb8caa4af7a2a9eba0b5b5a8c8fcb78265))
 * **add paper eventloop raf-ric :art::** add paper eventloop raf-ric :art: ([b41120e](https://github.com/yancqS/blog-container/commit/b41120e271b5f9b1223839c5caa8af5b70138281))
 * **add paper sci-note#six :fire::** update paper sci-note#six bu ruanyf :art: ([7918eb0](https://github.com/yancqS/blog-container/commit/7918eb0dea31cd9cb4b309267f79be0e0d9f0628))
+* **enceyption.md:** add new post called encryption.md :zap: ([924dc47](https://github.com/yancqS/blog-container/commit/924dc47b26105811ce8dc78c2958f32adca4d31f))
 * **life/promisetomarry.md:** promiseToMarry :tada: :tada: :tada: ([4b6fb4e](https://github.com/yancqS/blog-container/commit/4b6fb4e2f571dd6be299a02350ed526d5703ab65))
 * **node-color-console.md:** add new paper node-color-console.md :zap: ([e7c11e0](https://github.com/yancqS/blog-container/commit/e7c11e06f3a4828a8370587ffdfe0a6c3c69707a))
 * **py-hb :zap::** py-hb change ([c94fd90](https://github.com/yancqS/blog-container/commit/c94fd902becbf208404fd8043247302cf78e87dd))
