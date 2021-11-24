@@ -1,4 +1,4 @@
-#  (2021-11-23)
+#  (2021-11-24)
 
 
 ### Bug Fixes
@@ -9,6 +9,7 @@
 * babel-hb ([304d7d6](https://github.com/yancqS/blog-container/commit/304d7d65380de4685e096c27b575ed9872064b62))
 * **busuanzi overlap :bug::** add media search :zap: ([20d0fc4](https://github.com/yancqS/blog-container/commit/20d0fc48e9ac8221ea77b1308a2fc2fab6777a06))
 * **config.js & less-function.md & baidu-swan.md:** fix error change markdown language mark :zap: ([1466b49](https://github.com/yancqS/blog-container/commit/1466b49c28dd3b35002a38248dd4a74cea86c095))
+* **exgcd.md:** fix: correct bkg image url :bug: ([c5004d8](https://github.com/yancqS/blog-container/commit/c5004d89125e05c2d24dff311375bf7fb5a7aea2))
 * first sci-note format error :zap: ([2570663](https://github.com/yancqS/blog-container/commit/2570663809903ab861b59685f945ddc7854b550c))
 * fix date error ([e02ee7e](https://github.com/yancqS/blog-container/commit/e02ee7e4a3f9656b283f995972910533a9362506))
 * fix emoji display error ([c2e62bc](https://github.com/yancqS/blog-container/commit/c2e62bc055cdbb53d94ad496f75ff89433ae3f48))
