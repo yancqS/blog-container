@@ -458,4 +458,191 @@ LIMIT <num_limit> OFFSET <num_offset>;
 
 ## 第六章 过滤数据
 
+### 使用WHERE子句
+
+```mysql
+select prod_name, prod_price from products where prod_price=2.50;
+```
+
+```
+mysql> select prod_name, prod_price from products where prod_price=2.50;
++---------------+------------+
+| prod_name     | prod_price |
++---------------+------------+
+| Carrots       |       2.50 |
+| TNT (1 stick) |       2.50 |
++---------------+------------+
+2 rows in set (0.00 sec)
+```
+
+> `WHERE`子句的位置：在同时使用`WHERE`子句和`ORDER BY`子句时，应该让`ORDER BY`位于`WHERE`之后，否则将会产生错误。
+
+### WHERE子句操作符
+
+`WHERE`子句操作符：
+
+| 操作符           | 说明               |
+| ---------------- | ------------------ |
+| =                | 等于               |
+| <>               | 不等于             |
+| !=               | 不等于             |
+| <                | 小于               |
+| <=               | 小于等于           |
+| >                | 大于               |
+| >=               | 大于等于           |
+| BETWEEN...AND... | 在指定的两个值之间 |
+
+#### 范围值检查
+
+```mysql
+select prod_name, prod_price from products where prod_price between 10 and 30 order by prod_price asc;
+```
+
+```
+mysql> select prod_name, prod_price from products where prod_price between 10 and 30 order by prod_price asc;
++----------------+------------+
+| prod_name      | prod_price |
++----------------+------------+
+| Bird seed      |      10.00 |
+| TNT (5 sticks) |      10.00 |
+| Detonator      |      13.00 |
+| 2 ton anvil    |      14.99 |
++----------------+------------+
+4 rows in set (0.00 sec)
+```
+
+#### 不匹配检查
+
+
+```mysql
+select vend_id, prod_name from products where vend_id!=1003;
+```
+
+```
+mysql> select vend_id, prod_name from products where vend_id!=1003;
++---------+--------------+
+| vend_id | prod_name    |
++---------+--------------+
+|    1001 | .5 ton anvil |
+|    1001 | 1 ton anvil  |
+|    1001 | 2 ton anvil  |
+|    1002 | Fuses        |
+|    1002 | Oil can      |
+|    1005 | JetPack 1000 |
+|    1005 | JetPack 2000 |
++---------+--------------+
+7 rows in set (0.00 sec)
+```
+
+#### 单个值检查
+
+```mysql
+select prod_name, prod_price from products where prod_name = 'fuses';
+```
+
+```
+mysql> select prod_name, prod_price from products where prod_name = 'fuses';
++-----------+------------+
+| prod_name | prod_price |
++-----------+------------+
+| Fuses     |       3.42 |
++-----------+------------+
+1 row in set (0.00 sec)
+```
+
+> 何时使用引号？单引号用来限定字符串。如果将值与串类型的列进行比较，则需要限定引号。用来与数值列进行比较的值不用引号。
+
+#### 空值检查
+
+在创建表时，表设计人员可以指定其中的列是否可以不包含值。在一个列不包含值时，称其为包含空值`NULL`。
+
+> `NULL`,无值（no value），它与字段包含0、空字符串或仅仅包含空格不同。
+
+```mysql
+select cust_id from customers where cust_email is null;
+```
+
+```
+mysql> select cust_id from customers where cust_email is null;
++---------+
+| cust_id |
++---------+
+|   10002 |
+|   10005 |
++---------+
+2 rows in set (0.01 sec)
+```
+
+## 第七章 数据过滤
+
+在第六章介绍的所有`WHERE`子句在过滤时使用的都是单一的条件。
+
+为了进行更强的过滤控制，MySQL允许给出多个`WHERE`子句。这些子句可以两种方式使用：以`AND`子句的方式活以`OR`子句的方式。
+
+#### AND操作符
+
+`AND`用于检索满足所有给定条件的行；
+
+```mysql
+select prod_id, prod_price, prod_name from products where vend_id = 1003 and prod_price <= 10;
+```
+
+```
+mysql> select prod_id, prod_price, prod_name from products where vend_id = 1003 and prod_price <= 10;
++---------+------------+----------------+
+| prod_id | prod_price | prod_name      |
++---------+------------+----------------+
+| FB      |      10.00 | Bird seed      |
+| FC      |       2.50 | Carrots        |
+| SLING   |       4.49 | Sling          |
+| TNT1    |       2.50 | TNT (1 stick)  |
+| TNT2    |      10.00 | TNT (5 sticks) |
++---------+------------+----------------+
+5 rows in set (0.00 sec)
+```
+
+上述例子中使用了只包含一个关键字`AND`的语句，把两个过滤条件组合在一起。还可以添加多个过滤条件，每添加一条就要使用一个`AND`。
+
+#### OR操作符
+
+`OR`用于检索匹配任一给定条件的行。
+
+```mysql
+select prod_name, prod_price, vend_id from products where vend_id = 1002 or vend_id = 1003;
+```
+
+```
+mysql> select prod_name, prod_price, vend_id from products where vend_id = 1002 or vend_id = 1003;
++----------------+------------+---------+
+| prod_name      | prod_price | vend_id |
++----------------+------------+---------+
+| Fuses          |       3.42 |    1002 |
+| Oil can        |       8.99 |    1002 |
+| Detonator      |      13.00 |    1003 |
+| Bird seed      |      10.00 |    1003 |
+| Carrots        |       2.50 |    1003 |
+| Safe           |      50.00 |    1003 |
+| Sling          |       4.49 |    1003 |
+| TNT (1 stick)  |       2.50 |    1003 |
+| TNT (5 sticks) |      10.00 |    1003 |
++----------------+------------+---------+
+9 rows in set (0.00 sec)
+```
+
+#### 计算次序
+
+`WHERE`可包含任意数目的`AND`和`OR`操作符。
+
+
+
+
+
+
+
+
+
+
+
+
+
 
