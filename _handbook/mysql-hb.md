@@ -1069,4 +1069,136 @@ mysql> select 'hello' regexp '[a-z]{2,}';
 
 ## 第十章 创建计算字段
 
+### 拼接字段
+
+- 拼接：将值联结到一起构成单个值。
+
+可使用拼接函数`concat()`函数来拼接两个列。
+
+```mysql
+select concat(vend_name, '(', vend_country ,')') from vendors order by vend_name;
+```
+
+```
+mysql> select concat(vend_name, '(', vend_country ,')') from vendors order by vend_name;
++-------------------------------------------+
+| concat(vend_name, '(', vend_country ,')') |
++-------------------------------------------+
+| ACME(USA)                                 |
+| Anvils R Us(USA)                          |
+| Furball Inc.(USA)                         |
+| Jet Set(England)                          |
+| Jouets Et Ours(France)                    |
+| LT Supplies(USA)                          |
++-------------------------------------------+
+6 rows in set (0.00 sec)
+```
+
+`concat()`拼接串，即把多个串连接起来行成一个较长的串。
+
+> Trim函数：
+>
+> - RTrim() 去掉串右边的空格
+> - LTrim() 去掉串左边的空格
+> - Trim() 去掉串左右两边的空格
+
+#### 使用别名
+
+别名是一个字段或值的替换名，有时也称为导出列。别名用`AS`关键字赋予。
+
+```mysql
+select concat(vend_name, '(', vend_country ,')') as vend_title from vendors order by vend_name;
+```
+
+```
+mysql> select concat(vend_name, '(', vend_country ,')') as vend_title from vendors order by vend_name;
++------------------------+
+| vend_title             |
++------------------------+
+| ACME(USA)              |
+| Anvils R Us(USA)       |
+| Furball Inc.(USA)      |
+| Jet Set(England)       |
+| Jouets Et Ours(France) |
+| LT Supplies(USA)       |
++------------------------+
+6 rows in set (0.00 sec)
+```
+
+### 执行算术计算
+
+| 操作符 | 说明 |
+| ------ | ---- |
+| +      | 加   |
+| -      | 减   |
+| *      | 乘   |
+| /      | 除   |
+
+```mysql
+select prod_id,
+			 quantity,
+			 item_price,
+			 quantity * item_price as expanded_price
+from orderitems where order_num = 20005;
+```
+
+```
+mysql> select prod_id, quantity, item_price, quantity * item_price as expanded_price from orderitems where order_num = 20005;
++---------+----------+------------+----------------+
+| prod_id | quantity | item_price | expanded_price |
++---------+----------+------------+----------------+
+| ANV01   |       10 |       5.99 |          59.90 |
+| ANV02   |        3 |       9.99 |          29.97 |
+| TNT2    |        5 |      10.00 |          50.00 |
+| FB      |        1 |      10.00 |          10.00 |
++---------+----------+------------+----------------+
+4 rows in set (0.00 sec)
+```
+
+### 如何测试计算
+
+`SELECT`提供了测试和试验函数与计算的一个很好的办法。虽然`SELECT`通常用来从表中检索数据，但可以省略`FROM`子句以便简单的访问和处理表达式。
+
+例如:
+
+```
+mysql> select 3*3;
++-----+
+| 3*3 |
++-----+
+|   9 |
++-----+
+1 row in set (0.00 sec)
+
+mysql> select now();
++---------------------+
+| now()               |
++---------------------+
+| 2021-12-13 23:06:40 |
++---------------------+
+1 row in set (0.00 sec)
+
+mysql> select trim(' 345 ');
++---------------+
+| trim(' 345 ') |
++---------------+
+| 345           |
++---------------+
+1 row in set (0.00 sec)
+```
+
+## 第十一章 使用数据处理函数
+
+### 常用的文本处理函数
+
+| 函数           | 说明                |
+| -------------- | ------------------- |
+| left(str, num) | 返回串左边num位字符 |
+|                |                     |
+|                |                     |
+|                |                     |
+|                |                     |
+|                |                     |
+|                |                     |
+
 
