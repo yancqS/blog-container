@@ -58,7 +58,7 @@ languages:
 
 显示可用的数据库列表：
 
-```mysql
+```sql
 show databases;
 ```
 
@@ -79,7 +79,7 @@ mysql> show databases;
 
 使用`USE`关键字选择一个数据库,并且用`SHOW`获取数据库内表的列表：
 
-```mysql
+```sql
 use customers;
 show tables;
 ```
@@ -106,7 +106,7 @@ mysql> show tables;
 
 `SHOW`也可以用来显示表列：
 
-```mysql
+```sql
 show columns from customers;
 //或
 describe customers;
@@ -145,7 +145,7 @@ mysql> show columns from customers;
 
 ### 检索单个列
 
-```mysql
+```sql
 select prod_name from products;
 ```
 
@@ -178,7 +178,7 @@ mysql> select prod_name from products;
 
 ### 检索多个列
 
-```mysql
+```sql
 select prod_id, prod_name, prod_price from products;
 ```
 
@@ -207,7 +207,7 @@ mysql> select prod_id, prod_name, prod_price from products;
 
 ### 检索所有列
 
-```mysql
+```sql
 select * from products;
 ```
 
@@ -221,7 +221,7 @@ select * from products;
 
 正如所见，`SELECT`返回所有匹配的行。但是，如果你不想要每个值每次都出现，怎么办？例如，你想要的出products表中产品的所有供应商ID：
 
-```mysql
+```sql
 select vend_id from products;
 ```
 
@@ -229,7 +229,7 @@ select vend_id from products;
 
 解决办法时使用`DISTINCT`关键字。
 
-```mysql
+```sql
 select distinct vend_id from products;
 ```
 
@@ -252,7 +252,7 @@ mysql> select distinct vend_id from products;
 
 为了返回第一行或前几行，可使用`LIMIT`子句。
 
-```mysql
+```sql
 select prod_name from products limit 5;
 ```
 
@@ -270,7 +270,7 @@ mysql> select prod_name from products limit 5;
 5 rows in set (0.00 sec)
 ```
 
-```mysql
+```sql
 select prod_name from products limit 5, 5;
 ```
 
@@ -302,7 +302,7 @@ mysql> select prod_name from products limit 5, 5;
 
 迄今为止使用的SQL例子只通过列明引用列。也可能使用完全限制的名字来引用列（同时使用表名和列名），比如：
 
-```mysql
+```sql
 select products.prod_name from customers.products;
 ```
 
@@ -316,7 +316,7 @@ select products.prod_name from customers.products;
 
 为了明确地排序用`SELECT`语句检索出的数据，可使用`ORDER BY`子句。
 
-```mysql
+```sql
 select prod_name from products order by prod_name;
 ```
 
@@ -349,7 +349,7 @@ mysql> select prod_name from products order by prod_name;
 
 下面检索3个列，并按其中两个列对结果进行排序——首先按价格，然后再按名称排序。
 
-```mysql
+```sql
 select prod_id, prod_price, prod_name from products order by prod_price, prod_name;
 ```
 
@@ -387,7 +387,7 @@ mysql> select prod_id, prod_price, prod_name from products order by prod_price, 
 - `DESC`：降序
 - `ASC`：升序，默认
 
-```mysql
+```sql
 select prod_id, prod_price, prod_name from products order by prod_price desc;
 ```
 
@@ -416,7 +416,7 @@ mysql> select prod_id, prod_price, prod_name from products order by prod_price d
 
 如果打算对多个列排序：
 
-```mysql
+```sql
 select prod_id, prod_price, prod_name from products order by prod_price desc, prod_name;
 ```
 
@@ -449,7 +449,7 @@ mysql> select prod_id, prod_price, prod_name from products order by prod_price d
 
 `ORDER BY`子句的位置，在给出`ORDER BY`子句时，应该保证它位于`FROM`子句之后，如果要使用`LIMIT`，它必须位于`ORDER BY`之后。使用子句的次序不对将产生错误消息。
 
-```mysql
+```sql
 SELECT <column>, <another_column>, …
 FROM <mytable>
 ORDER BY <column> ASC/DESC
@@ -460,7 +460,7 @@ LIMIT <num_limit> OFFSET <num_offset>;
 
 ### 使用WHERE子句
 
-```mysql
+```sql
 select prod_name, prod_price from products where prod_price=2.50;
 ```
 
@@ -494,7 +494,7 @@ mysql> select prod_name, prod_price from products where prod_price=2.50;
 
 #### 范围值检查
 
-```mysql
+```sql
 select prod_name, prod_price from products where prod_price between 10 and 30 order by prod_price asc;
 ```
 
@@ -514,7 +514,7 @@ mysql> select prod_name, prod_price from products where prod_price between 10 an
 #### 不匹配检查
 
 
-```mysql
+```sql
 select vend_id, prod_name from products where vend_id!=1003;
 ```
 
@@ -536,7 +536,7 @@ mysql> select vend_id, prod_name from products where vend_id!=1003;
 
 #### 单个值检查
 
-```mysql
+```sql
 select prod_name, prod_price from products where prod_name = 'fuses';
 ```
 
@@ -558,7 +558,7 @@ mysql> select prod_name, prod_price from products where prod_name = 'fuses';
 
 > `NULL`,无值（no value），它与字段包含0、空字符串或仅仅包含空格不同。
 
-```mysql
+```sql
 select cust_id from customers where cust_email is null;
 ```
 
@@ -583,7 +583,7 @@ mysql> select cust_id from customers where cust_email is null;
 
 `AND`用于检索满足所有给定条件的行；
 
-```mysql
+```sql
 select prod_id, prod_price, prod_name from products where vend_id = 1003 and prod_price <= 10;
 ```
 
@@ -607,7 +607,7 @@ mysql> select prod_id, prod_price, prod_name from products where vend_id = 1003 
 
 `OR`用于检索匹配任一给定条件的行。
 
-```mysql
+```sql
 select prod_name, prod_price, vend_id from products where vend_id = 1002 or vend_id = 1003;
 ```
 
@@ -635,7 +635,7 @@ mysql> select prod_name, prod_price, vend_id from products where vend_id = 1002 
 
 但是这样会带来一个问题，请看下面的SQL语句：
 
-```mysql
+```sql
 select prod_name, prod_price from products where vend_id = 1002 or vend_id = 1003 and prod_price >= 10;
 ```
 
@@ -662,7 +662,7 @@ mysql> select prod_name, prod_price from products where vend_id = 1002 or vend_i
 
 此类问题的解决办法是**使用圆括号明确地分组相应的操作**。修改后如下：
 
-```mysql
+```sql
 select prod_name, prod_price from products where (vend_id = 1002 or vend_id = 1003) and prod_price >= 10;
 ```
 
@@ -685,7 +685,7 @@ mysql> select prod_name, prod_price from products where (vend_id = 1002 or vend_
 
 圆括号在`WHERE`子句中还有一种用法。`IN`操作符用来指定条件范围。
 
-```mysql
+```sql
 select prod_name, prod_price from products where vend_id in (1002, 1003) order by prod_name;
 ```
 
@@ -720,7 +720,7 @@ mysql> select prod_name, prod_price from products where vend_id in (1002, 1003) 
 
 WHERE子句中NOT操作符有且只有一个功能，那就是否定它之后所跟的任何条件。
 
-```mysql
+```sql
 select prod_name, prod_price from products where vend_id not in (1002, 1003) order by prod_name;
 ```
 
@@ -762,7 +762,7 @@ mysql> select prod_name, prod_price from products where vend_id not in (1002, 10
 
 在搜索串中，`%`表示*任何字符出现任意次数*。
 
-```mysql
+```sql
 select prod_id, prod_name from products where prod_name like 'jet%';
 ```
 
@@ -783,7 +783,7 @@ mysql> select prod_id, prod_name from products where prod_name like 'jet%';
 
 通配符可在搜索模式中任意位置使用，并且可以使用多个通配符。例如：
 
-```mysql
+```sql
 select prod_id, prod_name from products where prod_name like '%anvil%';
 ```
 
@@ -795,7 +795,7 @@ select prod_id, prod_name from products where prod_name like '%anvil%';
 
 下面的例子是找出所有以s开头以e结尾的结尾的所有产品：
 
-```mysql
+```sql
 select prod_name from products where prod_name like 's%e';
 ```
 
@@ -803,7 +803,7 @@ select prod_name from products where prod_name like 's%e';
 
 下划线的用途与%一样，但是下划线子匹配单个字符而不是多个字符。
 
-```mysql
+```sql
 select prod_name, prod_id from products where prod_name like '_ ton anvil';
 ```
 
@@ -834,7 +834,7 @@ MySQL的通配符很有用，但是这种功能是有代价的：通配符搜索
 
 下面语句检索列prod_name保含文本1000的所有行：
 
-```mysql
+```sql
 select prod_name from products where prod_name regexp '1000' order by prod_name;
 ```
 
@@ -854,7 +854,7 @@ mysql> select prod_name from products where prod_name regexp '1000' order by pro
 
 在LIKE和REGEXP质检有一个重要的差别。请看一下两条语句：
 
-```mysql
+```sql
 select prod_name from products where prod_name like '1000' order by prod_name;
 
 select prod_name from products where prod_name regexp '1000' order by prod_name;
@@ -870,7 +870,7 @@ select prod_name from products where prod_name regexp '1000' order by prod_name;
 
 ### 进行OR匹配
 
-```mysql
+```sql
 select prod_name from products where prod_name regexp '1000|2000' order by prod_name;
 ```
 
@@ -889,7 +889,7 @@ mysql> select prod_name from products where prod_name regexp '1000|2000' order b
 
 如果你想匹配特定的字符，你可以指定一组用 [ 和 ] 括起来的字符来完成。
 
-```mysql
+```sql
 select prod_name from products where prod_name regexp '[123] Ton' order by prod_name;
 ```
 
@@ -916,7 +916,7 @@ mysql> select prod_name from products where prod_name regexp '[123] Ton' order b
 
 范围不限于完整的集合，[1-3]和[6-9]也是合法的。范围也不一定只是数值的，[a-z]匹配任意字母字符。
 
-```mysql
+```sql
 select prod_name from products where prod_name regexp '[1-5] Ton' order by prod_name;
 ```
 
@@ -936,7 +936,7 @@ mysql> select prod_name from products where prod_name regexp '[1-5] Ton' order b
 
 如何找出保含`.`字符的值？为了匹配特殊字符，必须用`\\`为前导。`\\-`表示查找`-`，`\\.`表示查找`.`。
 
-```mysql
+```sql
 select vend_name from vendors where vend_name regexp '\\.' order by vend_name;
 ```
 
@@ -958,7 +958,7 @@ mysql> select vend_name from vendors where vend_name regexp '\\.' order by vend_
 
 ![](https://gitee.com/yancqS/blogImage/raw/master/blogImage/20211212222215.png)
 
-```mysql
+```sql
 select vend_name from vendors where vend_name regexp '[[:upper:]]';
 //等价于
 select vend_name from vendors where vend_name regexp '[A-Z]';
@@ -975,7 +975,7 @@ select vend_name from vendors where vend_name regexp '[A-Z]';
 | {n, }  | 不少于指定数目的匹配         |
 | {n, m} | 匹配数目的范围（m不超过255） |
 
-```mysql
+```sql
 select prod_name from products where prod_name regexp '\\([0-9] sticks?\\)' order by prod_name;
 ```
 
@@ -992,7 +992,7 @@ mysql> select prod_name from products where prod_name regexp '\\([0-9] sticks?\\
 
 另外一个例子：
 
-```mysql
+```sql
 select prod_name from products where prod_name regexp '[[:digit:]]{4}' order by prod_name;
 ```
 
@@ -1009,7 +1009,7 @@ mysql> select prod_name from products where prod_name regexp '[[:digit:]]{4}' or
 
 上面的例子也可如此编写：
 
-```mysql
+```sql
 select prod_name from products where prod_name regexp '[0-9][0-9][0-9][0-9]' order by prod_name;
 ```
 
@@ -1026,7 +1026,7 @@ select prod_name from products where prod_name regexp '[0-9][0-9][0-9][0-9]' ord
 
 例如找出以一个数（包括小数点开始的数）开始的所有产品：
 
-```mysql
+```sql
 select prod_name from products where prod_name regexp '^[[0-9]\\.]' order by prod_name;
 // 或
 select prod_name from products where prod_name regexp '^[[:digit:]\\.]' order by prod_name;
@@ -1052,7 +1052,7 @@ mysql> select prod_name from products where prod_name regexp '^[[0-9]\\.]' order
 
 语法如下：
 
-```mysql
+```sql
 select 'hello' regexp '[0-9]';
 select 'hello' regexp '[a-z]{2,}';
 ```
@@ -1075,7 +1075,7 @@ mysql> select 'hello' regexp '[a-z]{2,}';
 
 可使用拼接函数`concat()`函数来拼接两个列。
 
-```mysql
+```sql
 select concat(vend_name, '(', vend_country ,')') from vendors order by vend_name;
 ```
 
@@ -1106,7 +1106,7 @@ mysql> select concat(vend_name, '(', vend_country ,')') from vendors order by ve
 
 别名是一个字段或值的替换名，有时也称为导出列。别名用`AS`关键字赋予。
 
-```mysql
+```sql
 select concat(vend_name, '(', vend_country ,')') as vend_title from vendors order by vend_name;
 ```
 
@@ -1134,7 +1134,7 @@ mysql> select concat(vend_name, '(', vend_country ,')') as vend_title from vendo
 | *      | 乘   |
 | /      | 除   |
 
-```mysql
+```sql
 select prod_id,
 			 quantity,
 			 item_price,
@@ -1191,14 +1191,135 @@ mysql> select trim(' 345 ');
 
 ### 常用的文本处理函数
 
-| 函数           | 说明                |
-| -------------- | ------------------- |
-| left(str, num) | 返回串左边num位字符 |
-|                |                     |
-|                |                     |
-|                |                     |
-|                |                     |
-|                |                     |
-|                |                     |
+| 函数                               | 说明                                                         |
+| ---------------------------------- | ------------------------------------------------------------ |
+| left(str, num)                     | 返回串左边num位字符                                          |
+| length(str)                        | 返回字符串的长度                                             |
+| locate(substr, str, pos)           | 返回从第pos尾查找第一次出现子字符串的位置，[参考文章](https://www.fujieace.com/mysql/functions/locate.html) |
+| lower(str)                         | 将字符串转为小写                                             |
+| ltrim(str)                         | 去掉字符串左边的空格                                         |
+| right(str, num)                    | 返回串右边num位字符                                          |
+| rtrim(str)                         | 去掉字符串右边的空格                                         |
+| soundex(str)                       | 返回串的SOUNDEX值                                            |
+| substring(str, pos)                | 截取特定长度的字符串，substring(被截取字符串， 从第几位开始截取) |
+| substring(str, pos, length)        | substring(被截取字符串，从第几位开始截取，截取长度)          |
+| upper(str)                         | 将串转为大写                                                 |
+| substring_index(str, delim, count) | substring_index(被截取字符串，关键字，关键字出现的次数)      |
+| trim(str)                          | 去掉字符串左右两边的空格                                     |
+
+需要对`soundex`做出进一步解释。`soundex`是一个将任何文本串转为描述其语音表示的字母数字模式的算法。
+
+举个例子：customers表中有一个顾客Coyote Inc.，其联系名为Y Lee，但是如果这是输入错误，此联系人实际为Y Lie，怎么办？显然按照正确的联系名搜索不会返回数据，如下所示：
+
+```sql
+select cust_name, cust_contact from customers where cust_contact = 'Y Lie';
+```
+
+现在使用`soundex()`函数进行搜索:
+
+```sql
+select cust_name, cust_contact from customers where soundex(cust_contact) = soundex('Y Lie');
+```
+
+```
+mysql> select cust_name, cust_contact from customers where soundex(cust_contact) = soundex('Y Lie');
++-------------+--------------+
+| cust_name   | cust_contact |
++-------------+--------------+
+| Coyote Inc. | Y Lee        |
++-------------+--------------+
+1 row in set (0.00 sec)
+```
+
+每个函数的示例如下：
+
+```
+// left函数
+mysql> select left('ABcddrere', 3);
++----------------------+
+| left('ABcddrere', 3) |
++----------------------+
+| ABc                  |
++----------------------+
+1 row in set (0.00 sec)
+// length函数
+mysql> select length('ABcddrere');
++---------------------+
+| length('ABcddrere') |
++---------------------+
+|                   9 |
++---------------------+
+1 row in set (0.00 sec)
+// locate函数
+mysql> select locate('abc', 'eryabcyabcui');
++-------------------------------+
+| locate('abc', 'eryabcyabcui') |
++-------------------------------+
+|                             4 |
++-------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select locate('abc', 'eryabcyabcui', 5);
++----------------------------------+
+| locate('abc', 'eryabcyabcui', 5) |
++----------------------------------+
+|                                8 |
++----------------------------------+
+1 row in set (0.00 sec)
+// lower函数
+mysql> select lower('ABcddrere');
++--------------------+
+| lower('ABcddrere') |
++--------------------+
+| abcddrere          |
++--------------------+
+1 row in set (0.00 sec)
+// ltrim函数
+mysql> select ltrim('  ABcddrere');
++----------------------+
+| ltrim('  ABcddrere') |
++----------------------+
+| ABcddrere            |
++----------------------+
+1 row in set (0.00 sec)
+// right函数
+mysql> select right('ABcddrere', 3);
++-----------------------+
+| right('ABcddrere', 3) |
++-----------------------+
+| ere                   |
++-----------------------+
+1 row in set (0.00 sec)
+// rtrim函数
+mysql> select rtrim('ABcddrere  ');
++----------------------+
+| rtrim('ABcddrere  ') |
++----------------------+
+| ABcddrere            |
++----------------------+
+1 row in set (0.00 sec)
+// upper函数
+mysql> select upper('ABcddrere');
++--------------------+
+| upper('ABcddrere') |
++--------------------+
+| ABCDDRERE          |
++--------------------+
+1 row in set (0.00 sec)
+//trim函数
+mysql> select trim('   ABcddrere  ');
++------------------------+
+| trim('   ABcddrere  ') |
++------------------------+
+| ABcddrere              |
++------------------------+
+1 row in set (0.00 sec)
+```
+
+`substring()`函数和`substring_index()`函数示例如下：
+
+![](https://gitee.com/yancqS/blogImage/raw/master/blogImage/20211214225213.png)
+
+### 日期和时间处理函数
 
 
