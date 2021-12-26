@@ -52,7 +52,7 @@ class EventEmitter {
   once(eventName, fn) {
     let wrapFun = function(...args) {
       fn.apply(this, args);
-      this.off(eventName, fn);
+      this.off(eventName, wrapFun);
     }
     this.on(eventName, wrapFun);
     return this;
@@ -71,6 +71,7 @@ event.on('click', handleClick1);//订阅（监听）
 /*执行其他代码，在某个时间触发（发布）click信号*/
 ...
 event.emit('click', 10);//发布（触发）
+event.emit('click', 100);//发布（触发）
 ```
 
 上面的eventEmitter类的实现就是基于发布订阅模式。在阮一峰老师的《Javascript异步编程的4种方法》中提到：
