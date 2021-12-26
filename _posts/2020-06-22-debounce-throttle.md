@@ -84,9 +84,21 @@ function PromiseAll(promiseArr) {
   })
 }
 
-let p1 = new Promise(1);
-let p2 = new Promise(2);
-let p3 = new Promise(3);
+let p1 = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(1);
+      }, 5000)
+});
+let p2 = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(2);
+      }, 6000)
+});
+let p3 = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(3);
+      }, 7000)
+});
 
 PromiseAll([p1,p2,p3]).then(valArr => {
   console.log(valArr);
