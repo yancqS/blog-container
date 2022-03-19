@@ -79,7 +79,7 @@ ln -s test.txt test-soft.txt
 ## 总结
 
 依此您可以做一些相关的测试，可以得到以下全部结论：
-1).删除符号(软)链接`test-soft.txt`, 对`test.txt`,`test-hard.txt`无影响；
-2).删除硬链接`test-hard.txt`, 对`test.txt`,`test-soft.txt`也无影响；
-3).删除原文件`test.txt`, 对硬链接`test-hard.txt`没有影响，导致符号(软)链接`test-soft.txt`失效；
-4).同时删除原文件`test.txt`, 硬链接`test-hard.txt`，整个文件会真正的被删除。
+1. 删除符号(软)链接`test-soft.txt`, 对`test.txt`,`test-hard.txt`无影响；
+2. 删除硬链接`test-hard.txt`, 对`test.txt`,`test-soft.txt`也无影响；
+3. 删除原文件`test.txt`, 对硬链接`test-hard.txt`没有影响，导致符号(软)链接`test-soft.txt`失效；
+4. 同时删除原文件`test.txt`, 硬链接`test-hard.txt`，整个文件会真正的被删除。

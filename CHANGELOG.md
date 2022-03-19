@@ -17,6 +17,7 @@
 * fix emoji display error ([c2e62bc](https://github.com/yancqS/blog-container/commit/c2e62bc055cdbb53d94ad496f75ff89433ae3f48))
 * fix error url of sci-note3 :bug: ([d33f1c6](https://github.com/yancqS/blog-container/commit/d33f1c6bb7b5443ae5158fc2fd5deda61fa525bd))
 * **fix error word in sci-note#6 :bug::** 支出 -> 指出 :zap: ([ce3d292](https://github.com/yancqS/blog-container/commit/ce3d2924c0327d8fa9acc2013637c4989c9f9684)), closes [sci-note#6](https://github.com/sci-note/issues/6)
+* **linux-link.md:** fix typo error ([8ff5088](https://github.com/yancqS/blog-container/commit/8ff5088fb1c8e92c6f83d9642335ff76b4375534))
 * paper image compress 错别字 ([08bb98a](https://github.com/yancqS/blog-container/commit/08bb98a68011d1bce1b78dee1f121e66ea4a61a8))
 * **py-hb.md:** fix typo: change 'sun' to 'sum' :bug: ([5e561e5](https://github.com/yancqS/blog-container/commit/5e561e51beb66ad881c361d27a002fc986590e94))
 * **py-hb:** fix error: change 'list' to 'list_1' ([ee2826c](https://github.com/yancqS/blog-container/commit/ee2826cbff5f9b7ad83e971018725dd4699e8d90))
