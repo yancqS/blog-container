@@ -1,4 +1,4 @@
-#  (2021-12-26)
+#  (2022-03-19)
 
 
 ### Bug Fixes
@@ -10,6 +10,7 @@
 * **busuanzi overlap :bug::** add media search :zap: ([20d0fc4](https://github.com/yancqS/blog-container/commit/20d0fc48e9ac8221ea77b1308a2fc2fab6777a06))
 * **config.js & less-function.md & baidu-swan.md:** fix error change markdown language mark :zap: ([1466b49](https://github.com/yancqS/blog-container/commit/1466b49c28dd3b35002a38248dd4a74cea86c095))
 * **debounce-throttle.md:** fix bug: error code :bug: ([2396782](https://github.com/yancqS/blog-container/commit/23967820921805f3a5533a7fb947d34ffcccce69))
+* **eventemitter.ms:** fix error code :bug: ([f043057](https://github.com/yancqS/blog-container/commit/f043057c1ab4924bb1e7f9c77e8b3cc090cb09fe))
 * **exgcd.md:** fix: correct bkg image url :bug: ([c5004d8](https://github.com/yancqS/blog-container/commit/c5004d89125e05c2d24dff311375bf7fb5a7aea2))
 * first sci-note format error :zap: ([2570663](https://github.com/yancqS/blog-container/commit/2570663809903ab861b59685f945ddc7854b550c))
 * fix date error ([e02ee7e](https://github.com/yancqS/blog-container/commit/e02ee7e4a3f9656b283f995972910533a9362506))
