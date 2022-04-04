@@ -10,7 +10,7 @@ module.exports = {
       href: `/favicon.ico`
     }]
   ],
-  base: '/blog/',
+  base: '/',
   theme: "vuepress-theme-custom",
   themeConfig: {
     heroImage: 'https://gitee.com/yancqS/blogImage/raw/master/blogImage/20211027231332.jpeg',
